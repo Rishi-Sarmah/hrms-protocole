@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AppData, BudgetData, BudgetRow } from '../types/budget';
 import { Coins, Banknote, TrendingUp, TrendingDown, ArrowUpCircle, ArrowDownCircle, Plus, Trash2 } from 'lucide-react';
 
 interface SectionBudgetProps {
   data: AppData;
   onChange: (data: AppData) => void;
-  t: (key: string) => string;
 }
 
 interface BudgetTableProps {
@@ -14,7 +14,6 @@ interface BudgetTableProps {
   sectionKey: keyof BudgetData;
   icon: React.ElementType;
   colorClass: string;
-  t: (key: string) => string;
   onBudgetChange: (section: keyof BudgetData, id: string, field: 'forecast' | 'achievement', value: string) => void;
   allowAdd?: boolean;
   onAddRow?: () => void;
@@ -31,7 +30,6 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
   sectionKey,
   icon: Icon,
   colorClass,
-  t,
   onBudgetChange,
   allowAdd,
   onAddRow,
@@ -41,6 +39,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
   insertSubtotalBeforeId,
   subtotalLabel
 }) => {
+  const { t } = useTranslation();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editValue, setEditValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -216,7 +215,8 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
   );
 };
 
-const SectionBudget: React.FC<SectionBudgetProps> = ({ data, onChange, t }) => {
+const SectionBudget: React.FC<SectionBudgetProps> = ({ data, onChange }) => {
+  const { t } = useTranslation();
   const budget = data.budget;
 
   const handleBudgetChange = (section: keyof BudgetData, id: string, field: 'forecast' | 'achievement', value: string) => {
@@ -364,7 +364,6 @@ const SectionBudget: React.FC<SectionBudgetProps> = ({ data, onChange, t }) => {
           sectionKey="production"
           icon={TrendingUp}
           colorClass="text-green-700"
-          t={t}
           onBudgetChange={handleBudgetChange}
         />
         <BudgetTable 
@@ -373,7 +372,6 @@ const SectionBudget: React.FC<SectionBudgetProps> = ({ data, onChange, t }) => {
           sectionKey="charges"
           icon={TrendingDown}
           colorClass="text-red-700"
-          t={t}
           onBudgetChange={handleBudgetChange}
           allowAdd={true}
           onAddRow={handleAddChargeRow}
@@ -398,7 +396,7 @@ const SectionBudget: React.FC<SectionBudgetProps> = ({ data, onChange, t }) => {
           sectionKey="treasuryReceipts"
           icon={ArrowUpCircle}
           colorClass="text-blue-700"
-          t={t}
+
           onBudgetChange={handleBudgetChange}
         />
         <BudgetTable 
@@ -407,7 +405,7 @@ const SectionBudget: React.FC<SectionBudgetProps> = ({ data, onChange, t }) => {
           sectionKey="treasuryDisbursements"
           icon={ArrowDownCircle}
           colorClass="text-orange-700"
-          t={t}
+
           onBudgetChange={handleBudgetChange}
           insertSubtotalBeforeId="td10"
           subtotalLabel="Total Operations"

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
+import LanguageSelector from '../components/LanguageSelector';
 
 interface Report {
   id: string;
@@ -11,6 +13,7 @@ interface Report {
 }
 
 export default function Dashboard() {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [reports, setReports] = useState<Report[]>([]);
@@ -44,15 +47,16 @@ export default function Dashboard() {
       <nav className="p-4 bg-white rounded-xl shadow-lg border-2 border-slate-200">
         <div className="flex items-center justify-between container mx-auto">
           <div className="flex items-center gap-6">
-            <h1 className="text-lg font-bold text-blue-600">Protocole Dashboard</h1>
+            <h1 className="text-lg font-bold text-blue-600">{t('Protocole Dashboard')}</h1>
             <button
               onClick={() => navigate('/budget')}
               className="px-3 py-1.5 text-xs text-blue-600 hover:bg-blue-50 rounded transition"
             >
-              Budget Management
+              {t('Budget Management')}
             </button>
           </div>
           <div className="flex items-center gap-4">
+            <LanguageSelector />
             <div className="flex flex-col items-end">
               <span className="text-xs font-medium">{user?.displayName}</span>
               <span className="text-[10px] text-gray-500">{user?.email}</span>
@@ -64,7 +68,7 @@ export default function Dashboard() {
               onClick={() => logout()}
               className="px-3 py-1.5 text-xs text-red-600 bg-red-50 rounded hover:bg-red-100 border border-red-200 transition"
             >
-              Logout
+              {t('Logout')}
             </button>
           </div>
         </div>
@@ -72,7 +76,7 @@ export default function Dashboard() {
 
       <main className="container mx-auto p-4 mt-6">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold">Your Reports</h2>
+          <h2 className="text-lg font-semibold">{t('Your Reports')}</h2>
         </div>
 
         {loading ? (
@@ -85,7 +89,7 @@ export default function Dashboard() {
           </div>
         ) : reports.length === 0 ? (
           <div className="p-6 text-center bg-white rounded shadow-sm border border-gray-200 text-xs">
-            <p className="text-gray-500">No reports found.</p>
+            <p className="text-gray-500">{t('No reports found.')}</p>
           </div>
         ) : (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

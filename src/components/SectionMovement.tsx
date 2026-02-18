@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AppData, MovementRow } from '../types/budget';
 import { ArrowLeftRight, Plus, Trash2, Edit2, Check } from 'lucide-react';
 
 interface Props {
   data: AppData;
   onChange: (data: AppData) => void;
-  t: (key: string) => string;
 }
 
-const SectionMovement: React.FC<Props> = ({ data, onChange, t }) => {
+const SectionMovement: React.FC<Props> = ({ data, onChange }) => {
+  const { t } = useTranslation();
   const [editingId, setEditingId] = useState<string | null>(null);
 
   const handleMoveChange = (id: string, field: 'type' | 'count' | 'observation', value: string) => {

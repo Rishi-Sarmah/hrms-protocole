@@ -1,14 +1,15 @@
 import React, { useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AppData, MedicalTransfer } from '../types/budget';
 import { HeartPulse, Plane, Plus } from 'lucide-react';
 
 interface Props {
   data: AppData;
   onChange: (data: AppData) => void;
-  t: (key: string) => string;
 }
 
-const SectionMedical: React.FC<Props> = ({ data, onChange, t }) => {
+const SectionMedical: React.FC<Props> = ({ data, onChange }) => {
+  const { t } = useTranslation();
   // Use a ref to maintain a counter across renders for ID generation
   const idCounterRef = useRef(0);
   

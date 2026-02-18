@@ -15,15 +15,15 @@ function App() {
             path="/"
             element={
               <RequireAuth>
-                <Dashboard />
+                <Budget />
               </RequireAuth>
             }
           />
           <Route
-            path="/budget"
+            path="/dashboard"
             element={
               <RequireAuth>
-                <Budget />
+                <Dashboard />
               </RequireAuth>
             }
           />

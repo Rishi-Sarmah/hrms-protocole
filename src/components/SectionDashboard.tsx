@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AppData } from '../types/budget';
 import { LayoutDashboard, Calculator } from 'lucide-react';
 
 interface Props {
   data: AppData;
-  t: (key: string) => string;
 }
 
-const SectionDashboard: React.FC<Props> = ({ data, t }) => {
+const SectionDashboard: React.FC<Props> = ({ data }) => {
+  const { t } = useTranslation();
   const metrics = useMemo(() => {
     // 1. Production (Sum of all production achievements)
     const production = data.budget.production.reduce((sum, row) => sum + row.achievement, 0);

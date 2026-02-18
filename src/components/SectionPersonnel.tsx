@@ -1,14 +1,15 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AppData } from '../types/budget';
 import { Users, DollarSign } from 'lucide-react';
 
 interface Props {
   data: AppData;
   onChange: (data: AppData) => void;
-  t: (key: string) => string;
 }
 
-const SectionPersonnel: React.FC<Props> = ({ data, onChange, t }) => {
+const SectionPersonnel: React.FC<Props> = ({ data, onChange }) => {
+  const { t } = useTranslation();
   const handleRowChange = (id: string, field: 'male' | 'female', value: string) => {
     const numValue = parseInt(value) || 0;
     const newPersonnel = data.personnel.map(row => 

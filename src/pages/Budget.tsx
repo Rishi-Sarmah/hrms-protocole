@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
+import LanguageSelector from '../components/LanguageSelector';
 import SectionBudget from '../components/SectionBudget';
 import SectionDashboard from '../components/SectionDashboard';
 import SectionPersonnel from '../components/SectionPersonnel';
@@ -98,86 +100,8 @@ const initialExploitationData: ExploitationData = {
   ],
 };
 
-const translate = (key: string) => {
-  const translations: Record<string, string> = {
-    'sec_budget_production': 'Production Budget',
-    'sec_budget_charges': 'Operating Charges',
-    'sec_treasury_receipts': 'Treasury Receipts',
-    'sec_treasury_disbursements': 'Treasury Disbursements',
-    'Designation': 'Designation',
-    'Forecast': 'Forecast',
-    'Achievements': 'Achievements',
-    'RealRate': 'Achievement Rate',
-    'sec_dashboard': 'Key Performance Indicators',
-    'Dashboard_Indicator': 'Indicator',
-    'Dashboard_Formula': 'Formula',
-    'Dashboard_Value': 'Value',
-    'dashboard_lbl_total_workforce': 'Total Workforce',
-    'dashboard_fml_total_workforce': 'Sum of all personnel',
-    'dashboard_lbl_va': 'Added Value (V.A.)',
-    'dashboard_fml_va': 'Production - Charges(60-65)',
-    'dashboard_lbl_coeff': 'Operating Coefficient',
-    'dashboard_fml_coeff': 'Production / Total Charges',
-    'dashboard_lbl_ebe': 'EBITDA (EBE)',
-    'dashboard_fml_ebe': 'V.A. - Charge(66)',
-    'dashboard_lbl_re': 'Operating Result (R.E.)',
-    'dashboard_fml_re': 'EBE - Charge(67)',
-    'dashboard_lbl_encours': 'Outstanding Receivables',
-    'dashboard_fml_encours': 'Production - Net Receipts',
-    'dashboard_lbl_recovery': 'Recovery Rate',
-    'dashboard_fml_recovery': '(Receipts / Production) × 100',
-    'dashboard_lbl_productivity': 'Productivity',
-    'dashboard_fml_productivity': 'Production / Workforce',
-    'dashboard_lbl_avg_cost': 'Average Cost per Employee',
-    'dashboard_fml_avg_cost': 'Charge(66) / Workforce',
-    'dashboard_lbl_supervision': 'Supervision Ratio',
-    'dashboard_fml_supervision': 'Workforce / Management Count',
-    'dashboard_lbl_avg_salary': 'Average Salary',
-    'dashboard_fml_avg_salary': 'Salary Mass / Workforce',
-    'sec_personnel': 'Personnel Management',
-    'col_category': 'Category',
-    'col_grade': 'Grade',
-    'col_male': 'Male',
-    'col_female': 'Female',
-    'col_total': 'Total',
-    'lbl_management_count': 'Management Count (Auto-calculated)',
-    'lbl_salary_mass': 'Salary Mass (CDF)',
-    'sec_workforce': 'Workforce by Education Level',
-    'Level': 'Education Level',
-    'sec_movement': 'Personnel Movement',
-    'Movement': 'Movement Type',
-    'Effectif': 'Count',
-    'Observation': 'Observation',
-    'Missions': 'Service Missions',
-    'Performed': 'Missions Performed',
-    'Received': 'Missions Received',
-    'Medical Care': 'Medical Care Expenses',
-    'Transfers Kinshasa': 'Medical Transfers - Kinshasa',
-    'Transfers Abroad': 'Medical Transfers - Abroad',
-    'Entity': 'Entity',
-    'Agents': 'Agents',
-    'Retirees': 'Retirees',
-    'Wives': 'Spouses',
-    'Children': 'Children',
-    'Divers': 'Miscellaneous Expenses',
-    'Inside': 'Domestic',
-    'Abroad': 'International',
-    'sec_operating': 'Operating Data',
-    'Product': 'Product',
-    'Volume': 'Volume',
-    'Value': 'Value',
-    'Fees & Result': 'Fees & Results',
-    'Failures': 'Operational Failures',
-    'Type': 'Type',
-    'Count': 'Count',
-    'Description': 'Description',
-    'Metrology': 'Metrology Services',
-    'TechControl': 'Technical Control',
-  };
-  return translations[key] || key;
-};
-
 export default function Budget() {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'dashboard' | 'personnel' | 'workforce' | 'movement' | 'medical' | 'exploitation' | 'budget'>('dashboard');
@@ -238,15 +162,16 @@ export default function Budget() {
               onClick={() => navigate('/')}
               className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded transition"
             >
-              ← Back to Dashboard
+              {t('← Back to Dashboard')}
             </button>
           </div>
           <div className="flex items-center gap-4">
+            <LanguageSelector />
             <button
               onClick={handleSave}
               className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
             >
-              Save All Data
+              {t('Save All Data')}
             </button>
             <div className="flex flex-col items-end">
               <span className="text-sm font-medium">{user?.displayName}</span>
@@ -256,7 +181,7 @@ export default function Budget() {
               onClick={logout}
               className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
             >
-              Logout
+              {t('Logout')}
             </button>
           </div>
         </div>
@@ -285,31 +210,31 @@ export default function Budget() {
 
       <main className="container mx-auto p-6">
         {activeTab === 'dashboard' && (
-          <SectionDashboard data={appData} t={translate} />
+          <SectionDashboard data={appData} />
         )}
         
         {activeTab === 'personnel' && (
-          <SectionPersonnel data={appData} onChange={handleDataChange} t={translate} />
+          <SectionPersonnel data={appData} onChange={handleDataChange} />
         )}
         
         {activeTab === 'workforce' && (
-          <SectionWorkforce data={appData} onChange={handleDataChange} t={translate} />
+          <SectionWorkforce data={appData} onChange={handleDataChange} />
         )}
         
         {activeTab === 'movement' && (
-          <SectionMovement data={appData} onChange={handleDataChange} t={translate} />
+          <SectionMovement data={appData} onChange={handleDataChange} />
         )}
         
         {activeTab === 'medical' && (
-          <SectionMedical data={appData} onChange={handleDataChange} t={translate} />
+          <SectionMedical data={appData} onChange={handleDataChange} />
         )}
         
         {activeTab === 'exploitation' && (
-          <SectionExploitation data={appData} onChange={handleDataChange} t={translate} />
+          <SectionExploitation data={appData} onChange={handleDataChange} />
         )}
         
         {activeTab === 'budget' && (
-          <SectionBudget data={appData} onChange={handleDataChange} t={translate} />
+          <SectionBudget data={appData} onChange={handleDataChange} />
         )}
       </main>
     </div>

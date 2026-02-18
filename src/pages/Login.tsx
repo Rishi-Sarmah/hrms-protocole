@@ -1,9 +1,12 @@
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import LanguageSelector from '../components/LanguageSelector';
 import type { FormEvent } from 'react';
 
 export default function Login() {
+  const { t } = useTranslation();
   const { signInWithGoogle, loginWithEmail, registerWithEmail, user } = useAuth();
   const navigate = useNavigate();
   
@@ -68,9 +71,12 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="absolute top-4 right-4">
+        <LanguageSelector />
+      </div>
       <div className="p-8 bg-white rounded shadow-md w-full max-w-md">
         <h1 className="mb-6 text-2xl font-bold text-center text-gray-800">
-          {isLogin ? 'Sign In' : 'Create Account'}
+          {isLogin ? t('Sign In') : t('Create Account')}
         </h1>
         
         {error && (
@@ -82,7 +88,7 @@ export default function Login() {
         <form onSubmit={handleEmailAuth} className="space-y-4">
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-              Email
+              {t('Email')}
             </label>
             <input
               id="email"
@@ -96,7 +102,7 @@ export default function Login() {
           </div>
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password
+              {t('Password')}
             </label>
             <input
               id="password"
@@ -115,7 +121,7 @@ export default function Login() {
             disabled={loading}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 disabled:opacity-50"
           >
-            {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Sign Up')}
+            {loading ? t('Processing...') : (isLogin ? t('Sign In') : t('Sign Up'))}
           </button>
         </form>
 
@@ -125,7 +131,7 @@ export default function Login() {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500">{t('Or continue with')}</span>
             </div>
           </div>
 
@@ -136,19 +142,19 @@ export default function Login() {
               className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
             >
               <img className="h-5 w-5 mr-2" src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google logo" />
-              Google
+              {t('Google')}
             </button>
           </div>
         </div>
 
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
-            {isLogin ? "Don't have an account? " : "Already have an account? "}
+            {isLogin ? t("Don't have an account? ") : t('Already have an account? ')}
             <button
               onClick={() => setIsLogin(!isLogin)}
               className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none"
             >
-              {isLogin ? 'Sign up' : 'Sign in'}
+              {isLogin ? t('Sign up') : t('Sign in')}
             </button>
           </p>
         </div>

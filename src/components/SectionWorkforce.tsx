@@ -1,16 +1,17 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AppData } from '../types/budget';
 import { GraduationCap } from 'lucide-react';
 
 interface Props {
   data: AppData;
   onChange: (data: AppData) => void;
-  t: (key: string) => string;
 }
 
 const grades = ['DIR', 'DA', 'SD', 'FPP', 'FP', 'CS3', 'CS2', 'CS1', 'M3', 'M2', 'M1', 'C9', 'C8', 'C7', 'C6'];
 
-const SectionWorkforce: React.FC<Props> = ({ data, onChange, t }) => {
+const SectionWorkforce: React.FC<Props> = ({ data, onChange }) => {
+  const { t } = useTranslation();
   const handleCellChange = (levelIndex: number, grade: string, value: string) => {
     const numVal = parseInt(value) || 0;
     const newWorkforce = [...data.workforce];
