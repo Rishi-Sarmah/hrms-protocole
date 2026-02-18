@@ -15,10 +15,16 @@ import type { AppData, BudgetData, PersonnelRow, WorkforceRow, MovementRow, Medi
 // Sample initial data
 const initialBudgetData: BudgetData = {
   production: [
-    { id: 'p1', label: 'Sales Revenue', forecast: 0, achievement: 0 },
-    { id: 'p2', label: 'Service Revenue', forecast: 0, achievement: 0 },
-    { id: 'p3', label: 'Other Revenue', forecast: 0, achievement: 0 },
-  ],
+  { id: 'p1', label: 'EXPORTATION', forecast: 0, achievement: 0 },
+  { id: 'p2', label: 'IMPORTATION', forecast: 0, achievement: 0 },
+  { id: 'p3', label: 'LOCAL PROD.', forecast: 0, achievement: 0 },
+  { id: 'p4', label: 'BORDER TRAFFIC', forecast: 0, achievement: 0 },
+  { id: 'p5', label: 'LOCAL TRANS.', forecast: 0, achievement: 0 },
+  { id: 'p6', label: 'LAB ANALYSIS', forecast: 0, achievement: 0 },
+  { id: 'p7', label: 'FAILURES/AVARIES', forecast: 0, achievement: 0 },
+  { id: 'p8', label: 'METROLOGY', forecast: 0, achievement: 0 },
+  { id: 'p9', label: 'TECH. CONTROL', forecast: 0, achievement: 0 }
+],
   charges: [
     { id: 'bc1', label: 'Salaries & Wages', forecast: 0, achievement: 0 },
     { id: 'bc2', label: 'Rent', forecast: 0, achievement: 0 },
@@ -53,10 +59,21 @@ const initialBudgetData: BudgetData = {
 };
 
 const initialPersonnelData: PersonnelRow[] = [
-  { id: 'p1', category: 'r_p_cat_dir', grade: 'DIR', male: 0, female: 0 },
-  { id: 'p2', category: 'Technical Staff', grade: 'SD', male: 0, female: 0 },
-  { id: 'p3', category: 'Administrative', grade: 'FP', male: 0, female: 0 },
-  { id: 'p4', category: 'Support Staff', grade: 'CS1', male: 0, female: 0 },
+  { id: 'p1', category: 'MANAGEMENT STAFF', grade: 'DIR.', male: 0, female: 0 },
+  { id: 'p2', category: 'MANAGEMENT STAFF', grade: 'D.A.', male: 0, female: 0 },
+  { id: 'p3', category: 'MANAGEMENT STAFF', grade: 'SD', male: 0, female: 0 },
+  { id: 'p4', category: 'SENIOR STAFF', grade: 'FPP', male: 0, female: 0 },
+  { id: 'p5', category: 'SENIOR STAFF', grade: 'FP', male: 0, female: 0 },
+  { id: 'p6', category: 'SUBORDINATE STAFF', grade: 'CS3', male: 0, female: 0 },
+  { id: 'p7', category: 'SUBORDINATE STAFF', grade: 'CS2', male: 0, female: 0 },
+  { id: 'p8', category: 'SUBORDINATE STAFF', grade: 'CS1', male: 0, female: 0 },
+  { id: 'p9', category: 'SUPERVISORY STAFF', grade: 'M3', male: 0, female: 0 },
+  { id: 'p10', category: 'SUPERVISORY STAFF', grade: 'M2', male: 0, female: 0 },
+  { id: 'p11', category: 'SUPERVISORY STAFF', grade: 'M1', male: 0, female: 0 },
+  { id: 'p12', category: 'ECHELONNED STAFF', grade: 'C9', male: 0, female: 0 },
+  { id: 'p13', category: 'ECHELONNED STAFF', grade: 'C8', male: 0, female: 0 },
+  { id: 'p14', category: 'ECHELONNED STAFF', grade: 'C7', male: 0, female: 0 },
+  { id: 'p15', category: 'ECHELONNED STAFF', grade: 'C6', male: 0, female: 0 },
 ];
 
 const initialWorkforceData: WorkforceRow[] = [
@@ -80,23 +97,36 @@ const initialMedicalCare: MedicalCare[] = [
   { category: 'Laboratory', usd: 0, cdf: 0 },
 ];
 
+
+
 const initialExploitationData: ExploitationData = {
+  // 1. Operating Data
   operatingData: [
-    { id: 'op1', category: 'Product A', subcategory: '', volume: { kgs: 0, m3: 0, litre: 0 }, value: { cif: 0, fob: 0, marchande: 0 }, occFees: 0, dpdVerification: 0, result: 0 },
-    { id: 'op2', category: 'Product B', subcategory: '', volume: { kgs: 0, m3: 0, litre: 0 }, value: { cif: 0, fob: 0, marchande: 0 }, occFees: 0, dpdVerification: 0, result: 0 },
+    { id: 'op1', category: 'IMPORTATION CAE', subcategory: '', volume: { kgs: 0, m3: 0, litre: 0 }, value: { cif: 0, fob: 0, marchande: 0 }, occFees: 0, dpdVerification: 0, result: 0 },
+    { id: 'op2', category: 'IMPORTATION CAA', subcategory: '', volume: { kgs: 0, m3: 0, litre: 0 }, value: { cif: 0, fob: 0, marchande: 0 }, occFees: 0, dpdVerification: 0, result: 0 },
+    { id: 'op3', category: 'EXPORTATION', subcategory: '', volume: { kgs: 0, m3: 0, litre: 0 }, value: { cif: 0, fob: 0, marchande: 0 }, occFees: 0, dpdVerification: 0, result: 0 },
+    { id: 'op4', category: 'LOCAL PRODUCTION', subcategory: '', volume: { kgs: 0, m3: 0, litre: 0 }, value: { cif: 0, fob: 0, marchande: 0 }, occFees: 0, dpdVerification: 0, result: 0 },
+    { id: 'op5', category: 'BORDER TRAFFIC', subcategory: '', volume: { kgs: 0, m3: 0, litre: 0 }, value: { cif: 0, fob: 0, marchande: 0 }, occFees: 0, dpdVerification: 0, result: 0 },
+    { id: 'op6', category: 'LOCAL TRANSACTION', subcategory: '', volume: { kgs: 0, m3: 0, litre: 0 }, value: { cif: 0, fob: 0, marchande: 0 }, occFees: 0, dpdVerification: 0, result: 0 },
   ],
+  // 2. Failures
   failures: [
-    { id: 'f1', name: 'Equipment Failure', count: '' },
-    { id: 'f2', name: 'Process Failure', count: '' },
+    { id: 'f1', name: 'Findings', count: 0 },
+    { id: 'f2', name: 'Prevention', count: 0 },
   ],
-  labAnalysis: [],
+  // 3. Laboratory
+  labAnalysis: [], 
+  // 4. Metrology
   metrology: [
-    { id: 'met1', name: 'Calibration', count: 0 },
-    { id: 'met2', name: 'Verification', count: 0 },
+    { id: 'met1', name: 'Metrology', count: 0 },
+    { id: 'met2', name: 'Other Services', count: 0 },
   ],
+  // 5. Technical Control
   technicalControl: [
-    { id: 'tc1', name: 'Quality Inspection', count: 0 },
-    { id: 'tc2', name: 'Safety Check', count: 0 },
+    { id: 'tc1', name: 'Lifting', count: 0 },
+    { id: 'tc2', name: 'Pressure', count: 0 },
+    { id: 'tc3', name: 'Electricity', count: 0 },
+    { id: 'tc4', name: 'Other Services', count: 0 },
   ],
 };
 
@@ -230,7 +260,7 @@ export default function Budget() {
         )}
         
         {activeTab === 'exploitation' && (
-          <SectionExploitation data={appData} onChange={handleDataChange} />
+          <SectionExploitation data={appData} onChange={handleDataChange} t={t}/>
         )}
         
         {activeTab === 'budget' && (
