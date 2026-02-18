@@ -1,0 +1,23 @@
+src/pages/Dashboard.tsx
+  ad6a4fc92c15affe 25-28,31-32,44,47,50,57-58,61,65,73-75,79-80,83,87-88,91,93-95,99-101
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "403026e15855a97d97ed7b059f81d87506e28e80",
+  "prompts": {
+    "ad6a4fc92c15affe": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "a0bab21c-a017-4baf-a57e-697bd80bb200",
+        "model": "copilot/claude-sonnet-4.5"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 28,
+      "total_deletions": 67,
+      "accepted_lines": 28,
+      "overriden_lines": 0
+    }
+  }
+}
