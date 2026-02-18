@@ -1,0 +1,64 @@
+src/pages/Budget.tsx
+  5446d4dee110635c 3,5,104,165,169,174,184
+src/i18n.ts
+  5446d4dee110635c 1-7,35-55,57-96
+src/App.tsx
+  5446d4dee110635c 18,23,26
+src/components/LanguageSelector.tsx
+  5446d4dee110635c 1,3-4,7-25
+src/pages/Dashboard.tsx
+  5446d4dee110635c 4,6,16,50,55,59,71,79,92
+src/pages/Login.tsx
+  5446d4dee110635c 4-5,9,74-76,79,91,105,124,134,145,152,157
+src/components/SectionBudget.tsx
+  5446d4dee110635c 42,399,408
+  ad6a4fc92c15affe 2
+src/main.tsx
+  5446d4dee110635c 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "55cbb7cb5475cca3615387f983ae49a70ffac260",
+  "prompts": {
+    "5446d4dee110635c": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "92c01680-81a1-459a-a1b8-19a01a2cdf4a",
+        "model": "copilot/gpt-5-mini"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 318,
+      "total_deletions": 317,
+      "accepted_lines": 127,
+      "overriden_lines": 1
+    },
+    "ad6a4fc92c15affe": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "a0bab21c-a017-4baf-a57e-697bd80bb200",
+        "model": "copilot/claude-sonnet-4.5"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 7,
+      "total_deletions": 7,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "b39f6ea5433bd745": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "db946dd0-1850-4834-99fc-ed551a0739c7",
+        "model": "copilot/claude-sonnet-4.5"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 3,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    }
+  }
+}
