@@ -1,0 +1,27 @@
+src/pages/Dashboard.tsx
+  4dedcf36df8d25c0 3-4,21,23-42,46,48,51,53,57-73,83,106-111,113,124
+Dockerfile.dev
+  4dedcf36df8d25c0 1
+src/firebase.ts
+  4dedcf36df8d25c0 3,16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "46f55dccc608d6aa522d525fce0fa9870ca96933",
+  "prompts": {
+    "4dedcf36df8d25c0": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_392e0f9d6ffen4qjbmo4qCJkdJ",
+        "model": "google/gemini-3-pro-preview"
+      },
+      "human_author": "Rishi-Sarmah <rishi@trueleap.io>",
+      "messages": [],
+      "total_additions": 64,
+      "total_deletions": 28,
+      "accepted_lines": 56,
+      "overriden_lines": 0
+    }
+  }
+}
