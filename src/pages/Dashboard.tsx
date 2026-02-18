@@ -37,10 +37,29 @@ export default function Dashboard() {
           setLoading(false);
         }
       }
-    };
+    }
+  };
 
+  useEffect(() => {
     fetchReports();
   }, [user]);
+
+  const handleCreateTestReport = async () => {
+    if (!user) return;
+    try {
+      await addDoc(collection(db, "reports"), {
+        userId: user.uid,
+        filename: `Test Report ${new Date().toLocaleTimeString()}`,
+        indicators: { status: "pending", score: Math.floor(Math.random() * 100) },
+        createdAt: serverTimestamp()
+      });
+      // Refresh list
+      fetchReports();
+    } catch (err) {
+      console.error("Error creating report", err);
+      alert("Failed to create report. Check permissions.");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
@@ -78,7 +97,7 @@ export default function Dashboard() {
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">{t('Your Reports')}</h2>
         </div>
-
+        
         {loading ? (
           <div className="flex justify-center p-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
