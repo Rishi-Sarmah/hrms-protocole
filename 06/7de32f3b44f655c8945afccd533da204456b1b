@@ -1,0 +1,23 @@
+firebase.json
+  2ed7523b803f786f 9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "067de32f3b44f655c8945afccd533da204456b1b",
+  "prompts": {
+    "2ed7523b803f786f": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_38dddcff6ffeO5s0G32giUHbSv",
+        "model": "google/gemini-3-pro-preview"
+      },
+      "human_author": "Rishi-Sarmah <rishi@trueleap.io>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
