@@ -1,0 +1,25 @@
+src/contexts/AuthContext.tsx
+  4dedcf36df8d25c0 5-7,9,15-17,45,48-53,57,65-66
+src/pages/Login.tsx
+  4dedcf36df8d25c0 3-4,7,9-14,22,24-25,28-35,39-65,71-112,114-138,140-154
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "622726a0ec04ae039c39627c299a0353e8ca29b1",
+  "prompts": {
+    "4dedcf36df8d25c0": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_392e0f9d6ffen4qjbmo4qCJkdJ",
+        "model": "unknown"
+      },
+      "human_author": "Rishi-Sarmah <rishi@trueleap.io>",
+      "messages": [],
+      "total_additions": 164,
+      "total_deletions": 30,
+      "accepted_lines": 151,
+      "overriden_lines": 0
+    }
+  }
+}
