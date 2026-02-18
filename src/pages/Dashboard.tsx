@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -6,11 +7,12 @@ interface Report {
   id: string;
   filename: string;
   createdAt: string;
-  indicators: any;
+  indicators: unknown;
 }
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +45,15 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-50 text-gray-900">
       <nav className="p-4 bg-white shadow border-b border-gray-200">
         <div className="flex items-center justify-between container mx-auto">
-          <h1 className="text-xl font-bold text-blue-600">Protocole Dashboard</h1>
+          <div className="flex items-center gap-6">
+            <h1 className="text-xl font-bold text-blue-600">Protocole Dashboard</h1>
+            <button
+              onClick={() => navigate('/budget')}
+              className="px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded transition"
+            >
+              Budget Management
+            </button>
+          </div>
           <div className="flex items-center gap-4">
             <div className="flex flex-col items-end">
                 <span className="text-sm font-medium">{user?.displayName}</span>

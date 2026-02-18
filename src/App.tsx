@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Budget from './pages/Budget';
 import RequireAuth from './components/RequireAuth';
 
 function App() {
@@ -15,6 +16,14 @@ function App() {
             element={
               <RequireAuth>
                 <Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/budget"
+            element={
+              <RequireAuth>
+                <Budget />
               </RequireAuth>
             }
           />
