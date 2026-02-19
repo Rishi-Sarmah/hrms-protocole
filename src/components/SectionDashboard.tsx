@@ -47,7 +47,7 @@ const SectionDashboard: React.FC<Props> = ({ data }) => {
     const recoveryRate = production !== 0 ? (receipts / production) * 100 : 0;
 
     // 9. Workforce Stats
-    const totalWorkforce = data.personnel.reduce((sum, p) => sum + p.male + p.female, 0);
+    const totalWorkforce = data.staff.reduce((sum, p) => sum + p.male + p.female, 0);
     
     // 10. Productivité = Production / Effectif
     const productivity = totalWorkforce !== 0 ? production / totalWorkforce : 0;
@@ -125,8 +125,8 @@ const SectionDashboard: React.FC<Props> = ({ data }) => {
       </div>
       
       <div className="m-4 p-4 bg-gradient-to-r from-yellow-50 to-orange-50 text-slate-700 text-xs rounded-lg border-2 border-yellow-300 shadow-sm">
-        <strong className="text-yellow-800">Note:</strong> These values are calculated automatically based on the data entered in the Personnel and Budget sections. 
-        Ensure all budget achievements and personnel counts are up-to-date for accurate results.
+        <strong className="text-yellow-800">{t('Dashboard_Note')}</strong> {t('Dashboard_Note_Text')}
+        {' '}{t('Dashboard_Note_Instruction')}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AppData, BudgetData, BudgetRow } from '../types/budget';
-import { Coins, Banknote, TrendingUp, TrendingDown, ArrowUpCircle, ArrowDownCircle, Plus, Trash2 } from 'lucide-react';
+import { Coins, Banknote, Plus, Trash2 } from 'lucide-react';
 
 interface SectionBudgetProps {
   data: AppData;
@@ -12,7 +12,7 @@ interface BudgetTableProps {
   title: string;
   rows: BudgetRow[];
   sectionKey: keyof BudgetData;
-  icon: React.ElementType;
+  
   colorClass: string;
   onBudgetChange: (section: keyof BudgetData, id: string, field: 'forecast' | 'achievement', value: string) => void;
   allowAdd?: boolean;
@@ -28,10 +28,10 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
   title, 
   rows, 
   sectionKey,
-  icon: Icon,
   colorClass,
   onBudgetChange,
   allowAdd,
+
   onAddRow,
   onDeleteRow,
   onLabelChange,
@@ -99,7 +99,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
     <div className="bg-white rounded-xl shadow-lg border-2 border-slate-200 overflow-hidden mb-8">
       <div className="flex justify-between items-center px-6 py-3 bg-gradient-to-r from-slate-50 to-slate-100 border-b-2 border-slate-200">
         <h2 className={`text-lg font-bold flex items-center gap-2 ${colorClass}`}>
-          <Icon className="w-5 h-5" />
+         
           {title}
         </h2>
         {allowAdd && onAddRow && (
@@ -108,7 +108,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
             className="flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg transition-all shadow-md hover:shadow-lg font-medium"
           >
             <Plus size={14} />
-            Add Row
+            {t('Add Row')}
           </button>
         )}
       </div>
@@ -131,7 +131,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
                 {insertSubtotalBeforeId === row.id && (
                   <tr className="bg-gradient-to-r from-slate-200 to-slate-100 font-bold border-y-2 border-slate-400">
                     {showSerial && <td className="border-r border-slate-300"></td>}
-                    <td className="px-3 py-2 text-right uppercase text-slate-800 font-bold tracking-wide border-r border-slate-300 text-xs">{subtotalLabel || 'SUBTOTAL'}</td>
+                    <td className="px-3 py-2 text-right uppercase text-slate-800 font-bold tracking-wide border-r border-slate-300 text-xs">{t(subtotalLabel || 'SUBTOTAL')}</td>
                     <td className="px-3 py-2 text-center font-mono text-slate-800 border-r border-slate-300">{subForecast.toFixed(2)}</td>
                     <td className="px-3 py-2 text-center font-mono text-slate-800 border-r border-slate-300">{subAchievement.toFixed(2)}</td>
                     <td className="px-3 py-2 text-center font-mono font-bold text-slate-800 border-r border-slate-300">{subRate}%</td>
@@ -202,7 +202,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
             ))}
             <tr className="bg-gradient-to-r from-slate-800 to-slate-700 text-white font-bold border-t-4 border-slate-900">
               {showSerial && <td className="border-r border-slate-600"></td>}
-              <td className="px-3 py-2 text-right uppercase tracking-wider text-xs border-r border-slate-600">TOTAL GLOBAL</td>
+              <td className="px-3 py-2 text-right uppercase tracking-wider text-xs border-r border-slate-600">{t('GRAND TOTAL')}</td>
               <td className="px-3 py-2 text-center font-mono text-xs border-r border-slate-600">{totalForecast.toFixed(2)}</td>
               <td className="px-3 py-2 text-center font-mono text-xs border-r border-slate-600">{totalAchievement.toFixed(2)}</td>
               <td className="px-3 py-2 text-center font-mono font-bold text-xs text-yellow-300 border-r border-slate-600">{totalRate}%</td>
@@ -359,18 +359,18 @@ const SectionBudget: React.FC<SectionBudgetProps> = ({ data, onChange }) => {
       {/* Budget d'Exploitation */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         <BudgetTable 
-          title={t('sec_budget_production')} 
+          title={t('Budget - Production')} 
           rows={budget.production} 
           sectionKey="production"
-          icon={TrendingUp}
+          
           colorClass="text-green-700"
           onBudgetChange={handleBudgetChange}
         />
         <BudgetTable 
-          title={t('sec_budget_charges')} 
+          title={t('Budget - Charges')} 
           rows={budget.charges} 
           sectionKey="charges"
-          icon={TrendingDown}
+          
           colorClass="text-red-700"
           onBudgetChange={handleBudgetChange}
           allowAdd={true}
@@ -386,24 +386,24 @@ const SectionBudget: React.FC<SectionBudgetProps> = ({ data, onChange }) => {
       {/* Budget de Trésorerie */}
       <h2 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2 bg-gradient-to-r from-blue-50 to-transparent p-3 rounded-lg border-l-4 border-blue-600">
         <Banknote className="w-5 h-5 text-blue-800" />
-        Budget de Trésorerie
+        {t('Treasury Budget')}
       </h2>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         <BudgetTable 
-          title={t('sec_treasury_receipts')} 
+          title={t('Treasury - Receipts')} 
           rows={budget.treasuryReceipts} 
           sectionKey="treasuryReceipts"
-          icon={ArrowUpCircle}
+          
           colorClass="text-blue-700"
 
           onBudgetChange={handleBudgetChange}
         />
         <BudgetTable 
-          title={t('sec_treasury_disbursements')} 
+          title={t('Treasury - Disbursements')} 
           rows={budget.treasuryDisbursements} 
           sectionKey="treasuryDisbursements"
-          icon={ArrowDownCircle}
+          
           colorClass="text-orange-700"
 
           onBudgetChange={handleBudgetChange}
@@ -416,7 +416,7 @@ const SectionBudget: React.FC<SectionBudgetProps> = ({ data, onChange }) => {
       <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-6 rounded-xl shadow-2xl mt-6 border-2 border-slate-700">
         <h3 className="text-sm font-bold uppercase tracking-wider mb-4 flex items-center gap-2 border-b border-slate-600 pb-3">
             <Coins className="text-yellow-400 w-5 h-5" />
-            SOLDE FIN PÉRIODE (END OF PERIOD BALANCE)
+            {t('BALANCE AT THE END OF PERIOD')}
         </h3>
         <div className="grid grid-cols-3 gap-4 text-center">
             <div className="p-4 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl border-2 border-slate-600 shadow-lg hover:shadow-xl transition-shadow">

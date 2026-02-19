@@ -1,14 +1,14 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import type { AppData } from "../types/budget";
-import { Users, DollarSign } from "lucide-react";
+import { Users, Banknote } from "lucide-react";
 
 interface Props {
   data: AppData;
   onChange: (data: AppData) => void;
 }
 
-const SectionPersonnel: React.FC<Props> = ({ data, onChange }) => {
+const SectionStaff: React.FC<Props> = ({ data, onChange }) => {
   const { t } = useTranslation();
   const handleRowChange = (
     id: string,
@@ -16,18 +16,18 @@ const SectionPersonnel: React.FC<Props> = ({ data, onChange }) => {
     value: string,
   ) => {
     const numValue = parseInt(value) || 0;
-    const newPersonnel = data.personnel.map((row) =>
+    const newStaff = data.staff.map((row) =>
       row.id === id ? { ...row, [field]: numValue } : row,
     );
 
     // Auto-calculate management count (Sum of r_p_cat_dir)
-    const newManagementCount = newPersonnel
+    const newManagementCount = newStaff
       .filter((row) => row.category === "r_p_cat_dir")
       .reduce((sum, row) => sum + row.male + row.female, 0);
 
     onChange({
       ...data,
-      personnel: newPersonnel,
+      staff: newStaff,
       managementCount: newManagementCount,
     });
   };
@@ -38,11 +38,11 @@ const SectionPersonnel: React.FC<Props> = ({ data, onChange }) => {
   };
 
   // Calculate Subtotals for display
-  const totalMale = data.personnel.reduce((acc, row) => acc + row.male, 0);
-  const totalFemale = data.personnel.reduce((acc, row) => acc + row.female, 0);
+  const totalMale = data.staff.reduce((acc, row) => acc + row.male, 0);
+  const totalFemale = data.staff.reduce((acc, row) => acc + row.female, 0);
 
   // Calculated management count for display
-  const calculatedManagementCount = data.personnel
+  const calculatedManagementCount = data.staff
     .filter((row) => row.category === "r_p_cat_dir")
     .reduce((sum, row) => sum + row.male + row.female, 0);
 
@@ -52,7 +52,7 @@ const SectionPersonnel: React.FC<Props> = ({ data, onChange }) => {
         <div className='px-6 py-3 bg-gradient-to-r from-blue-50 to-slate-50 border-b-2 border-slate-200'>
           <h2 className='text-lg font-bold text-slate-800 flex items-center gap-2'>
             <Users className='w-5 h-5 text-blue-600' />
-            {t("sec_personnel")}
+            {t("Staff")}
           </h2>
         </div>
 
@@ -61,24 +61,24 @@ const SectionPersonnel: React.FC<Props> = ({ data, onChange }) => {
             <thead className='bg-gradient-to-r from-slate-100 to-slate-50'>
               <tr className='border-b-2 border-slate-300'>
                 <th className='px-3 py-2 text-left font-semibold text-slate-700 border-r border-slate-200'>
-                  {t("col_category")}
+                  {t("Category")}
                 </th>
                 <th className='px-3 py-2 text-left font-semibold text-slate-700 border-r border-slate-200'>
-                  {t("col_grade")}
+                  {t("Grade")}
                 </th>
                 <th className='px-3 py-2 text-center font-semibold text-blue-700 bg-blue-50 border-r border-slate-200'>
-                  {t("col_male")}
+                  {t("Male")}
                 </th>
                 <th className='px-3 py-2 text-center font-semibold text-pink-700 bg-pink-50 border-r border-slate-200'>
-                  {t("col_female")}
+                  {t("Female")}
                 </th>
                 <th className='px-3 py-2 text-center font-semibold text-slate-700'>
-                  {t("col_total")}
+                  {t("Total")}
                 </th>
               </tr>
             </thead>
             <tbody>
-              {data.personnel.map((row) => (
+              {data.staff.map((row) => (
                 <tr
                   key={row.id}
                   className='border-b border-slate-200 hover:bg-blue-50/30 transition-all duration-150'
@@ -121,7 +121,7 @@ const SectionPersonnel: React.FC<Props> = ({ data, onChange }) => {
                   colSpan={2}
                   className='px-3 py-2 text-right uppercase tracking-wider text-sm border-r border-slate-600'
                 >
-                  TOTAL
+                  {t('TOTAL')}
                 </td>
                 <td className='px-3 py-2 text-center text-sm font-mono border-r border-slate-600'>
                   {totalMale}
@@ -141,7 +141,7 @@ const SectionPersonnel: React.FC<Props> = ({ data, onChange }) => {
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
         <div className='bg-gradient-to-br from-slate-50 to-white p-4 rounded-xl shadow-lg border-2 border-slate-200 hover:shadow-xl transition-shadow'>
           <label className='block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide'>
-            {t("lbl_management_count")}
+            {t("Management Staff Count")}
           </label>
           <div className='flex items-center gap-3'>
             <div className='p-2 bg-slate-200 rounded-lg'>
@@ -158,11 +158,12 @@ const SectionPersonnel: React.FC<Props> = ({ data, onChange }) => {
         </div>
         <div className='bg-gradient-to-br from-green-50 to-white p-4 rounded-xl shadow-lg border-2 border-green-200 hover:shadow-xl transition-shadow'>
           <label className='block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wide'>
-            {t("lbl_salary_mass")}
+            {t("Mass Salary in CDF")}
           </label>
           <div className='flex items-center gap-3'>
             <div className='p-2 bg-green-200 rounded-lg'>
-              <DollarSign className='w-5 h-5 text-green-700' />
+              <Banknote className='w-5 h-5 text-green-700' />
+              
             </div>
             <input
               type='number'
@@ -179,4 +180,4 @@ const SectionPersonnel: React.FC<Props> = ({ data, onChange }) => {
   );
 };
 
-export default SectionPersonnel;
+export default SectionStaff;
