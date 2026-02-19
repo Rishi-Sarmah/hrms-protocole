@@ -168,6 +168,16 @@ const resources = {
       'Tab_Medical': 'Medical',
       'Tab_Exploitation': 'Exploitation',
       'Tab_Budget': 'Budget',
+      // Upload Features
+      'Upload Excel': 'Upload Excel',
+      'Upload Budget Excel': 'Upload Budget Excel',
+      'Upload Exploitation Excel': 'Upload Exploitation Excel',
+      'Data uploaded successfully!': 'Data uploaded successfully!',
+      'Budget data uploaded successfully!': 'Budget data uploaded successfully!',
+      'Exploitation data uploaded successfully!': 'Exploitation data uploaded successfully!',
+      'Error parsing Excel file. Please check the format.': 'Error parsing Excel file. Please check the format.',
+      'Error parsing Excel file. Please ensure sheets are named: Production, Charges, Treasury Receipts, Treasury Disbursements': 'Error parsing Excel file. Please ensure sheets are named: Production, Charges, Treasury Receipts, Treasury Disbursements',
+      'Error parsing Excel file. Please ensure sheets are named correctly: Operating Data, Failures, Lab Analysis, Metrology, Technical Control': 'Error parsing Excel file. Please ensure sheets are named correctly: Operating Data, Failures, Lab Analysis, Metrology, Technical Control',
       // ...existing keys...
       // Dashboard metrics (FR)
     }
@@ -337,6 +347,16 @@ const resources = {
       'Tab_Medical': 'Médical',
       'Tab_Exploitation': 'Exploitation',
       'Tab_Budget': 'Budget',
+      // Upload Features
+      'Upload Excel': 'Télécharger Excel',
+      'Upload Budget Excel': 'Télécharger Budget Excel',
+      'Upload Exploitation Excel': 'Télécharger Exploitation Excel',
+      'Data uploaded successfully!': 'Données téléchargées avec succès !',
+      'Budget data uploaded successfully!': 'Données budgétaires téléchargées avec succès !',
+      'Exploitation data uploaded successfully!': 'Données d\'exploitation téléchargées avec succès !',
+      'Error parsing Excel file. Please check the format.': 'Erreur lors de l\'analyse du fichier Excel. Veuillez vérifier le format.',
+      'Error parsing Excel file. Please ensure sheets are named: Production, Charges, Treasury Receipts, Treasury Disbursements': 'Erreur lors de l\'analyse du fichier Excel. Assurez-vous que les feuilles sont nommées : Production, Charges, Recettes de trésorerie, Décaissements de trésorerie',
+      'Error parsing Excel file. Please ensure sheets are named correctly: Operating Data, Failures, Lab Analysis, Metrology, Technical Control': 'Erreur lors de l\'analyse du fichier Excel. Assurez-vous que les feuilles sont correctement nommées : Données d\'exploitation, Défaillances, Analyse de laboratoire, Métrologie, Contrôle technique',
       // ...existing keys...
     }
   }

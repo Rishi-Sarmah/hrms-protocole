@@ -320,7 +320,7 @@ export default function Budget() {
           if (session && session.userId === user.uid) {
             setAppData((prevData) => ({
               ...prevData,
-              personnel: session.data.personnel,
+              staff: session.data.staff,
               managementCount: session.data.managementCount,
               salaryMassCDF: session.data.salaryMassCDF,
               exploitation: session.data.exploitation,
@@ -436,7 +436,7 @@ export default function Budget() {
     return (
       <div className='min-h-screen flex items-center justify-center bg-gray-50'>
         <div className='flex flex-col items-center gap-4'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600'></div>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900'></div>
           <p className='text-gray-600'>{t("Loading session...")}</p>
         </div>
       </div>
@@ -449,7 +449,7 @@ export default function Budget() {
         <div className='flex items-center justify-between container mx-auto'>
           <div className='flex items-center gap-6'>
             <div>
-              <h1 className='text-xl font-bold text-blue-600'>
+              <h1 className='text-xl font-bold text-gray-900'>
                 HRMS Management
               </h1>
               {(sessionDetails || sessionId) && (
@@ -470,7 +470,7 @@ export default function Budget() {
             <button
               onClick={handleSaveSession}
               disabled={isSaving}
-              className='px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2'
+              className='px-4 py-2 bg-gray-900 text-white rounded hover:bg-black transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2'
             >
               {isSaving ? (
                 <>
@@ -505,7 +505,7 @@ export default function Budget() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-6 py-3 font-medium text-sm transition-colors border-b-2 whitespace-nowrap ${
                   activeTab === tab.id
-                    ? "border-blue-600 text-blue-600"
+                    ? "border-gray-900 text-gray-900"
                     : "border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300"
                 }`}
               >

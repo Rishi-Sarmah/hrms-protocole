@@ -72,7 +72,7 @@ export const SessionDetailsForm: React.FC<SessionDetailsFormProps> = ({
         {/* Card */}
         <div className='bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden'>
           {/* Header */}
-          <div className='bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-8 relative'>
+          <div className='bg-gradient-to-r from-gray-900 to-gray-800 px-6 py-8 relative'>
             <button
               onClick={() => (onClose ? onClose() : navigate("/"))}
               className='absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-2 transition'
@@ -84,7 +84,7 @@ export const SessionDetailsForm: React.FC<SessionDetailsFormProps> = ({
               <FileText className='w-7 h-7' />
               {t("New Session")}
             </h1>
-            <p className='text-blue-100 text-sm mt-2'>
+            <p className='text-gray-100 text-sm mt-2'>
               {t("Fill in the details to start a new session")}
             </p>
           </div>
@@ -106,7 +106,7 @@ export const SessionDetailsForm: React.FC<SessionDetailsFormProps> = ({
                   }
                 }}
                 placeholder={t("Enter session name") || "e.g., Q1 2026 Report"}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition ${
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-transparent outline-none transition ${
                   errors.sessionName
                     ? "border-red-500 bg-red-50"
                     : "border-slate-300 bg-slate-50"
@@ -132,14 +132,14 @@ export const SessionDetailsForm: React.FC<SessionDetailsFormProps> = ({
                   "e.g., Comments or notes about this session"
                 }
                 rows={3}
-                className='w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none resize-none bg-slate-50 transition'
+                className='w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-transparent outline-none resize-none bg-slate-50 transition'
               />
             </div>
 
             {/* Dates Section */}
-            <div className='space-y-4 p-4 bg-blue-50 rounded-lg border border-blue-200'>
+            <div className='space-y-4 p-4 bg-gray-50 rounded-lg border border-gray-200'>
               <div className='flex items-center gap-2 text-slate-700'>
-                <Calendar className='w-4 h-4 text-blue-600' />
+                <Calendar className='w-4 h-4 text-gray-700' />
                 <label className='text-sm font-semibold'>
                   {t("Reporting Period")}
                 </label>
@@ -159,7 +159,7 @@ export const SessionDetailsForm: React.FC<SessionDetailsFormProps> = ({
                         setErrors({ ...errors, startDate: "", dateRange: "" });
                       }
                     }}
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition text-sm ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-transparent outline-none transition text-sm ${
                       errors.startDate
                         ? "border-red-500 bg-red-50"
                         : "border-slate-300 bg-white"
@@ -185,7 +185,7 @@ export const SessionDetailsForm: React.FC<SessionDetailsFormProps> = ({
                         setErrors({ ...errors, endDate: "", dateRange: "" });
                       }
                     }}
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none transition text-sm ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-transparent outline-none transition text-sm ${
                       errors.endDate
                         ? "border-red-500 bg-red-50"
                         : "border-slate-300 bg-white"
@@ -207,7 +207,7 @@ export const SessionDetailsForm: React.FC<SessionDetailsFormProps> = ({
             {/* Submit Button */}
             <button
               type='submit'
-              className='w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 flex items-center justify-center gap-2 group'
+              className='w-full py-3 bg-gradient-to-r from-gray-900 to-black text-white font-semibold rounded-lg hover:from-black hover:to-gray-900 transition-all duration-200 flex items-center justify-center gap-2 group'
             >
               {t("Start Session")}
               <ArrowRight className='w-4 h-4 group-hover:translate-x-1 transition-transform' />

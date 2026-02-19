@@ -16,16 +16,21 @@ import {
   Eye,
   BarChart3,
   Users,
-  DollarSign,
+  Banknote,
   TrendingUp,
   FileSearch,
   Calculator,
   LayoutDashboard,
+  Zap,
+  Loader2,
+  AlertCircle,
 } from "lucide-react";
+import { analyzeReport } from "../services/aiservice";
 import type { SessionListItem, Session } from "../types/session";
 
 export default function Dashboard() {
-  const { t } = useTranslation();
+  const [showAIInsights, setShowAIInsights] = useState(false);
+  const { t, i18n } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [sessions, setSessions] = useState<SessionListItem[]>([]);
@@ -34,6 +39,9 @@ export default function Dashboard() {
   const [loadingSessionData, setLoadingSessionData] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showNewSessionForm, setShowNewSessionForm] = useState(false);
+  const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
 
   const loadSessions = async () => {
     if (user?.uid) {
@@ -58,6 +66,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     loadSessions();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const loadSessionData = async (sessionId: string) => {
@@ -119,6 +128,43 @@ export default function Dashboard() {
     }
   };
 
+  const handleAIInsights = async (sessionId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    
+    try {
+      // Load session data if not already loaded or if different session
+      let session = selectedSession;
+      if (!session || session.id !== sessionId) {
+        setLoadingSessionData(true);
+        session = await getSession(sessionId);
+        if (session && session.userId === user?.uid) {
+          setSelectedSession(session);
+        } else {
+          throw new Error("Session not found or access denied");
+        }
+        setLoadingSessionData(false);
+      }
+
+      // Show AI Insights view and start analysis
+      setShowAIInsights(true);
+      setAiLoading(true);
+      setAiError(null);
+      setAiAnalysis(null);
+
+      // Get current language
+      const currentLanguage = i18n.language || 'en';
+
+      // Call AI service
+      const analysis = await analyzeReport(session, currentLanguage);
+      setAiAnalysis(analysis);
+    } catch (err) {
+      console.error("Error generating AI insights:", err);
+      setAiError(t("Failed to generate AI insights. Please try again."));
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
   if (showNewSessionForm) {
     return <SessionDetailsForm onClose={() => setShowNewSessionForm(false)} />;
   }
@@ -127,7 +173,7 @@ export default function Dashboard() {
   const calculateStats = () => {
     if (!selectedSession) return null;
 
-    const totalPersonnel = selectedSession.data.personnel.reduce(
+    const totalPersonnel = selectedSession.data.staff.reduce(
       (sum, row) => sum + row.male + row.female,
       0,
     );
@@ -274,13 +320,184 @@ export default function Dashboard() {
 
   const stats = calculateStats();
 
+  if (showAIInsights) {
+    return (
+      <div className='h-screen bg-gray-50 text-gray-900 flex flex-col'>
+        <nav className='p-4 bg-white shadow-lg border-b-2 border-slate-200 shrink-0'>
+          <div className='flex items-center justify-between container mx-auto'>
+            <div className='flex items-center gap-6'>
+              <h1 className='text-lg font-bold text-gray-900'>
+                {t("AI Insights")}
+              </h1>
+            </div>
+            <div className='flex items-center gap-4'>
+              <button
+                onClick={() => {
+                  setShowAIInsights(false);
+                  setAiAnalysis(null);
+                  setAiError(null);
+                }}
+                className='px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-black transition font-semibold text-sm'
+              >
+                {t('Back to Dashboard')}
+              </button>
+              <LanguageSelector />
+              <div className='flex flex-col items-end'>
+                <span className='text-xs font-medium'>{user?.displayName}</span>
+                <span className='text-[10px] text-gray-500'>{user?.email}</span>
+              </div>
+              {user?.photoURL && (
+                <img
+                  src={user.photoURL}
+                  alt='User'
+                  className='w-8 h-8 rounded-full border border-gray-300'
+                />
+              )}
+              <button
+                onClick={() => logout()}
+                className='px-3 py-1.5 text-xs text-red-600 bg-red-50 rounded hover:bg-red-100 border border-red-200 transition'
+              >
+                {t("Logout")}
+              </button>
+            </div>
+          </div>
+        </nav>
+        <div className='flex-1 overflow-y-auto p-6'>
+          <div className='max-w-5xl mx-auto'>
+            {/* Session Info Header */}
+            {selectedSession && (
+              <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
+                <div className='flex items-start gap-4'>
+                  <div className='p-3 bg-blue-100 rounded-lg'>
+                    <Zap className='w-8 h-8 text-blue-600' />
+                  </div>
+                  <div className='flex-1'>
+                    <h2 className='text-xl font-bold text-slate-800 mb-1'>
+                      {selectedSession.sessionName}
+                    </h2>
+                    {selectedSession.description && (
+                      <p className='text-slate-600 text-sm mb-2'>
+                        {selectedSession.description}
+                      </p>
+                    )}
+                    <div className='flex gap-4 text-xs text-slate-500'>
+                      <span>
+                        {t("Period")}: {new Date(selectedSession.startDate).toLocaleDateString()} - {new Date(selectedSession.endDate).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* AI Analysis Content */}
+            <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 overflow-hidden'>
+              <div className='px-6 py-4 bg-linear-to-r from-blue-50 to-indigo-50 border-b-2 border-slate-200'>
+                <h3 className='text-lg font-bold text-slate-800 flex items-center gap-2'>
+                  <BarChart3 className='w-5 h-5 text-indigo-600' />
+                  {t("Executive Summary & Analysis")}
+                </h3>
+              </div>
+
+              <div className='p-6'>
+                {aiLoading && (
+                  <div className='flex flex-col items-center justify-center py-12'>
+                    <Loader2 className='w-12 h-12 text-blue-500 animate-spin mb-4' />
+                    <p className='text-slate-600 text-lg'>{t("Analyzing your session data...")}</p>
+                    <p className='text-slate-500 text-sm mt-2'>{t("This may take a few moments")}</p>
+                  </div>
+                )}
+
+                {aiError && (
+                  <div className='flex flex-col items-center justify-center py-12'>
+                    <div className='p-4 bg-red-50 rounded-full mb-4'>
+                      <AlertCircle className='w-12 h-12 text-red-500' />
+                    </div>
+                    <p className='text-red-600 text-lg font-semibold mb-2'>{t("Analysis Failed")}</p>
+                    <p className='text-slate-600 text-sm text-center max-w-md'>{aiError}</p>
+                  </div>
+                )}
+
+                {aiAnalysis && !aiLoading && (
+                  <div className='prose prose-slate max-w-none'>
+                    <div className='whitespace-pre-wrap text-slate-700 leading-relaxed'>
+                      {aiAnalysis.split('\n').map((line, index) => {
+                        // Check if line is a heading (starts with #)
+                        if (line.startsWith('###')) {
+                          return (
+                            <h3 key={index} className='text-lg font-bold text-slate-800 mt-6 mb-3'>
+                              {line.replace(/^###\s*/, '')}
+                            </h3>
+                          );
+                        } else if (line.startsWith('##')) {
+                          return (
+                            <h2 key={index} className='text-xl font-bold text-slate-800 mt-6 mb-3'>
+                              {line.replace(/^##\s*/, '')}
+                            </h2>
+                          );
+                        } else if (line.startsWith('#')) {
+                          return (
+                            <h1 key={index} className='text-2xl font-bold text-slate-800 mt-6 mb-4'>
+                              {line.replace(/^#\s*/, '')}
+                            </h1>
+                          );
+                        } else if (line.startsWith('* ') || line.startsWith('- ')) {
+                          return (
+                            <li key={index} className='ml-6 mb-2 text-slate-700'>
+                              {line.replace(/^[*-]\s*/, '')}
+                            </li>
+                          );
+                        } else if (line.match(/^\d+\./)) {
+                          return (
+                            <li key={index} className='ml-6 mb-2 text-slate-700 list-decimal'>
+                              {line.replace(/^\d+\.\s*/, '')}
+                            </li>
+                          );
+                        } else if (line.trim() === '') {
+                          return <br key={index} />;
+                        } else {
+                          return (
+                            <p key={index} className='mb-3 text-slate-700'>
+                              {line}
+                            </p>
+                          );
+                        }
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {!aiLoading && !aiError && !aiAnalysis && (
+                  <div className='flex flex-col items-center justify-center py-12'>
+                    <Zap className='w-12 h-12 text-slate-300 mb-4' />
+                    <p className='text-slate-500'>{t("No analysis available")}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Info Box */}
+            <div className='mt-6 p-4 bg-blue-50 border-2 border-blue-200 rounded-lg'>
+              <div className='flex gap-3'>
+                <AlertCircle className='w-5 h-5 text-blue-600 shrink-0 mt-0.5' />
+                <div className='text-sm text-slate-700'>
+                  <p className='font-semibold mb-1'>{t("About AI Insights")}</p>
+                  <p>{t("This analysis is generated by AI based on your session data. Use it as a supplementary tool for decision-making.")}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className='h-screen bg-gray-50 text-gray-900 flex flex-col'>
       {/* Header */}
-      <nav className='p-4 bg-white shadow-lg border-b-2 border-slate-200 flex-shrink-0'>
+      <nav className='p-4 bg-white shadow-lg border-b-2 border-slate-200 shrink-0'>
         <div className='flex items-center justify-between container mx-auto'>
           <div className='flex items-center gap-6'>
-            <h1 className='text-lg font-bold text-blue-600'>
+            <h1 className='text-lg font-bold text-gray-900'>
               {t("Protocole Dashboard")}
             </h1>
           </div>
@@ -311,13 +528,13 @@ export default function Dashboard() {
       <div className='flex-1 flex overflow-hidden'>
         {/* Sidebar - Sessions List */}
         <aside className='w-80 bg-white border-r border-slate-200 flex flex-col'>
-          <div className='p-4 border-b border-slate-200 flex-shrink-0'>
+          <div className='p-4 border-b border-slate-200 shrink-0'>
             <h2 className='text-lg font-semibold text-slate-800 mb-2'>
               {t("Your Sessions")}
             </h2>
             <button
               onClick={() => setShowNewSessionForm(true)}
-              className='w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors text-sm'
+              className='w-full px-4 py-2 bg-gray-900 text-white font-semibold rounded-lg hover:bg-black transition-colors text-sm'
             >
               + {t("New Session")}
             </button>
@@ -326,7 +543,7 @@ export default function Dashboard() {
           <div className='flex-1 overflow-y-auto'>
             {loading ? (
               <div className='flex justify-center p-8'>
-                <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600'></div>
+                <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900'></div>
               </div>
             ) : error ? (
               <div className='p-4 m-4 text-red-700 bg-red-100 border border-red-200 rounded text-sm'>
@@ -346,7 +563,7 @@ export default function Dashboard() {
                     onClick={() => loadSessionData(session.id)}
                     className={`p-4 cursor-pointer transition hover:bg-slate-50 ${
                       selectedSession?.id === session.id
-                        ? "bg-blue-50 border-l-4 border-l-blue-600"
+                        ? "bg-gray-50 border-l-4 border-l-gray-900"
                         : ""
                     }`}
                   >
@@ -354,6 +571,15 @@ export default function Dashboard() {
                       <h3 className='text-sm font-bold text-slate-800 truncate flex-1'>
                         {session.sessionName}
                       </h3>
+                      <div
+                        className='flex items-center gap-1 cursor-pointer hover:bg-blue-50 px-2 py-1 rounded transition'
+                        onClick={(e) => handleAIInsights(session.id, e)}
+                        title={t("Get AI insights for this session")}
+                      >
+                        <Zap className='w-4 h-4 text-blue-500 font-bold' />
+                        <p className='text-xs text-blue-600 font-bold'>AI insights</p>
+                      </div>
+                      
                     </div>
                     {session.description && (
                       <p className='text-xs text-slate-600 mb-2 line-clamp-2'>
@@ -378,25 +604,16 @@ export default function Dashboard() {
 
                     <div className='flex gap-1 mt-3'>
                       <button
-                        onClick={(e) => {
+                       onClick={(e) => {
                           e.stopPropagation();
-                          loadSessionData(session.id);
+                          navigate(`/budget/${session.id}`);
                         }}
-                        className='flex-1 px-2 py-1.5 bg-purple-50 text-purple-600 rounded hover:bg-purple-100 transition text-[10px] font-semibold flex items-center justify-center gap-1'
+                        className='flex-1 px-2 py-1.5 bg-gray-50 text-gray-900 rounded hover:bg-gray-100 transition text-[10px] font-semibold flex items-center justify-center gap-1'
                       >
                         <FileSearch className='w-3 h-3' />
                         {t("Preview")}
                       </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate(`/budget/${session.id}`);
-                        }}
-                        className='px-2 py-1.5 bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition text-[10px]'
-                        title={t("Open")}
-                      >
-                        <Eye className='w-3 h-3' />
-                      </button>
+                      
                       <button
                         onClick={(e) =>
                           handleDuplicateSession(
@@ -405,7 +622,7 @@ export default function Dashboard() {
                             e,
                           )
                         }
-                        className='px-2 py-1.5 bg-green-50 text-green-600 rounded hover:bg-green-100 transition text-[10px]'
+                        className='px-2 py-1.5 bg-gray-50 text-gray-900 rounded hover:bg-gray-100 transition text-[10px]'
                         title={t("Duplicate")}
                       >
                         <Copy className='w-3 h-3' />
@@ -430,7 +647,7 @@ export default function Dashboard() {
           {loadingSessionData ? (
             <div className='flex items-center justify-center h-full'>
               <div className='text-center'>
-                <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4'></div>
+                <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4'></div>
                 <p className='text-gray-600'>{t("Loading session data...")}</p>
               </div>
             </div>
@@ -481,7 +698,7 @@ export default function Dashboard() {
                   </div>
                   <button
                     onClick={() => navigate(`/budget/${selectedSession.id}`)}
-                    className='px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold text-sm flex items-center gap-2'
+                    className='px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-black transition font-semibold text-sm flex items-center gap-2'
                   >
                     <Eye className='w-4 h-4' />
                     {t("Open Full View")}
@@ -496,8 +713,8 @@ export default function Dashboard() {
                   <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6'>
                     <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-5'>
                       <div className='flex items-center justify-between mb-3'>
-                        <div className='p-3 bg-blue-100 rounded-lg'>
-                          <Users className='w-6 h-6 text-blue-600' />
+                        <div className='p-3 bg-gray-100 rounded-lg'>
+                          <Users className='w-6 h-6 text-gray-700' />
                         </div>
                       </div>
                       <h3 className='text-sm font-medium text-slate-600 mb-1'>
@@ -510,8 +727,8 @@ export default function Dashboard() {
 
                     <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-5'>
                       <div className='flex items-center justify-between mb-3'>
-                        <div className='p-3 bg-purple-100 rounded-lg'>
-                          <Users className='w-6 h-6 text-purple-600' />
+                        <div className='p-3 bg-gray-100 rounded-lg'>
+                          <Users className='w-6 h-6 text-gray-700' />
                         </div>
                       </div>
                       <h3 className='text-sm font-medium text-slate-600 mb-1'>
@@ -524,8 +741,8 @@ export default function Dashboard() {
 
                     <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-5'>
                       <div className='flex items-center justify-between mb-3'>
-                        <div className='p-3 bg-green-100 rounded-lg'>
-                          <DollarSign className='w-6 h-6 text-green-600' />
+                        <div className='p-3 bg-gray-200 rounded-lg'>
+                          <Banknote className='w-6 h-6  text-gray-700' />
                         </div>
                       </div>
                       <h3 className='text-sm font-medium text-slate-600 mb-1'>
@@ -541,14 +758,14 @@ export default function Dashboard() {
                         <div
                           className={`p-3 rounded-lg ${
                             stats.operatingMargin >= 0
-                              ? "bg-green-100"
+                              ? "bg-gray-200"
                               : "bg-red-100"
                           }`}
                         >
                           <TrendingUp
                             className={`w-6 h-6 ${
                               stats.operatingMargin >= 0
-                                ? "text-green-600"
+                                ? "text-black"
                                 : "text-red-600"
                             }`}
                           />
@@ -560,7 +777,7 @@ export default function Dashboard() {
                       <p
                         className={`text-2xl font-bold ${
                           stats.operatingMargin >= 0
-                            ? "text-green-600"
+                            ? "text-black"
                             : "text-red-600"
                         }`}
                       >
@@ -572,7 +789,7 @@ export default function Dashboard() {
                   {/* Budget Production KPIs */}
                   <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
                     <h3 className='text-lg font-bold text-slate-800 mb-4 flex items-center gap-2'>
-                      <BarChart3 className='w-5 h-5 text-blue-600' />
+                      <BarChart3 className='w-5 h-5 text-gray-700' />
                       {t("Budget Production Performance")}
                     </h3>
                     <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
@@ -627,7 +844,7 @@ export default function Dashboard() {
                   {/* Budget Charges KPIs */}
                   <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
                     <h3 className='text-lg font-bold text-slate-800 mb-4 flex items-center gap-2'>
-                      <DollarSign className='w-5 h-5 text-amber-600' />
+                      <Banknote className='w-5 h-5  text-gray-700' />
                       {t("Budget Charges")}
                     </h3>
                     <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
@@ -639,7 +856,7 @@ export default function Dashboard() {
                           {stats.chargesForecast.toLocaleString()}
                         </p>
                       </div>
-                      <div className='p-4 bg-amber-50 rounded-lg'>
+                      <div className='p-4 bg-blue-50 rounded-lg'>
                         <p className='text-xs text-slate-600 mb-1'>
                           {t("Achievement")}
                         </p>
@@ -673,7 +890,7 @@ export default function Dashboard() {
 
                   {/* Detailed KPI Table */}
                   <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 overflow-hidden mb-6'>
-                    <div className='px-6 py-3 bg-gradient-to-r from-indigo-50 to-slate-50 border-b-2 border-slate-200'>
+                    <div className='px-6 py-3 bg-linear-to-r from-indigo-50 to-slate-50 border-b-2 border-slate-200'>
                       <h3 className='text-lg font-bold text-slate-800 flex items-center gap-2'>
                         <LayoutDashboard className='w-5 h-5 text-indigo-600' />
                         {t("Key Performance Indicators")}
@@ -681,7 +898,7 @@ export default function Dashboard() {
                     </div>
                     <div className='overflow-x-auto'>
                       <table className='w-full text-left border-collapse text-xs'>
-                        <thead className='bg-gradient-to-r from-slate-100 to-slate-50'>
+                        <thead className='bg-linear-to-r from-slate-100 to-slate-50'>
                           <tr className='border-b-2 border-slate-300'>
                             <th className='px-3 py-2 font-semibold text-slate-700 w-1/3 border-r border-slate-200'>
                               {t("Indicator")}
@@ -908,7 +1125,7 @@ export default function Dashboard() {
                         </tbody>
                       </table>
                     </div>
-                    <div className='m-4 p-4 bg-gradient-to-r from-yellow-50 to-orange-50 text-slate-700 text-xs rounded-lg border-2 border-yellow-300 shadow-sm'>
+                    <div className='m-4 p-4 bg-linear-to-r from-yellow-50 to-orange-50 text-slate-700 text-xs rounded-lg border-2 border-yellow-300 shadow-sm'>
                       <strong className='text-yellow-800'>Note:</strong> These
                       values are calculated automatically based on the data
                       entered in the Personnel and Budget sections. Ensure all
@@ -920,7 +1137,7 @@ export default function Dashboard() {
                   {/* Treasury Position */}
                   <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
                     <h3 className='text-lg font-bold text-slate-800 mb-4 flex items-center gap-2'>
-                      <TrendingUp className='w-5 h-5 text-green-600' />
+                      <TrendingUp className='w-5 h-5 text-black' />
                       {t("Treasury Position")}
                     </h3>
                     <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>

@@ -58,12 +58,12 @@ const SectionMovement: React.FC<Props> = ({ data, onChange }) => {
     <div className="bg-white rounded-xl shadow-lg border-2 border-slate-200 overflow-hidden">
       <div className="flex justify-between items-center px-6 py-3 bg-gradient-to-r from-orange-50 to-slate-50 border-b-2 border-slate-200">
         <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-          <ArrowLeftRight className="w-5 h-5 text-orange-600" />
+          <ArrowLeftRight className="w-5 h-5 text-gray-700" />
           {t('sec_movement')}
         </h2>
         <button 
           onClick={handleAddRow}
-          className="flex items-center gap-1 text-sm bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg transition-all shadow-md hover:shadow-lg font-medium"
+          className="flex items-center gap-1 text-sm bg-gray-900 hover:bg-black text-white px-4 py-2 rounded-lg transition-all shadow-md hover:shadow-lg font-medium"
         >
           <Plus size={16} />
           Add Row
@@ -86,7 +86,7 @@ const SectionMovement: React.FC<Props> = ({ data, onChange }) => {
               const isEditing = editingId === item.id;
               
               return (
-                <tr key={item.id} className="border-b border-slate-200 hover:bg-orange-50/30 transition-all duration-150 group">
+                <tr key={item.id} className="border-b border-slate-200 hover:bg-gray-50 transition-all duration-150 group">
                   <td className="px-3 py-2 text-center text-slate-500 font-semibold border-r border-slate-200 bg-slate-50">
                     {index + 1}
                   </td>
@@ -96,7 +96,7 @@ const SectionMovement: React.FC<Props> = ({ data, onChange }) => {
                      {isEditing && item.isCustom ? (
                         <input 
                           type="text"
-                          className="w-full p-1.5 border-2 border-orange-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none bg-white text-slate-800 hover:border-orange-400 transition-all"
+                          className="w-full p-1.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none bg-white text-slate-800 hover:border-gray-400 transition-all"
                           value={item.type}
                           onChange={(e) => handleMoveChange(item.id, 'type', e.target.value)}
                         />
@@ -108,11 +108,11 @@ const SectionMovement: React.FC<Props> = ({ data, onChange }) => {
                   </td>
 
                   {/* Count / Effectif */}
-                  <td className="px-3 py-2 text-center border-r border-slate-200 bg-orange-50/40">
+                  <td className="px-3 py-2 text-center border-r border-slate-200 bg-gray-50/40">
                     {isEditing ? (
                       <input 
                         type="number"
-                        className="w-full text-center p-1.5 border-2 border-orange-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none bg-white text-black hover:border-orange-400 transition-all font-semibold"
+                        className="w-full text-center p-1.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none bg-white text-black hover:border-gray-400 transition-all font-semibold"
                         value={item.count}
                         onChange={(e) => handleMoveChange(item.id, 'count', e.target.value)}
                       />
@@ -126,7 +126,7 @@ const SectionMovement: React.FC<Props> = ({ data, onChange }) => {
                     {isEditing ? (
                       <input 
                         type="text"
-                        className="w-full p-1.5 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-orange-400 outline-none bg-white text-black hover:border-slate-400 transition-all"
+                        className="w-full p-1.5 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none bg-white text-black hover:border-slate-400 transition-all"
                         value={item.observation}
                         onChange={(e) => handleMoveChange(item.id, 'observation', e.target.value)}
                       />
@@ -142,7 +142,7 @@ const SectionMovement: React.FC<Props> = ({ data, onChange }) => {
                     <div className="flex items-center justify-center gap-2">
                       <button 
                         onClick={() => toggleEdit(item.id)}
-                        className={`${isEditing ? 'text-green-600 hover:text-green-800 hover:scale-110' : 'text-blue-500 hover:text-blue-700 hover:scale-110'} transition-all p-1 rounded-full hover:bg-slate-100`}
+                        className={`${isEditing ? 'text-black hover:text-gray-900 hover:scale-110' : 'text-gray-600 hover:text-gray-900 hover:scale-110'} transition-all p-1 rounded-full hover:bg-slate-100`}
                         title={isEditing ? "Save" : "Edit"}
                       >
                         {isEditing ? <Check size={18} /> : <Edit2 size={16} />}

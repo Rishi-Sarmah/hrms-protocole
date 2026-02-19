@@ -119,7 +119,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 disabled:opacity-50"
+            className="w-full bg-gray-900 hover:bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 disabled:opacity-50"
           >
             {loading ? t('Processing...') : (isLogin ? t('Sign In') : t('Sign Up'))}
           </button>
@@ -139,7 +139,7 @@ export default function Login() {
             <button
               onClick={handleGoogleLogin}
               disabled={loading}
-              className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+              className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50"
             >
               <img className="h-5 w-5 mr-2" src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google logo" />
               {t('Google')}
@@ -152,7 +152,7 @@ export default function Login() {
             {isLogin ? t("Don't have an account? ") : t('Already have an account? ')}
             <button
               onClick={() => setIsLogin(!isLogin)}
-              className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none"
+              className="font-medium text-gray-900 hover:text-gray-700 focus:outline-none"
             >
               {isLogin ? t('Sign up') : t('Sign in')}
             </button>

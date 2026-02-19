@@ -80,23 +80,23 @@ const SectionMedical: React.FC<Props> = ({ data, onChange }) => {
         
       {/* Service Missions */}
       <div className="bg-white rounded-xl shadow-lg border-2 border-slate-200 overflow-hidden">
-        <div className="px-6 py-3 bg-gradient-to-r from-blue-50 to-slate-50 border-b-2 border-slate-200">
+        <div className="px-6 py-3 bg-gradient-to-r from-gray-50 to-slate-50 border-b-2 border-slate-200">
           <h3 className="text-lg font-bold text-slate-800">{t('Missions')}</h3>
         </div>
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-4 bg-gradient-to-br from-blue-50 to-white rounded-lg border-2 border-blue-200">
-                  <h4 className="font-bold mb-3 text-sm text-blue-800 uppercase tracking-wide">{t('Performed')}</h4>
+              <div className="p-4 bg-gradient-to-br from-gray-50 to-white rounded-lg border-2 border-gray-200">
+                  <h4 className="font-bold mb-3 text-sm text-gray-800 uppercase tracking-wide">{t('Performed')}</h4>
                   <div className="flex gap-2">
-                      <input type="number" placeholder="Count" className="border-2 border-blue-300 p-2 rounded-lg w-1/3 bg-white text-black focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all hover:border-blue-400 text-xs font-semibold" value={data.serviceMissions.performed.count || ''} onChange={e => handleMissionChange('performed', 'count', e.target.value)} />
-                      <input type="number" placeholder="Cost" className="border-2 border-blue-300 p-2 rounded-lg w-2/3 bg-white text-black focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all hover:border-blue-400 text-xs font-semibold" value={data.serviceMissions.performed.cost || ''} onChange={e => handleMissionChange('performed', 'cost', e.target.value)} />
+                      <input type="number" placeholder="Count" className="border-2 border-gray-300 p-2 rounded-lg w-1/3 bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold" value={data.serviceMissions.performed.count || ''} onChange={e => handleMissionChange('performed', 'count', e.target.value)} />
+                      <input type="number" placeholder="Cost" className="border-2 border-gray-300 p-2 rounded-lg w-2/3 bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold" value={data.serviceMissions.performed.cost || ''} onChange={e => handleMissionChange('performed', 'cost', e.target.value)} />
                   </div>
               </div>
-              <div className="p-4 bg-gradient-to-br from-green-50 to-white rounded-lg border-2 border-green-200">
-                  <h4 className="font-bold mb-3 text-sm text-green-800 uppercase tracking-wide">{t('Received')}</h4>
+              <div className="p-4 bg-gradient-to-br from-gray-50 to-white rounded-lg border-2 border-gray-200">
+                  <h4 className="font-bold mb-3 text-sm text-gray-800 uppercase tracking-wide">{t('Received')}</h4>
                   <div className="flex gap-2">
-                      <input type="number" placeholder="Count" className="border-2 border-green-300 p-2 rounded-lg w-1/3 bg-white text-black focus:ring-2 focus:ring-green-400 focus:border-green-400 outline-none transition-all hover:border-green-400 text-xs font-semibold" value={data.serviceMissions.received.count || ''} onChange={e => handleMissionChange('received', 'count', e.target.value)} />
-                      <input type="number" placeholder="Cost" className="border-2 border-green-300 p-2 rounded-lg w-2/3 bg-white text-black focus:ring-2 focus:ring-green-400 focus:border-green-400 outline-none transition-all hover:border-green-400 text-xs font-semibold" value={data.serviceMissions.received.cost || ''} onChange={e => handleMissionChange('received', 'cost', e.target.value)} />
+                      <input type="number" placeholder="Count" className="border-2 border-gray-300 p-2 rounded-lg w-1/3 bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold" value={data.serviceMissions.received.count || ''} onChange={e => handleMissionChange('received', 'count', e.target.value)} />
+                      <input type="number" placeholder="Cost" className="border-2 border-gray-300 p-2 rounded-lg w-2/3 bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold" value={data.serviceMissions.received.cost || ''} onChange={e => handleMissionChange('received', 'cost', e.target.value)} />
                   </div>
               </div>
           </div>
@@ -122,10 +122,11 @@ const SectionMedical: React.FC<Props> = ({ data, onChange }) => {
               </thead>
               <tbody>
                   {data.medicalCare.map((item, idx) => (
-                      <tr key={idx} className="border-b border-slate-200 hover:bg-red-50/30 transition-all duration-150">
+                      <tr key={idx} className="border-b border-slate-200 hover:bg-gray-50 transition-all duration-150">
                           <td className="px-3 py-2 font-medium text-slate-800 border-r border-slate-200">{t(item.category)}</td>
-                          <td className="px-3 py-2 border-r border-slate-200"><input type="number" className="border-2 border-slate-300 rounded-lg p-1.5 w-full bg-white text-black focus:ring-2 focus:ring-red-400 focus:border-red-400 outline-none transition-all hover:border-red-400 text-xs font-semibold text-center" value={item.usd || ''} onChange={e => handleMedicalCareChange(idx, 'usd', e.target.value)} /></td>
-                          <td className="px-3 py-2"><input type="number" className="border-2 border-slate-300 rounded-lg p-1.5 w-full bg-white text-black focus:ring-2 focus:ring-red-400 focus:border-red-400 outline-none transition-all hover:border-red-400 text-xs font-semibold text-center" value={item.cdf || ''} onChange={e => handleMedicalCareChange(idx, 'cdf', e.target.value)} /></td>
+                          <td className="px-3 py-2 border-r border-slate-200">
+<input type="number" className="border-2 border-slate-300 rounded-lg p-1.5 w-full bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold text-center" value={item.usd || ''} onChange={e => handleMedicalCareChange(idx, 'usd', e.target.value)} /></td>
+                          <td className="px-3 py-2"><input type="number" className="border-2 border-slate-300 rounded-lg p-1.5 w-full bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold text-center" value={item.cdf || ''} onChange={e => handleMedicalCareChange(idx, 'cdf', e.target.value)} /></td>
                       </tr>
                   ))}
               </tbody>
@@ -138,10 +139,10 @@ const SectionMedical: React.FC<Props> = ({ data, onChange }) => {
           <div key={key} className="bg-white rounded-xl shadow-lg border-2 border-slate-200 overflow-hidden">
             <div className="flex justify-between items-center px-6 py-3 bg-gradient-to-r from-slate-50 to-white border-b-2 border-slate-200">
                 <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-                    <Plane className={`w-5 h-5 ${key === 'transfersAbroad' ? 'text-blue-500' : 'text-green-600'}`} />
+                    <Plane className="w-5 h-5 text-gray-600" />
                     {t(key === 'transfersKinshasa' ? 'Transfers Kinshasa' : 'Transfers Abroad')}
                 </h3>
-                <button onClick={() => addTransferRow(key as 'transfersKinshasa' | 'transfersAbroad')} className={`text-sm ${key === 'transfersAbroad' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'} text-white px-4 py-2 rounded-lg flex items-center gap-1 transition-all shadow-md hover:shadow-lg font-medium`}>
+                <button onClick={() => addTransferRow(key as 'transfersKinshasa' | 'transfersAbroad')} className="text-sm bg-gray-900 hover:bg-black text-white px-4 py-2 rounded-lg flex items-center gap-1 transition-all shadow-md hover:shadow-lg font-medium">
                     <Plus size={14} /> Add Row
                 </button>
             </div>
@@ -161,13 +162,13 @@ const SectionMedical: React.FC<Props> = ({ data, onChange }) => {
                     <tbody>
                         {(data[key as keyof AppData] as MedicalTransfer[]).map((row) => (
                             <tr key={row.id} className="border-b border-slate-200 hover:bg-slate-50 transition-all duration-150">
-                                <td className="p-1 border-r border-slate-200"><input className="border-2 border-slate-300 w-full p-1.5 bg-white text-black rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all hover:border-slate-400 text-xs" value={row.entity} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'entity', e.target.value)} /></td>
-                                <td className="p-1 border-r border-slate-200"><input type="number" className="border-2 border-slate-300 w-16 p-1.5 text-center bg-white text-black rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all hover:border-slate-400 text-xs font-semibold" value={row.agents || ''} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'agents', e.target.value)} /></td>
-                                <td className="p-1 border-r border-slate-200"><input type="number" className="border-2 border-slate-300 w-16 p-1.5 text-center bg-white text-black rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all hover:border-slate-400 text-xs font-semibold" value={row.retirees || ''} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'retirees', e.target.value)} /></td>
-                                <td className="p-1 border-r border-slate-200"><input type="number" className="border-2 border-slate-300 w-16 p-1.5 text-center bg-white text-black rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all hover:border-slate-400 text-xs font-semibold" value={row.wives || ''} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'wives', e.target.value)} /></td>
-                                <td className="p-1 border-r border-slate-200"><input type="number" className="border-2 border-slate-300 w-16 p-1.5 text-center bg-white text-black rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all hover:border-slate-400 text-xs font-semibold" value={row.children || ''} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'children', e.target.value)} /></td>
-                                <td className="p-1 border-r border-slate-200"><input type="number" className="border-2 border-slate-300 w-24 p-1.5 text-right bg-white text-black rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all hover:border-slate-400 text-xs font-semibold" value={row.totalUsd || ''} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'totalUsd', e.target.value)} /></td>
-                                <td className="p-1"><input className="border-2 border-slate-300 w-full p-1.5 bg-white text-black rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all hover:border-slate-400 text-xs" value={row.observation} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'observation', e.target.value)} /></td>
+                                <td className="p-1 border-r border-slate-200"><input className="border-2 border-slate-300 w-full p-1.5 bg-white text-black rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-slate-400 text-xs" value={row.entity} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'entity', e.target.value)} /></td>
+                                <td className="p-1 border-r border-slate-200"><input type="number" className="border-2 border-slate-300 w-16 p-1.5 text-center bg-white text-black rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-slate-400 text-xs font-semibold" value={row.agents || ''} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'agents', e.target.value)} /></td>
+                                <td className="p-1 border-r border-slate-200"><input type="number" className="border-2 border-slate-300 w-16 p-1.5 text-center bg-white text-black rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-slate-400 text-xs font-semibold" value={row.retirees || ''} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'retirees', e.target.value)} /></td>
+                                <td className="p-1 border-r border-slate-200"><input type="number" className="border-2 border-slate-300 w-16 p-1.5 text-center bg-white text-black rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-slate-400 text-xs font-semibold" value={row.wives || ''} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'wives', e.target.value)} /></td>
+                                <td className="p-1 border-r border-slate-200"><input type="number" className="border-2 border-slate-300 w-16 p-1.5 text-center bg-white text-black rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-slate-400 text-xs font-semibold" value={row.children || ''} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'children', e.target.value)} /></td>
+                                <td className="p-1 border-r border-slate-200"><input type="number" className="border-2 border-slate-300 w-24 p-1.5 text-right bg-white text-black rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-slate-400 text-xs font-semibold" value={row.totalUsd || ''} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'totalUsd', e.target.value)} /></td>
+                                <td className="p-1"><input className="border-2 border-slate-300 w-full p-1.5 bg-white text-black rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-slate-400 text-xs" value={row.observation} onChange={e => handleTransferChange(key as 'transfersKinshasa' | 'transfersAbroad', row.id, 'observation', e.target.value)} /></td>
                             </tr>
                         ))}
                     </tbody>
@@ -184,36 +185,36 @@ const SectionMedical: React.FC<Props> = ({ data, onChange }) => {
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Missions Costs */}
-              <div className="bg-gradient-to-br from-blue-50 to-white p-4 rounded-lg border-2 border-blue-200">
-                  <h4 className="font-bold text-sm text-blue-800 mb-3 pb-2 border-b-2 border-blue-300 uppercase tracking-wide">Missions Cost</h4>
+              <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg border-2 border-gray-200">
+                  <h4 className="font-bold text-sm text-gray-800 mb-3 pb-2 border-b-2 border-gray-300 uppercase tracking-wide">Missions Cost</h4>
                   <div className="space-y-3">
                       <div className="flex justify-between items-center">
                           <span className="text-xs font-semibold text-slate-700">{t('Inside')}</span>
                           <div className="flex gap-2">
-                              <input type="number" placeholder="USD" className="border-2 border-blue-300 p-1.5 w-20 text-xs bg-white text-black rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all hover:border-blue-400 font-semibold text-center" value={data.missionCosts.inside.usd || ''} onChange={e => handleCostChange('missionCosts', 'inside', 'usd', e.target.value)} />
-                              <input type="number" placeholder="CDF" className="border-2 border-blue-300 p-1.5 w-20 text-xs bg-white text-black rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all hover:border-blue-400 font-semibold text-center" value={data.missionCosts.inside.cdf || ''} onChange={e => handleCostChange('missionCosts', 'inside', 'cdf', e.target.value)} />
+                              <input type="number" placeholder="USD" className="border-2 border-gray-300 p-1.5 w-20 text-xs bg-white text-black rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 font-semibold text-center" value={data.missionCosts.inside.usd || ''} onChange={e => handleCostChange('missionCosts', 'inside', 'usd', e.target.value)} />
+                              <input type="number" placeholder="CDF" className="border-2 border-gray-300 p-1.5 w-20 text-xs bg-white text-black rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 font-semibold text-center" value={data.missionCosts.inside.cdf || ''} onChange={e => handleCostChange('missionCosts', 'inside', 'cdf', e.target.value)} />
                           </div>
                       </div>
                       <div className="flex justify-between items-center">
                           <span className="text-xs font-semibold text-slate-700">{t('Abroad')}</span>
                           <div className="flex gap-2">
-                              <input type="number" placeholder="USD" className="border-2 border-blue-300 p-1.5 w-20 text-xs bg-white text-black rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all hover:border-blue-400 font-semibold text-center" value={data.missionCosts.abroad.usd || ''} onChange={e => handleCostChange('missionCosts', 'abroad', 'usd', e.target.value)} />
-                              <input type="number" placeholder="CDF" className="border-2 border-blue-300 p-1.5 w-20 text-xs bg-white text-black rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all hover:border-blue-400 font-semibold text-center" value={data.missionCosts.abroad.cdf || ''} onChange={e => handleCostChange('missionCosts', 'abroad', 'cdf', e.target.value)} />
+                              <input type="number" placeholder="USD" className="border-2 border-gray-300 p-1.5 w-20 text-xs bg-white text-black rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 font-semibold text-center" value={data.missionCosts.abroad.usd || ''} onChange={e => handleCostChange('missionCosts', 'abroad', 'usd', e.target.value)} />
+                              <input type="number" placeholder="CDF" className="border-2 border-gray-300 p-1.5 w-20 text-xs bg-white text-black rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 font-semibold text-center" value={data.missionCosts.abroad.cdf || ''} onChange={e => handleCostChange('missionCosts', 'abroad', 'cdf', e.target.value)} />
                           </div>
                       </div>
                   </div>
               </div>
 
               {/* Other Divers */}
-              <div className="bg-gradient-to-br from-purple-50 to-white p-4 rounded-lg border-2 border-purple-200">
-                  <h4 className="font-bold text-sm text-purple-800 mb-3 pb-2 border-b-2 border-purple-300 uppercase tracking-wide">Others</h4>
+              <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg border-2 border-gray-200">
+                  <h4 className="font-bold text-sm text-gray-800 mb-3 pb-2 border-b-2 border-gray-300 uppercase tracking-wide">Others</h4>
                   <div className="space-y-3">
                       {data.divers.map(d => (
                           <div key={d.category} className="flex justify-between items-center">
                               <span className="text-xs font-semibold text-slate-700 truncate mr-2" title={t(d.category)}>{t(d.category)}</span>
                               <div className="flex gap-2">
-                                  <input type="number" placeholder="USD" className="border-2 border-purple-300 p-1.5 w-20 text-xs bg-white text-black rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none transition-all hover:border-purple-400 font-semibold text-center" value={d.usd || ''} onChange={e => handleCostChange('divers', d.category, 'usd', e.target.value)} />
-                                  <input type="number" placeholder="CDF" className="border-2 border-purple-300 p-1.5 w-20 text-xs bg-white text-black rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-purple-400 outline-none transition-all hover:border-purple-400 font-semibold text-center" value={d.cdf || ''} onChange={e => handleCostChange('divers', d.category, 'cdf', e.target.value)} />
+                                  <input type="number" placeholder="USD" className="border-2 border-gray-300 p-1.5 w-20 text-xs bg-white text-black rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 font-semibold text-center" value={d.usd || ''} onChange={e => handleCostChange('divers', d.category, 'usd', e.target.value)} />
+                                  <input type="number" placeholder="CDF" className="border-2 border-gray-300 p-1.5 w-20 text-xs bg-white text-black rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 font-semibold text-center" value={d.cdf || ''} onChange={e => handleCostChange('divers', d.category, 'cdf', e.target.value)} />
                               </div>
                           </div>
                       ))}
