@@ -1,7 +1,7 @@
 export type Language = 'en' | 'fr';
 
 // --- Administration Types ---
-export interface PersonnelRow {
+export interface StaffRow {
   id: string;
   category: string;
   grade: string;
@@ -115,7 +115,7 @@ export interface BudgetData {
 
 export interface AppData {
   // Admin
-  personnel: PersonnelRow[];
+  staff: StaffRow[];
   managementCount: number;
   salaryMassCDF: number;
   movements: MovementRow[];

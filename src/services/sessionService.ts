@@ -42,7 +42,7 @@ export async function saveSession(
         : now,
       updatedAt: now,
       data: {
-        personnel: data.personnel,
+        staff: data.staff,
         managementCount: data.managementCount,
         salaryMassCDF: data.salaryMassCDF,
         exploitation: data.exploitation,
@@ -171,7 +171,7 @@ export async function duplicateSession(
       userId,
       newSessionName,
       {
-        personnel: originalSession.data.personnel,
+        staff: originalSession.data.staff,
         managementCount: originalSession.data.managementCount,
         salaryMassCDF: originalSession.data.salaryMassCDF,
         movements: [],

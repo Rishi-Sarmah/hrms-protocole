@@ -6,7 +6,7 @@ import { useSession } from "../contexts/SessionContext";
 import LanguageSelector from "../components/LanguageSelector";
 import SectionBudget from "../components/SectionBudget";
 import SectionDashboard from "../components/SectionDashboard";
-import SectionPersonnel from "../components/SectionPersonnel";
+import SectionStaff from "../components/SectionStaff";
 import SectionWorkforce from "../components/SectionWorkforce";
 import SectionMovement from "../components/SectionMovement";
 import SectionMedical from "../components/SectionMedical";
@@ -15,7 +15,7 @@ import { saveSession, getSession } from "../services/sessionService";
 import type {
   AppData,
   BudgetData,
-  PersonnelRow,
+  StaffRow,
   WorkforceRow,
   MovementRow,
   MedicalCare,
@@ -25,16 +25,16 @@ import type {
 // Sample initial data
 const initialBudgetData: BudgetData = {
   production: [
-    { id: "p1", label: "EXPORTATION", forecast: 0, achievement: 0 },
-    { id: "p2", label: "IMPORTATION", forecast: 0, achievement: 0 },
-    { id: "p3", label: "LOCAL PROD.", forecast: 0, achievement: 0 },
-    { id: "p4", label: "BORDER TRAFFIC", forecast: 0, achievement: 0 },
-    { id: "p5", label: "LOCAL TRANS.", forecast: 0, achievement: 0 },
-    { id: "p6", label: "LAB ANALYSIS", forecast: 0, achievement: 0 },
-    { id: "p7", label: "FAILURES/AVARIES", forecast: 0, achievement: 0 },
-    { id: "p8", label: "METROLOGY", forecast: 0, achievement: 0 },
-    { id: "p9", label: "TECH. CONTROL", forecast: 0, achievement: 0 },
-  ],
+  { id: 'p1', label: 'Exportation', forecast: 0, achievement: 0 },
+  { id: 'p2', label: 'Importation', forecast: 0, achievement: 0 },
+  { id: 'p3', label: 'Local Production', forecast: 0, achievement: 0 },
+  { id: 'p4', label: 'Border Traffic', forecast: 0, achievement: 0 },
+  { id: 'p5', label: 'Local Transportation', forecast: 0, achievement: 0 },
+  { id: 'p6', label: 'Lab Analysis', forecast: 0, achievement: 0 },
+  { id: 'p7', label: 'Damages', forecast: 0, achievement: 0 },
+  { id: 'p8', label: 'Metrology', forecast: 0, achievement: 0 },
+  { id: 'p9', label: 'Technical Control', forecast: 0, achievement: 0 }
+],
   charges: [
     { id: "bc1", label: "Salaries & Wages", forecast: 0, achievement: 0 },
     { id: "bc2", label: "Rent", forecast: 0, achievement: 0 },
@@ -68,22 +68,22 @@ const initialBudgetData: BudgetData = {
   ],
 };
 
-const initialPersonnelData: PersonnelRow[] = [
-  { id: "p1", category: "MANAGEMENT STAFF", grade: "DIR.", male: 0, female: 0 },
-  { id: "p2", category: "MANAGEMENT STAFF", grade: "D.A.", male: 0, female: 0 },
-  { id: "p3", category: "MANAGEMENT STAFF", grade: "SD", male: 0, female: 0 },
-  { id: "p4", category: "SENIOR STAFF", grade: "FPP", male: 0, female: 0 },
-  { id: "p5", category: "SENIOR STAFF", grade: "FP", male: 0, female: 0 },
-  { id: "p6", category: "SUBORDINATE STAFF", grade: "CS3", male: 0, female: 0 },
-  { id: "p7", category: "SUBORDINATE STAFF", grade: "CS2", male: 0, female: 0 },
-  { id: "p8", category: "SUBORDINATE STAFF", grade: "CS1", male: 0, female: 0 },
-  { id: "p9", category: "SUPERVISORY STAFF", grade: "M3", male: 0, female: 0 },
-  { id: "p10", category: "SUPERVISORY STAFF", grade: "M2", male: 0, female: 0 },
-  { id: "p11", category: "SUPERVISORY STAFF", grade: "M1", male: 0, female: 0 },
-  { id: "p12", category: "ECHELONNED STAFF", grade: "C9", male: 0, female: 0 },
-  { id: "p13", category: "ECHELONNED STAFF", grade: "C8", male: 0, female: 0 },
-  { id: "p14", category: "ECHELONNED STAFF", grade: "C7", male: 0, female: 0 },
-  { id: "p15", category: "ECHELONNED STAFF", grade: "C6", male: 0, female: 0 },
+const initialStaffData: StaffRow[] = [
+  { id: 'p1', category: 'MANAGEMENT STAFF', grade: 'DIR.', male: 0, female: 0 },
+  { id: 'p2', category: 'MANAGEMENT STAFF', grade: 'D.A.', male: 0, female: 0 },
+  { id: 'p3', category: 'MANAGEMENT STAFF', grade: 'SD', male: 0, female: 0 },
+  { id: 'p4', category: 'SENIOR STAFF', grade: 'FPP', male: 0, female: 0 },
+  { id: 'p5', category: 'SENIOR STAFF', grade: 'FP', male: 0, female: 0 },
+  { id: 'p6', category: 'SUBORDINATE STAFF', grade: 'CS3', male: 0, female: 0 },
+  { id: 'p7', category: 'SUBORDINATE STAFF', grade: 'CS2', male: 0, female: 0 },
+  { id: 'p8', category: 'SUBORDINATE STAFF', grade: 'CS1', male: 0, female: 0 },
+  { id: 'p9', category: 'SUPERVISORY STAFF', grade: 'M3', male: 0, female: 0 },
+  { id: 'p10', category: 'SUPERVISORY STAFF', grade: 'M2', male: 0, female: 0 },
+  { id: 'p11', category: 'SUPERVISORY STAFF', grade: 'M1', male: 0, female: 0 },
+  { id: 'p12', category: 'ECHELONNED STAFF', grade: 'C9', male: 0, female: 0 },
+  { id: 'p13', category: 'ECHELONNED STAFF', grade: 'C8', male: 0, female: 0 },
+  { id: 'p14', category: 'ECHELONNED STAFF', grade: 'C7', male: 0, female: 0 },
+  { id: 'p15', category: 'ECHELONNED STAFF', grade: 'C6', male: 0, female: 0 },
 ];
 
 const initialWorkforceData: WorkforceRow[] = [
@@ -268,7 +268,7 @@ export default function Budget() {
   const { sessionId } = useParams<{ sessionId?: string }>();
   const [activeTab, setActiveTab] = useState<
     | "dashboard"
-    | "personnel"
+    | "staff"
     | "workforce"
     | "movement"
     | "medical"
@@ -278,7 +278,7 @@ export default function Budget() {
 
   const [appData, setAppData] = useState<AppData>({
     budget: initialBudgetData,
-    personnel: initialPersonnelData,
+    staff: initialStaffData,
     managementCount: 0,
     salaryMassCDF: 0,
     workforce: initialWorkforceData,
@@ -320,7 +320,7 @@ export default function Budget() {
           if (session && session.userId === user.uid) {
             setAppData((prevData) => ({
               ...prevData,
-              personnel: session.data.personnel,
+              staff: session.data.staff,
               managementCount: session.data.managementCount,
               salaryMassCDF: session.data.salaryMassCDF,
               exploitation: session.data.exploitation,
@@ -423,20 +423,20 @@ export default function Budget() {
   };
 
   const tabs = [
-    { id: "dashboard", label: "KPI" },
-    { id: "personnel", label: "Personnel" },
-    // { id: "workforce", label: "Workforce" },
-    // { id: "movement", label: "Movement" },
-    // { id: "medical", label: "Medical" },
-    { id: "exploitation", label: "Exploitation" },
-    { id: "budget", label: "Budget" },
+    { id: 'dashboard', label: t('Tab_Dashboard') },
+    { id: 'staff', label: t('Tab_Staff') },
+    { id: 'workforce', label: t('Tab_Workforce') },
+    { id: 'movement', label: t('Tab_Movement') },
+    { id: 'medical', label: t('Tab_Medical') },
+    { id: 'exploitation', label: t('Tab_Exploitation') },
+    { id: 'budget', label: t('Tab_Budget') },
   ] as const;
 
   if (isLoadingSession) {
     return (
       <div className='min-h-screen flex items-center justify-center bg-gray-50'>
         <div className='flex flex-col items-center gap-4'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600'></div>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900'></div>
           <p className='text-gray-600'>{t("Loading session...")}</p>
         </div>
       </div>
@@ -449,7 +449,7 @@ export default function Budget() {
         <div className='flex items-center justify-between container mx-auto'>
           <div className='flex items-center gap-6'>
             <div>
-              <h1 className='text-xl font-bold text-blue-600'>
+              <h1 className='text-xl font-bold text-gray-900'>
                 HRMS Management
               </h1>
               {(sessionDetails || sessionId) && (
@@ -470,7 +470,7 @@ export default function Budget() {
             <button
               onClick={handleSaveSession}
               disabled={isSaving}
-              className='px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2'
+              className='px-4 py-2 bg-gray-900 text-white rounded hover:bg-black transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2'
             >
               {isSaving ? (
                 <>
@@ -505,7 +505,7 @@ export default function Budget() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-6 py-3 font-medium text-sm transition-colors border-b-2 whitespace-nowrap ${
                   activeTab === tab.id
-                    ? "border-blue-600 text-blue-600"
+                    ? "border-gray-900 text-gray-900"
                     : "border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300"
                 }`}
               >
@@ -516,11 +516,13 @@ export default function Budget() {
         </div>
       </div>
 
-      <main className='container mx-auto p-6'>
-        {activeTab === "dashboard" && <SectionDashboard data={appData} />}
-
-        {activeTab === "personnel" && (
-          <SectionPersonnel data={appData} onChange={handleDataChange} />
+      <main className="container mx-auto p-6">
+        {activeTab === 'dashboard' && (
+          <SectionDashboard data={appData} />
+        )}
+        
+        {activeTab === 'staff' && (
+          <SectionStaff data={appData} onChange={handleDataChange} />
         )}
 
         {activeTab === "workforce" && (

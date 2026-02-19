@@ -1,4 +1,4 @@
-import type { AppData, ExploitationData, BudgetData, PersonnelRow, WorkforceRow, MovementRow, MedicalCare } from './types/budget';
+import type { AppData, ExploitationData, BudgetData, StaffRow, WorkforceRow, MovementRow, MedicalCare } from './types/budget';
 
 const INITIAL_EXPLOITATION: ExploitationData = {
   operatingData: [
@@ -34,7 +34,7 @@ const INITIAL_BUDGET: BudgetData = {
     { id: 'bp4', label: 'r_bud_trafic', forecast: 0, achievement: 0 },
     { id: 'bp5', label: 'r_bud_trans_loc', forecast: 0, achievement: 0 },
     { id: 'bp6', label: 'r_bud_lab', forecast: 0, achievement: 0 },
-    { id: 'bp7', label: 'r_bud_avaries', forecast: 0, achievement: 0 },
+    { id: 'bp7', label: 'Damages', forecast: 0, achievement: 0 },
     { id: 'bp8', label: 'r_bud_metro', forecast: 0, achievement: 0 },
     { id: 'bp9', label: 'r_bud_tech_ctrl', forecast: 0, achievement: 0 },
   ],
@@ -73,7 +73,7 @@ const INITIAL_BUDGET: BudgetData = {
   ],
 };
 
-const INITIAL_PERSONNEL: PersonnelRow[] = [
+const INITIAL_STAFF: StaffRow[] = [
   { id: 'p1', category: 'r_p_cat_dir', grade: 'r_gr_dir', male: 0, female: 0 },
   { id: 'p2', category: 'r_p_cat_dir', grade: 'r_gr_da', male: 0, female: 0 },
   { id: 'p3', category: 'r_p_cat_dir', grade: 'r_gr_sd', male: 0, female: 0 },
@@ -127,7 +127,7 @@ const INITIAL_MEDICAL_CARE: MedicalCare[] = [
 ];
 
 export const INITIAL_DATA: AppData = {
-  personnel: INITIAL_PERSONNEL,
+  staff: INITIAL_STAFF,
   managementCount: 0,
   salaryMassCDF: 0,
   movements: INITIAL_MOVEMENTS,

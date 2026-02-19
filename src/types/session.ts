@@ -10,7 +10,7 @@ export interface Session {
   createdAt: string; // ISO timestamp
   updatedAt: string; // ISO timestamp
   data: {
-    personnel: AppData["personnel"];
+    staff: AppData["staff"];
     managementCount: AppData["managementCount"];
     salaryMassCDF: AppData["salaryMassCDF"];
     exploitation: AppData["exploitation"];

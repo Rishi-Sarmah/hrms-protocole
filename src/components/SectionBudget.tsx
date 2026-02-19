@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AppData, BudgetData, BudgetRow } from '../types/budget';
-import { Coins, Banknote, TrendingUp, TrendingDown, ArrowUpCircle, ArrowDownCircle, Plus, Trash2 } from 'lucide-react';
+import { Coins, Banknote, Plus, Trash2, Upload } from 'lucide-react';
+import * as XLSX from 'xlsx';
 
 interface SectionBudgetProps {
   data: AppData;
@@ -12,7 +13,7 @@ interface BudgetTableProps {
   title: string;
   rows: BudgetRow[];
   sectionKey: keyof BudgetData;
-  icon: React.ElementType;
+  
   colorClass: string;
   onBudgetChange: (section: keyof BudgetData, id: string, field: 'forecast' | 'achievement', value: string) => void;
   allowAdd?: boolean;
@@ -28,10 +29,10 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
   title, 
   rows, 
   sectionKey,
-  icon: Icon,
   colorClass,
   onBudgetChange,
   allowAdd,
+
   onAddRow,
   onDeleteRow,
   onLabelChange,
@@ -97,25 +98,25 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
 
   return (
     <div className="bg-white rounded-xl shadow-lg border-2 border-slate-200 overflow-hidden mb-8">
-      <div className="flex justify-between items-center px-6 py-3 bg-gradient-to-r from-slate-50 to-slate-100 border-b-2 border-slate-200">
+      <div className="flex justify-between items-center px-6 py-3 bg-linear-to-r from-slate-50 to-slate-100 border-b-2 border-slate-200">
         <h2 className={`text-lg font-bold flex items-center gap-2 ${colorClass}`}>
-          <Icon className="w-5 h-5" />
+         
           {title}
         </h2>
         {allowAdd && onAddRow && (
           <button 
             onClick={onAddRow}
-            className="flex items-center gap-1 text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg transition-all shadow-md hover:shadow-lg font-medium"
+            className="flex items-center gap-1 text-xs bg-gray-900 hover:bg-black text-white px-3 py-1.5 rounded-lg transition-all shadow-md hover:shadow-lg font-medium"
           >
             <Plus size={14} />
-            Add Row
+            {t('Add Row')}
           </button>
         )}
       </div>
       
       <div className="overflow-x-auto">
         <table className="w-full text-xs border-collapse">
-          <thead className="bg-gradient-to-r from-slate-100 to-slate-50">
+          <thead className="bg-linear-to-r from-slate-100 to-slate-50">
             <tr className="border-b-2 border-slate-300">
               {showSerial && <th className="px-3 py-2 w-10 text-center font-semibold text-slate-700 border-r border-slate-200">#</th>}
               <th className="px-3 py-2 w-1/2 text-left font-semibold text-slate-700 border-r border-slate-200">{t('Designation')}</th>
@@ -129,16 +130,16 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
             {rows.map((row, index) => (
               <React.Fragment key={row.id}>
                 {insertSubtotalBeforeId === row.id && (
-                  <tr className="bg-gradient-to-r from-slate-200 to-slate-100 font-bold border-y-2 border-slate-400">
+                  <tr className="bg-linear-to-r from-slate-200 to-slate-100 font-bold border-y-2 border-slate-400">
                     {showSerial && <td className="border-r border-slate-300"></td>}
-                    <td className="px-3 py-2 text-right uppercase text-slate-800 font-bold tracking-wide border-r border-slate-300 text-xs">{subtotalLabel || 'SUBTOTAL'}</td>
+                    <td className="px-3 py-2 text-right uppercase text-slate-800 font-bold tracking-wide border-r border-slate-300 text-xs">{t(subtotalLabel || 'SUBTOTAL')}</td>
                     <td className="px-3 py-2 text-center font-mono text-slate-800 border-r border-slate-300">{subForecast.toFixed(2)}</td>
                     <td className="px-3 py-2 text-center font-mono text-slate-800 border-r border-slate-300">{subAchievement.toFixed(2)}</td>
                     <td className="px-3 py-2 text-center font-mono font-bold text-slate-800 border-r border-slate-300">{subRate}%</td>
                     {allowAdd && <td></td>}
                   </tr>
                 )}
-                <tr className="hover:bg-blue-50 transition-all duration-150 group border-b border-slate-200">
+                <tr className="hover:bg-gray-50 transition-all duration-150 group border-b border-slate-200">
                   {showSerial && (
                     <td className="px-3 py-2 text-center text-slate-500 font-semibold text-xs border-r border-slate-200 bg-slate-50">
                       {index + 1}
@@ -149,7 +150,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
                       <input 
                         ref={inputRef}
                         type="text" 
-                        className="w-full p-2 border-2 border-blue-400 rounded-lg outline-none bg-white text-black shadow-md focus:shadow-lg transition-all"
+                        className="w-full p-2 border-2 border-gray-400 rounded-lg outline-none bg-white text-black shadow-md focus:shadow-lg transition-all"
                         value={editValue}
                         onChange={(e) => setEditValue(e.target.value)}
                         onBlur={() => handleFinishEdit(row.id)}
@@ -158,7 +159,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
                     ) : (
                       <span 
                         onClick={() => allowAdd ? handleStartEdit(row) : undefined}
-                        className={allowAdd ? "cursor-pointer hover:text-blue-600 transition-colors" : ""}
+                        className={allowAdd ? "cursor-pointer hover:text-gray-900 transition-colors" : ""}
                         title={allowAdd ? "Click to edit label" : ""}
                       >
                         {t(row.label)}
@@ -168,7 +169,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
                   <td className="px-3 py-2 border-r border-slate-200">
                     <input 
                       type="number" 
-                      className="w-full text-center p-1.5 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all bg-white text-black hover:border-slate-400 text-xs font-semibold"
+                      className="w-full text-center p-1.5 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all bg-white text-black hover:border-slate-400 text-xs font-semibold"
                       value={row.forecast || ''}
                       onChange={(e) => onBudgetChange(sectionKey, row.id, 'forecast', e.target.value)}
                     />
@@ -176,7 +177,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
                   <td className="px-3 py-2 border-r border-slate-200">
                     <input 
                       type="number" 
-                      className="w-full text-center p-1.5 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 outline-none transition-all bg-white text-black hover:border-slate-400 text-xs font-semibold"
+                      className="w-full text-center p-1.5 border-2 border-slate-300 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all bg-white text-black hover:border-slate-400 text-xs font-semibold"
                       value={row.achievement || ''}
                       onChange={(e) => onBudgetChange(sectionKey, row.id, 'achievement', e.target.value)}
                     />
@@ -200,12 +201,12 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
                 </tr>
               </React.Fragment>
             ))}
-            <tr className="bg-gradient-to-r from-slate-800 to-slate-700 text-white font-bold border-t-4 border-slate-900">
+            <tr className="bg-linear-to-r from-slate-800 to-slate-700 text-white font-bold border-t-4 border-slate-900">
               {showSerial && <td className="border-r border-slate-600"></td>}
-              <td className="px-3 py-2 text-right uppercase tracking-wider text-xs border-r border-slate-600">TOTAL GLOBAL</td>
+              <td className="px-3 py-2 text-right uppercase tracking-wider text-xs border-r border-slate-600">{t('GRAND TOTAL')}</td>
               <td className="px-3 py-2 text-center font-mono text-xs border-r border-slate-600">{totalForecast.toFixed(2)}</td>
               <td className="px-3 py-2 text-center font-mono text-xs border-r border-slate-600">{totalAchievement.toFixed(2)}</td>
-              <td className="px-3 py-2 text-center font-mono font-bold text-xs text-yellow-300 border-r border-slate-600">{totalRate}%</td>
+              <td className="px-3 py-2 text-center font-mono font-bold text-xs text-gray-100 border-r border-slate-600">{totalRate}%</td>
               {allowAdd && <td></td>}
             </tr>
           </tbody>
@@ -218,6 +219,92 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
 const SectionBudget: React.FC<SectionBudgetProps> = ({ data, onChange }) => {
   const { t } = useTranslation();
   const budget = data.budget;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleExcelUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const fileData = e.target?.result;
+        const workbook = XLSX.read(fileData, { type: 'binary' });
+
+        // Expected sheets: Production, Charges, Treasury Receipts, Treasury Disbursements
+        const newBudget: BudgetData = {
+          production: [],
+          charges: [],
+          treasuryReceipts: [],
+          treasuryDisbursements: [],
+        };
+
+        // Parse Production sheet
+        if (workbook.SheetNames.includes('Production')) {
+          const sheet = workbook.Sheets['Production'];
+          const jsonData = XLSX.utils.sheet_to_json(sheet) as Record<string, unknown>[];
+          newBudget.production = jsonData.map((row, index) => ({
+            id: String(row.id || `p${index + 1}`),
+            label: String(row.Label || row.label || row.Designation || ''),
+            forecast: parseFloat(String(row.Forecast || row.forecast || '0')) || 0,
+            achievement: parseFloat(String(row.Achievement || row.achievement || row.Achievements || '0')) || 0,
+          }));
+        }
+
+        // Parse Charges sheet
+        if (workbook.SheetNames.includes('Charges')) {
+          const sheet = workbook.Sheets['Charges'];
+          const jsonData = XLSX.utils.sheet_to_json(sheet) as Record<string, unknown>[];
+          newBudget.charges = jsonData.map((row, index) => ({
+            id: String(row.id || `bc${index + 1}`),
+            label: String(row.Label || row.label || row.Designation || ''),
+            forecast: parseFloat(String(row.Forecast || row.forecast || '0')) || 0,
+            achievement: parseFloat(String(row.Achievement || row.achievement || row.Achievements || '0')) || 0,
+            isCustom: Boolean(row.isCustom) || false,
+          }));
+        }
+
+        // Parse Treasury Receipts sheet
+        if (workbook.SheetNames.includes('Treasury Receipts')) {
+          const sheet = workbook.Sheets['Treasury Receipts'];
+          const jsonData = XLSX.utils.sheet_to_json(sheet) as Record<string, unknown>[];
+          newBudget.treasuryReceipts = jsonData.map((row, index) => ({
+            id: String(row.id || `tr${index + 1}`),
+            label: String(row.Label || row.label || row.Designation || ''),
+            forecast: parseFloat(String(row.Forecast || row.forecast || '0')) || 0,
+            achievement: parseFloat(String(row.Achievement || row.achievement || row.Achievements || '0')) || 0,
+          }));
+        }
+
+        // Parse Treasury Disbursements sheet
+        if (workbook.SheetNames.includes('Treasury Disbursements')) {
+          const sheet = workbook.Sheets['Treasury Disbursements'];
+          const jsonData = XLSX.utils.sheet_to_json(sheet) as Record<string, unknown>[];
+          newBudget.treasuryDisbursements = jsonData.map((row, index) => ({
+            id: String(row.id || `td${index + 1}`),
+            label: String(row.Label || row.label || row.Designation || ''),
+            forecast: parseFloat(String(row.Forecast || row.forecast || '0')) || 0,
+            achievement: parseFloat(String(row.Achievement || row.achievement || row.Achievements || '0')) || 0,
+            isCustom: Boolean(row.isCustom) || false,
+          }));
+        }
+
+        onChange({
+          ...data,
+          budget: newBudget,
+        });
+
+        alert(t('Budget data uploaded successfully!'));
+      } catch (error) {
+        console.error('Error parsing Excel file:', error);
+        alert(t('Error parsing Excel file. Please ensure sheets are named: Production, Charges, Treasury Receipts, Treasury Disbursements'));
+      }
+    };
+    reader.readAsBinaryString(file);
+    
+    // Reset input
+    if (event.target) event.target.value = '';
+  };
 
   const handleBudgetChange = (section: keyof BudgetData, id: string, field: 'forecast' | 'achievement', value: string) => {
     const num = parseFloat(value) || 0;
@@ -356,21 +443,39 @@ const SectionBudget: React.FC<SectionBudgetProps> = ({ data, onChange }) => {
   return (
     <div className="space-y-4">
       
+      {/* Upload Button */}
+      <div className="flex justify-end mb-4">
+        <input
+          ref={fileInputRef}
+          type='file'
+          accept='.xlsx,.xls'
+          onChange={handleExcelUpload}
+          className='hidden'
+        />
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          className='flex items-center gap-2 px-4 py-2 bg-gray-900 hover:bg-black text-white rounded-lg transition-all text-sm font-medium shadow-md hover:shadow-lg'
+        >
+          <Upload className='w-4 h-4' />
+          {t('Upload Budget Excel')}
+        </button>
+      </div>
+
       {/* Budget d'Exploitation */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         <BudgetTable 
-          title={t('sec_budget_production')} 
+          title={t('Budget - Production')} 
           rows={budget.production} 
           sectionKey="production"
-          icon={TrendingUp}
-          colorClass="text-green-700"
+          
+          colorClass="text-gray-800"
           onBudgetChange={handleBudgetChange}
         />
         <BudgetTable 
-          title={t('sec_budget_charges')} 
+          title={t('Budget - Charges')} 
           rows={budget.charges} 
           sectionKey="charges"
-          icon={TrendingDown}
+          
           colorClass="text-red-700"
           onBudgetChange={handleBudgetChange}
           allowAdd={true}
@@ -384,27 +489,27 @@ const SectionBudget: React.FC<SectionBudgetProps> = ({ data, onChange }) => {
       <div className="my-8 border-t-2 border-slate-300"></div>
 
       {/* Budget de Trésorerie */}
-      <h2 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2 bg-gradient-to-r from-blue-50 to-transparent p-3 rounded-lg border-l-4 border-blue-600">
-        <Banknote className="w-5 h-5 text-blue-800" />
-        Budget de Trésorerie
+      <h2 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2 bg-linear-to-r from-gray-50 to-transparent p-3 rounded-lg border-l-4 border-gray-800">
+        <Banknote className="w-5 h-5 text-gray-800" />
+        {t('Treasury Budget')}
       </h2>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         <BudgetTable 
-          title={t('sec_treasury_receipts')} 
+          title={t('Treasury - Receipts')} 
           rows={budget.treasuryReceipts} 
           sectionKey="treasuryReceipts"
-          icon={ArrowUpCircle}
-          colorClass="text-blue-700"
+          
+          colorClass="text-gray-800"
 
           onBudgetChange={handleBudgetChange}
         />
         <BudgetTable 
-          title={t('sec_treasury_disbursements')} 
+          title={t('Treasury - Disbursements')} 
           rows={budget.treasuryDisbursements} 
           sectionKey="treasuryDisbursements"
-          icon={ArrowDownCircle}
-          colorClass="text-orange-700"
+          
+          colorClass="text-gray-800"
 
           onBudgetChange={handleBudgetChange}
           insertSubtotalBeforeId="td10"
@@ -413,23 +518,23 @@ const SectionBudget: React.FC<SectionBudgetProps> = ({ data, onChange }) => {
       </div>
 
       {/* Summary Card for Treasury Balance */}
-      <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-6 rounded-xl shadow-2xl mt-6 border-2 border-slate-700">
+      <div className="bg-linear-to-br from-slate-900 to-slate-800 text-white p-6 rounded-xl shadow-2xl mt-6 border-2 border-slate-700">
         <h3 className="text-sm font-bold uppercase tracking-wider mb-4 flex items-center gap-2 border-b border-slate-600 pb-3">
-            <Coins className="text-yellow-400 w-5 h-5" />
-            SOLDE FIN PÉRIODE (END OF PERIOD BALANCE)
+            <Coins className="text-gray-100 w-5 h-5" />
+            {t('BALANCE AT THE END OF PERIOD')}
         </h3>
         <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="p-4 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl border-2 border-slate-600 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="p-4 bg-linear-to-br from-slate-700 to-slate-800 rounded-xl border-2 border-slate-600 shadow-lg hover:shadow-xl transition-shadow">
                 <div className="text-xs text-slate-300 uppercase mb-2 font-semibold tracking-wide">{t('Forecast')}</div>
-                <div className="text-xl font-mono font-bold text-yellow-300">{balanceForecast.toFixed(2)}</div>
+                <div className="text-xl font-mono font-bold text-white">{balanceForecast.toFixed(2)}</div>
             </div>
-            <div className="p-4 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl border-2 border-slate-600 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="p-4 bg-linear-to-br from-slate-700 to-slate-800 rounded-xl border-2 border-slate-600 shadow-lg hover:shadow-xl transition-shadow">
                 <div className="text-xs text-slate-300 uppercase mb-2 font-semibold tracking-wide">{t('Achievements')}</div>
-                <div className="text-xl font-mono font-bold text-yellow-300">{balanceAchievement.toFixed(2)}</div>
+                <div className="text-xl font-mono font-bold text-white">{balanceAchievement.toFixed(2)}</div>
             </div>
-            <div className="p-4 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl border-2 border-slate-600 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="p-4 bg-linear-to-br from-slate-700 to-slate-800 rounded-xl border-2 border-slate-600 shadow-lg hover:shadow-xl transition-shadow">
                 <div className="text-xs text-slate-300 uppercase mb-2 font-semibold tracking-wide">{t('RealRate')}</div>
-                <div className="text-xl font-mono font-bold text-green-400">{balanceRate}%</div>
+                <div className="text-xl font-mono font-bold text-gray-100">{balanceRate}%</div>
             </div>
         </div>
       </div>

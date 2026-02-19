@@ -127,7 +127,7 @@ export const SaveSessionModal: React.FC<SaveSessionModalProps> = ({
               onChange={(e) => setSessionName(e.target.value)}
               placeholder={t("Enter session name") || ""}
               disabled={isLoading}
-              className='w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none disabled:bg-slate-100 disabled:cursor-not-allowed'
+              className='w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-transparent outline-none disabled:bg-slate-100 disabled:cursor-not-allowed'
             />
           </div>
 
@@ -141,7 +141,7 @@ export const SaveSessionModal: React.FC<SaveSessionModalProps> = ({
               placeholder={t("Enter optional description") || ""}
               disabled={isLoading}
               rows={3}
-              className='w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none resize-none disabled:bg-slate-100 disabled:cursor-not-allowed'
+              className='w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-transparent outline-none resize-none disabled:bg-slate-100 disabled:cursor-not-allowed'
             />
           </div>
 
@@ -155,7 +155,7 @@ export const SaveSessionModal: React.FC<SaveSessionModalProps> = ({
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
                 disabled={isLoading}
-                className='w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none disabled:bg-slate-100 disabled:cursor-not-allowed'
+                className='w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-transparent outline-none disabled:bg-slate-100 disabled:cursor-not-allowed'
               />
             </div>
 
@@ -168,7 +168,7 @@ export const SaveSessionModal: React.FC<SaveSessionModalProps> = ({
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
                 disabled={isLoading}
-                className='w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent outline-none disabled:bg-slate-100 disabled:cursor-not-allowed'
+                className='w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-transparent outline-none disabled:bg-slate-100 disabled:cursor-not-allowed'
               />
             </div>
           </div>
@@ -186,7 +186,7 @@ export const SaveSessionModal: React.FC<SaveSessionModalProps> = ({
             <button
               type='submit'
               disabled={isLoading}
-              className='flex-1 px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2'
+              className='flex-1 px-4 py-2 text-white bg-gray-900 rounded-lg hover:bg-black font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2'
             >
               {isLoading ? (
                 <>

@@ -47,7 +47,7 @@ const SectionDashboard: React.FC<Props> = ({ data }) => {
     const recoveryRate = production !== 0 ? (receipts / production) * 100 : 0;
 
     // 9. Workforce Stats
-    const totalWorkforce = data.personnel.reduce((sum, p) => sum + p.male + p.female, 0);
+    const totalWorkforce = data.staff.reduce((sum, p) => sum + p.male + p.female, 0);
     
     // 10. Productivité = Production / Effectif
     const productivity = totalWorkforce !== 0 ? production / totalWorkforce : 0;
@@ -91,7 +91,7 @@ const SectionDashboard: React.FC<Props> = ({ data }) => {
     <div className="bg-white rounded-xl shadow-lg border-2 border-slate-200 overflow-hidden">
       <div className="px-6 py-3 bg-gradient-to-r from-indigo-50 to-slate-50 border-b-2 border-slate-200">
         <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-          <LayoutDashboard className="w-5 h-5 text-indigo-600" />
+          <LayoutDashboard className="w-5 h-5 text-gray-700" />
           {t('sec_dashboard')}
         </h2>
       </div>
@@ -107,7 +107,7 @@ const SectionDashboard: React.FC<Props> = ({ data }) => {
             </thead>
             <tbody>
                 {metrics.map((m, idx) => (
-                    <tr key={idx} className="border-b border-slate-200 hover:bg-indigo-50/30 transition-all duration-150">
+                    <tr key={idx} className="border-b border-slate-200 hover:bg-gray-50 transition-all duration-150">
                         <td className="px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200">{m.label}</td>
                         <td className="px-3 py-2.5 text-slate-600 border-r border-slate-200">
                             <div className="flex items-center gap-2">
@@ -115,7 +115,7 @@ const SectionDashboard: React.FC<Props> = ({ data }) => {
                               <span>{m.formula}</span>
                             </div>
                         </td>
-                        <td className="px-3 py-2.5 text-right font-mono font-bold text-indigo-700">
+                        <td className="px-3 py-2.5 text-right font-mono font-bold text-gray-900">
                             {formatValue(m.value, m.format)}
                         </td>
                     </tr>
@@ -124,9 +124,9 @@ const SectionDashboard: React.FC<Props> = ({ data }) => {
         </table>
       </div>
       
-      <div className="m-4 p-4 bg-gradient-to-r from-yellow-50 to-orange-50 text-slate-700 text-xs rounded-lg border-2 border-yellow-300 shadow-sm">
-        <strong className="text-yellow-800">Note:</strong> These values are calculated automatically based on the data entered in the Personnel and Budget sections. 
-        Ensure all budget achievements and personnel counts are up-to-date for accurate results.
+      <div className="m-4 p-4 bg-gradient-to-r from-gray-50 to-slate-50 text-slate-700 text-xs rounded-lg border-2 border-gray-300 shadow-sm">
+        <strong className="text-gray-800">{t('Dashboard_Note')}</strong> {t('Dashboard_Note_Text')}
+        {' '}{t('Dashboard_Note_Instruction')}
       </div>
     </div>
   );
