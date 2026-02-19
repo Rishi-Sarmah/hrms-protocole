@@ -1,0 +1,38 @@
+src/pages/Budget.tsx
+  6f4363db170491d6 112
+src/components/SectionExploitation.tsx
+  6f4363db170491d6 3,55-61,100,102,106,108,111,115-116,134-136,139-140,143,146,148,152-153,162,169,182,341,344,352-353,362-363
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "b1a2d680e0eb3495a42af61cf81d44e55f3cc48e",
+  "prompts": {
+    "5446d4dee110635c": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "92c01680-81a1-459a-a1b8-19a01a2cdf4a",
+        "model": "copilot/gpt-5-mini"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 30,
+      "total_deletions": 30,
+      "accepted_lines": 17,
+      "overriden_lines": 0
+    },
+    "6f4363db170491d6": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "472a2a01-75de-4de4-bbc2-f0a40d843b38",
+        "model": "copilot/grok-code-fast-1"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 90,
+      "total_deletions": 78,
+      "accepted_lines": 36,
+      "overriden_lines": 0
+    }
+  }
+}
