@@ -1,0 +1,45 @@
+functions/tsconfig.json
+  d96deb3d0051c191 1-16
+firestore.indexes.json
+  d96deb3d0051c191 16-32
+functions/package.json
+  d96deb3d0051c191 1-25
+src/services/chatService.ts
+  d96deb3d0051c191 1-60
+src/i18n.ts
+  d96deb3d0051c191 171-176,356-361
+src/types/session.ts
+  d96deb3d0051c191 19-20
+functions/src/utils/serialize.ts
+  d96deb3d0051c191 1-273
+src/App.tsx
+  d96deb3d0051c191 2,8,10-15,49-50
+src/components/ChatPanel.tsx
+  d96deb3d0051c191 1-227
+src/firebase.ts
+  d96deb3d0051c191 4,18
+firebase.json
+  d96deb3d0051c191 8-12
+functions/src/index.ts
+  d96deb3d0051c191 1-333
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "52fcd79dadb2f48ca462912720c785b028569b2d",
+  "prompts": {
+    "d96deb3d0051c191": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_388d32569ffevAoNY6C0RnPimK",
+        "model": "github-copilot/claude-opus-4.6"
+      },
+      "human_author": "Rishi-Sarmah <rishi@trueleap.io>",
+      "messages": [],
+      "total_additions": 986,
+      "total_deletions": 4,
+      "accepted_lines": 983,
+      "overriden_lines": 0
+    }
+  }
+}
