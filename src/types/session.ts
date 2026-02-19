@@ -16,6 +16,8 @@ export interface Session {
     exploitation: AppData["exploitation"];
     budget: AppData["budget"];
   };
+  // Vector embedding fields (managed by Cloud Functions — not set client-side)
+  embeddingText?: string;
 }
 
 export interface SessionListItem {

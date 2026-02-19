@@ -66,7 +66,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     loadSessions();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const loadSessionData = async (sessionId: string) => {
@@ -130,7 +130,7 @@ export default function Dashboard() {
 
   const handleAIInsights = async (sessionId: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    
+
     try {
       // Load session data if not already loaded or if different session
       let session = selectedSession;
@@ -152,7 +152,7 @@ export default function Dashboard() {
       setAiAnalysis(null);
 
       // Get current language
-      const currentLanguage = i18n.language || 'en';
+      const currentLanguage = i18n.language || "en";
 
       // Call AI service
       const analysis = await analyzeReport(session, currentLanguage);
@@ -339,7 +339,7 @@ export default function Dashboard() {
                 }}
                 className='px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-black transition font-semibold text-sm'
               >
-                {t('Back to Dashboard')}
+                {t("Back to Dashboard")}
               </button>
               <LanguageSelector />
               <div className='flex flex-col items-end'>
@@ -382,7 +382,12 @@ export default function Dashboard() {
                     )}
                     <div className='flex gap-4 text-xs text-slate-500'>
                       <span>
-                        {t("Period")}: {new Date(selectedSession.startDate).toLocaleDateString()} - {new Date(selectedSession.endDate).toLocaleDateString()}
+                        {t("Period")}:{" "}
+                        {new Date(
+                          selectedSession.startDate,
+                        ).toLocaleDateString()}{" "}
+                        -{" "}
+                        {new Date(selectedSession.endDate).toLocaleDateString()}
                       </span>
                     </div>
                   </div>
@@ -403,8 +408,12 @@ export default function Dashboard() {
                 {aiLoading && (
                   <div className='flex flex-col items-center justify-center py-12'>
                     <Loader2 className='w-12 h-12 text-blue-500 animate-spin mb-4' />
-                    <p className='text-slate-600 text-lg'>{t("Analyzing your session data...")}</p>
-                    <p className='text-slate-500 text-sm mt-2'>{t("This may take a few moments")}</p>
+                    <p className='text-slate-600 text-lg'>
+                      {t("Analyzing your session data...")}
+                    </p>
+                    <p className='text-slate-500 text-sm mt-2'>
+                      {t("This may take a few moments")}
+                    </p>
                   </div>
                 )}
 
@@ -413,47 +422,69 @@ export default function Dashboard() {
                     <div className='p-4 bg-red-50 rounded-full mb-4'>
                       <AlertCircle className='w-12 h-12 text-red-500' />
                     </div>
-                    <p className='text-red-600 text-lg font-semibold mb-2'>{t("Analysis Failed")}</p>
-                    <p className='text-slate-600 text-sm text-center max-w-md'>{aiError}</p>
+                    <p className='text-red-600 text-lg font-semibold mb-2'>
+                      {t("Analysis Failed")}
+                    </p>
+                    <p className='text-slate-600 text-sm text-center max-w-md'>
+                      {aiError}
+                    </p>
                   </div>
                 )}
 
                 {aiAnalysis && !aiLoading && (
                   <div className='prose prose-slate max-w-none'>
                     <div className='whitespace-pre-wrap text-slate-700 leading-relaxed'>
-                      {aiAnalysis.split('\n').map((line, index) => {
+                      {aiAnalysis.split("\n").map((line, index) => {
                         // Check if line is a heading (starts with #)
-                        if (line.startsWith('###')) {
+                        if (line.startsWith("###")) {
                           return (
-                            <h3 key={index} className='text-lg font-bold text-slate-800 mt-6 mb-3'>
-                              {line.replace(/^###\s*/, '')}
+                            <h3
+                              key={index}
+                              className='text-lg font-bold text-slate-800 mt-6 mb-3'
+                            >
+                              {line.replace(/^###\s*/, "")}
                             </h3>
                           );
-                        } else if (line.startsWith('##')) {
+                        } else if (line.startsWith("##")) {
                           return (
-                            <h2 key={index} className='text-xl font-bold text-slate-800 mt-6 mb-3'>
-                              {line.replace(/^##\s*/, '')}
+                            <h2
+                              key={index}
+                              className='text-xl font-bold text-slate-800 mt-6 mb-3'
+                            >
+                              {line.replace(/^##\s*/, "")}
                             </h2>
                           );
-                        } else if (line.startsWith('#')) {
+                        } else if (line.startsWith("#")) {
                           return (
-                            <h1 key={index} className='text-2xl font-bold text-slate-800 mt-6 mb-4'>
-                              {line.replace(/^#\s*/, '')}
+                            <h1
+                              key={index}
+                              className='text-2xl font-bold text-slate-800 mt-6 mb-4'
+                            >
+                              {line.replace(/^#\s*/, "")}
                             </h1>
                           );
-                        } else if (line.startsWith('* ') || line.startsWith('- ')) {
+                        } else if (
+                          line.startsWith("* ") ||
+                          line.startsWith("- ")
+                        ) {
                           return (
-                            <li key={index} className='ml-6 mb-2 text-slate-700'>
-                              {line.replace(/^[*-]\s*/, '')}
+                            <li
+                              key={index}
+                              className='ml-6 mb-2 text-slate-700'
+                            >
+                              {line.replace(/^[*-]\s*/, "")}
                             </li>
                           );
                         } else if (line.match(/^\d+\./)) {
                           return (
-                            <li key={index} className='ml-6 mb-2 text-slate-700 list-decimal'>
-                              {line.replace(/^\d+\.\s*/, '')}
+                            <li
+                              key={index}
+                              className='ml-6 mb-2 text-slate-700 list-decimal'
+                            >
+                              {line.replace(/^\d+\.\s*/, "")}
                             </li>
                           );
-                        } else if (line.trim() === '') {
+                        } else if (line.trim() === "") {
                           return <br key={index} />;
                         } else {
                           return (
@@ -470,7 +501,9 @@ export default function Dashboard() {
                 {!aiLoading && !aiError && !aiAnalysis && (
                   <div className='flex flex-col items-center justify-center py-12'>
                     <Zap className='w-12 h-12 text-slate-300 mb-4' />
-                    <p className='text-slate-500'>{t("No analysis available")}</p>
+                    <p className='text-slate-500'>
+                      {t("No analysis available")}
+                    </p>
                   </div>
                 )}
               </div>
@@ -482,7 +515,11 @@ export default function Dashboard() {
                 <AlertCircle className='w-5 h-5 text-blue-600 shrink-0 mt-0.5' />
                 <div className='text-sm text-slate-700'>
                   <p className='font-semibold mb-1'>{t("About AI Insights")}</p>
-                  <p>{t("This analysis is generated by AI based on your session data. Use it as a supplementary tool for decision-making.")}</p>
+                  <p>
+                    {t(
+                      "This analysis is generated by AI based on your session data. Use it as a supplementary tool for decision-making.",
+                    )}
+                  </p>
                 </div>
               </div>
             </div>
@@ -498,7 +535,7 @@ export default function Dashboard() {
         <div className='flex items-center justify-between container mx-auto'>
           <div className='flex items-center gap-6'>
             <h1 className='text-lg font-bold text-gray-900'>
-              {t("Protocole Dashboard")}
+              Standards and Means
             </h1>
           </div>
           <div className='flex items-center gap-4'>
@@ -577,9 +614,10 @@ export default function Dashboard() {
                         title={t("Get AI insights for this session")}
                       >
                         <Zap className='w-4 h-4 text-blue-500 font-bold' />
-                        <p className='text-xs text-blue-600 font-bold'>AI insights</p>
+                        <p className='text-xs text-blue-600 font-bold'>
+                          AI insights
+                        </p>
                       </div>
-                      
                     </div>
                     {session.description && (
                       <p className='text-xs text-slate-600 mb-2 line-clamp-2'>
@@ -604,7 +642,7 @@ export default function Dashboard() {
 
                     <div className='flex gap-1 mt-3'>
                       <button
-                       onClick={(e) => {
+                        onClick={(e) => {
                           e.stopPropagation();
                           navigate(`/budget/${session.id}`);
                         }}
@@ -613,7 +651,7 @@ export default function Dashboard() {
                         <FileSearch className='w-3 h-3' />
                         {t("Preview")}
                       </button>
-                      
+
                       <button
                         onClick={(e) =>
                           handleDuplicateSession(
@@ -643,555 +681,563 @@ export default function Dashboard() {
         </aside>
 
         {/* Main Content Area */}
-        <main className='flex-1 overflow-y-auto p-6'>
-          {loadingSessionData ? (
-            <div className='flex items-center justify-center h-full'>
-              <div className='text-center'>
-                <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4'></div>
-                <p className='text-gray-600'>{t("Loading session data...")}</p>
-              </div>
-            </div>
-          ) : !selectedSession ? (
-            <div className='flex items-center justify-center h-full'>
-              <div className='text-center max-w-md'>
-                <BarChart3 className='w-16 h-16 text-slate-300 mx-auto mb-4' />
-                <h3 className='text-xl font-semibold text-slate-700 mb-2'>
-                  {t("No Session Selected")}
-                </h3>
-                <p className='text-slate-500'>
-                  {t(
-                    "Select a session from the sidebar to view its details and statistics",
-                  )}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div>
-              {/* Session Header */}
-              <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
-                <div className='flex justify-between items-start'>
-                  <div>
-                    <h2 className='text-2xl font-bold text-slate-800 mb-1'>
-                      {selectedSession.sessionName}
-                    </h2>
-                    {selectedSession.description && (
-                      <p className='text-slate-600 text-sm mb-3'>
-                        {selectedSession.description}
-                      </p>
-                    )}
-                    <div className='flex gap-4 text-sm text-slate-600'>
-                      <span>
-                        <strong>{t("Period")}:</strong>{" "}
-                        {new Date(
-                          selectedSession.startDate,
-                        ).toLocaleDateString()}{" "}
-                        -{" "}
-                        {new Date(selectedSession.endDate).toLocaleDateString()}
-                      </span>
-                      <span>
-                        <strong>{t("Updated")}:</strong>{" "}
-                        {new Date(
-                          selectedSession.updatedAt,
-                        ).toLocaleDateString()}
-                      </span>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => navigate(`/budget/${selectedSession.id}`)}
-                    className='px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-black transition font-semibold text-sm flex items-center gap-2'
-                  >
-                    <Eye className='w-4 h-4' />
-                    {t("Open Full View")}
-                  </button>
+        <main className='flex-1 overflow-y-auto'>
+          <div className='container mx-auto p-6'>
+            {loadingSessionData ? (
+              <div className='flex items-center justify-center h-full'>
+                <div className='text-center'>
+                  <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4'></div>
+                  <p className='text-gray-600'>
+                    {t("Loading session data...")}
+                  </p>
                 </div>
               </div>
-
-              {/* Statistics Grid */}
-              {stats && (
-                <>
-                  {/* Key Metrics - Top Row */}
-                  <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6'>
-                    <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-5'>
-                      <div className='flex items-center justify-between mb-3'>
-                        <div className='p-3 bg-gray-100 rounded-lg'>
-                          <Users className='w-6 h-6 text-gray-700' />
-                        </div>
+            ) : !selectedSession ? (
+              <div className='flex items-center justify-center h-full'>
+                <div className='text-center max-w-md'>
+                  <BarChart3 className='w-16 h-16 text-slate-300 mx-auto mb-4' />
+                  <h3 className='text-xl font-semibold text-slate-700 mb-2'>
+                    {t("No Session Selected")}
+                  </h3>
+                  <p className='text-slate-500'>
+                    {t(
+                      "Select a session from the sidebar to view its details and statistics",
+                    )}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div>
+                {/* Session Header */}
+                <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
+                  <div className='flex justify-between items-start'>
+                    <div>
+                      <h2 className='text-2xl font-bold text-slate-800 mb-1'>
+                        {selectedSession.sessionName}
+                      </h2>
+                      {selectedSession.description && (
+                        <p className='text-slate-600 text-sm mb-3'>
+                          {selectedSession.description}
+                        </p>
+                      )}
+                      <div className='flex gap-4 text-sm text-slate-600'>
+                        <span>
+                          <strong>{t("Period")}:</strong>{" "}
+                          {new Date(
+                            selectedSession.startDate,
+                          ).toLocaleDateString()}{" "}
+                          -{" "}
+                          {new Date(
+                            selectedSession.endDate,
+                          ).toLocaleDateString()}
+                        </span>
+                        <span>
+                          <strong>{t("Updated")}:</strong>{" "}
+                          {new Date(
+                            selectedSession.updatedAt,
+                          ).toLocaleDateString()}
+                        </span>
                       </div>
-                      <h3 className='text-sm font-medium text-slate-600 mb-1'>
-                        {t("Total Personnel")}
-                      </h3>
-                      <p className='text-2xl font-bold text-slate-800'>
-                        {stats.totalPersonnel}
-                      </p>
                     </div>
+                    <button
+                      onClick={() => navigate(`/budget/${selectedSession.id}`)}
+                      className='px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-black transition font-semibold text-sm flex items-center gap-2'
+                    >
+                      <Eye className='w-4 h-4' />
+                      {t("Open Full View")}
+                    </button>
+                  </div>
+                </div>
 
-                    <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-5'>
-                      <div className='flex items-center justify-between mb-3'>
-                        <div className='p-3 bg-gray-100 rounded-lg'>
-                          <Users className='w-6 h-6 text-gray-700' />
+                {/* Statistics Grid */}
+                {stats && (
+                  <>
+                    {/* Key Metrics - Top Row */}
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6'>
+                      <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-5'>
+                        <div className='flex items-center justify-between mb-3'>
+                          <div className='p-3 bg-gray-100 rounded-lg'>
+                            <Users className='w-6 h-6 text-gray-700' />
+                          </div>
                         </div>
+                        <h3 className='text-sm font-medium text-slate-600 mb-1'>
+                          {t("Total Personnel")}
+                        </h3>
+                        <p className='text-2xl font-bold text-slate-800'>
+                          {stats.totalPersonnel}
+                        </p>
                       </div>
-                      <h3 className='text-sm font-medium text-slate-600 mb-1'>
-                        {t("Management Staff")}
-                      </h3>
-                      <p className='text-2xl font-bold text-slate-800'>
-                        {stats.managementCount}
-                      </p>
-                    </div>
 
-                    <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-5'>
-                      <div className='flex items-center justify-between mb-3'>
-                        <div className='p-3 bg-gray-200 rounded-lg'>
-                          <Banknote className='w-6 h-6  text-gray-700' />
+                      <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-5'>
+                        <div className='flex items-center justify-between mb-3'>
+                          <div className='p-3 bg-gray-100 rounded-lg'>
+                            <Users className='w-6 h-6 text-gray-700' />
+                          </div>
                         </div>
+                        <h3 className='text-sm font-medium text-slate-600 mb-1'>
+                          {t("Management Staff")}
+                        </h3>
+                        <p className='text-2xl font-bold text-slate-800'>
+                          {stats.managementCount}
+                        </p>
                       </div>
-                      <h3 className='text-sm font-medium text-slate-600 mb-1'>
-                        {t("Salary Mass (CDF)")}
-                      </h3>
-                      <p className='text-2xl font-bold text-slate-800'>
-                        {stats.salaryMass.toLocaleString()}
-                      </p>
-                    </div>
 
-                    <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-5'>
-                      <div className='flex items-center justify-between mb-3'>
-                        <div
-                          className={`p-3 rounded-lg ${
-                            stats.operatingMargin >= 0
-                              ? "bg-gray-200"
-                              : "bg-red-100"
-                          }`}
-                        >
-                          <TrendingUp
-                            className={`w-6 h-6 ${
+                      <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-5'>
+                        <div className='flex items-center justify-between mb-3'>
+                          <div className='p-3 bg-gray-200 rounded-lg'>
+                            <Banknote className='w-6 h-6  text-gray-700' />
+                          </div>
+                        </div>
+                        <h3 className='text-sm font-medium text-slate-600 mb-1'>
+                          {t("Salary Mass (CDF)")}
+                        </h3>
+                        <p className='text-2xl font-bold text-slate-800'>
+                          {stats.salaryMass.toLocaleString()}
+                        </p>
+                      </div>
+
+                      <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-5'>
+                        <div className='flex items-center justify-between mb-3'>
+                          <div
+                            className={`p-3 rounded-lg ${
                               stats.operatingMargin >= 0
-                                ? "text-black"
-                                : "text-red-600"
+                                ? "bg-gray-200"
+                                : "bg-red-100"
                             }`}
-                          />
+                          >
+                            <TrendingUp
+                              className={`w-6 h-6 ${
+                                stats.operatingMargin >= 0
+                                  ? "text-black"
+                                  : "text-red-600"
+                              }`}
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <h3 className='text-sm font-medium text-slate-600 mb-1'>
-                        {t("Operating Margin")}
-                      </h3>
-                      <p
-                        className={`text-2xl font-bold ${
-                          stats.operatingMargin >= 0
-                            ? "text-black"
-                            : "text-red-600"
-                        }`}
-                      >
-                        {stats.operatingMargin.toLocaleString()}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Budget Production KPIs */}
-                  <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
-                    <h3 className='text-lg font-bold text-slate-800 mb-4 flex items-center gap-2'>
-                      <BarChart3 className='w-5 h-5 text-gray-700' />
-                      {t("Budget Production Performance")}
-                    </h3>
-                    <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
-                      <div className='p-4 bg-blue-50 rounded-lg'>
-                        <p className='text-xs text-slate-600 mb-1'>
-                          {t("Forecast")}
-                        </p>
-                        <p className='text-xl font-bold text-slate-800'>
-                          {stats.productionForecast.toLocaleString()}
-                        </p>
-                      </div>
-                      <div className='p-4 bg-green-50 rounded-lg'>
-                        <p className='text-xs text-slate-600 mb-1'>
-                          {t("Achievement")}
-                        </p>
-                        <p className='text-xl font-bold text-green-600'>
-                          {stats.productionAchievement.toLocaleString()}
-                        </p>
-                      </div>
-                      <div
-                        className={`p-4 rounded-lg ${
-                          stats.productionVariance >= 0
-                            ? "bg-green-50"
-                            : "bg-red-50"
-                        }`}
-                      >
-                        <p className='text-xs text-slate-600 mb-1'>
-                          {t("Variance")}
-                        </p>
-                        <p
-                          className={`text-xl font-bold ${
-                            stats.productionVariance >= 0
-                              ? "text-green-600"
-                              : "text-red-600"
-                          }`}
-                        >
-                          {stats.productionVariance >= 0 ? "+" : ""}
-                          {stats.productionVariance.toLocaleString()}
-                        </p>
-                      </div>
-                      <div className='p-4 bg-purple-50 rounded-lg'>
-                        <p className='text-xs text-slate-600 mb-1'>
-                          {t("Performance")}
-                        </p>
-                        <p className='text-xl font-bold text-purple-600'>
-                          {stats.productionPerformance}%
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Budget Charges KPIs */}
-                  <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
-                    <h3 className='text-lg font-bold text-slate-800 mb-4 flex items-center gap-2'>
-                      <Banknote className='w-5 h-5  text-gray-700' />
-                      {t("Budget Charges")}
-                    </h3>
-                    <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                      <div className='p-4 bg-blue-50 rounded-lg'>
-                        <p className='text-xs text-slate-600 mb-1'>
-                          {t("Forecast")}
-                        </p>
-                        <p className='text-xl font-bold text-slate-800'>
-                          {stats.chargesForecast.toLocaleString()}
-                        </p>
-                      </div>
-                      <div className='p-4 bg-blue-50 rounded-lg'>
-                        <p className='text-xs text-slate-600 mb-1'>
-                          {t("Achievement")}
-                        </p>
-                        <p className='text-xl font-bold text-amber-600'>
-                          {stats.chargesAchievement.toLocaleString()}
-                        </p>
-                      </div>
-                      <div
-                        className={`p-4 rounded-lg ${
-                          stats.chargesVariance >= 0
-                            ? "bg-green-50"
-                            : "bg-red-50"
-                        }`}
-                      >
-                        <p className='text-xs text-slate-600 mb-1'>
-                          {t("Savings/Overrun")}
-                        </p>
-                        <p
-                          className={`text-xl font-bold ${
-                            stats.chargesVariance >= 0
-                              ? "text-green-600"
-                              : "text-red-600"
-                          }`}
-                        >
-                          {stats.chargesVariance >= 0 ? "+" : ""}
-                          {stats.chargesVariance.toLocaleString()}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Detailed KPI Table */}
-                  <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 overflow-hidden mb-6'>
-                    <div className='px-6 py-3 bg-linear-to-r from-indigo-50 to-slate-50 border-b-2 border-slate-200'>
-                      <h3 className='text-lg font-bold text-slate-800 flex items-center gap-2'>
-                        <LayoutDashboard className='w-5 h-5 text-indigo-600' />
-                        {t("Key Performance Indicators")}
-                      </h3>
-                    </div>
-                    <div className='overflow-x-auto'>
-                      <table className='w-full text-left border-collapse text-xs'>
-                        <thead className='bg-linear-to-r from-slate-100 to-slate-50'>
-                          <tr className='border-b-2 border-slate-300'>
-                            <th className='px-3 py-2 font-semibold text-slate-700 w-1/3 border-r border-slate-200'>
-                              {t("Indicator")}
-                            </th>
-                            <th className='px-3 py-2 font-semibold text-slate-600 w-1/3 border-r border-slate-200'>
-                              {t("Formula")}
-                            </th>
-                            <th className='px-3 py-2 font-bold text-slate-800 text-right w-1/3'>
-                              {t("Value")}
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
-                            <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                              {t("Total Workforce")}
-                            </td>
-                            <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
-                              <div className='flex items-center gap-2'>
-                                <Calculator
-                                  size={12}
-                                  className='text-slate-400'
-                                />
-                                <span>{t("Sum of all personnel")}</span>
-                              </div>
-                            </td>
-                            <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
-                              {stats.totalPersonnel.toLocaleString()}
-                            </td>
-                          </tr>
-                          <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
-                            <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                              {t("V.A.")}
-                            </td>
-                            <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
-                              <div className='flex items-center gap-2'>
-                                <Calculator
-                                  size={12}
-                                  className='text-slate-400'
-                                />
-                                <span>{t("Production - Charges (60-65)")}</span>
-                              </div>
-                            </td>
-                            <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
-                              {stats.va.toLocaleString("en-US", {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                            </td>
-                          </tr>
-                          <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
-                            <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                              {t("Coefficient d'Exploitation")}
-                            </td>
-                            <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
-                              <div className='flex items-center gap-2'>
-                                <Calculator
-                                  size={12}
-                                  className='text-slate-400'
-                                />
-                                <span>{t("Production / Total Charges")}</span>
-                              </div>
-                            </td>
-                            <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
-                              {stats.coeffExploitation.toFixed(2)}
-                            </td>
-                          </tr>
-                          <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
-                            <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                              {t("EBE")}
-                            </td>
-                            <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
-                              <div className='flex items-center gap-2'>
-                                <Calculator
-                                  size={12}
-                                  className='text-slate-400'
-                                />
-                                <span>{t("V.A. - Charge 66")}</span>
-                              </div>
-                            </td>
-                            <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
-                              {stats.ebe.toLocaleString("en-US", {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                            </td>
-                          </tr>
-                          <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
-                            <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                              {t("R.E.")}
-                            </td>
-                            <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
-                              <div className='flex items-center gap-2'>
-                                <Calculator
-                                  size={12}
-                                  className='text-slate-400'
-                                />
-                                <span>{t("EBE - Charge 67")}</span>
-                              </div>
-                            </td>
-                            <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
-                              {stats.re.toLocaleString("en-US", {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                            </td>
-                          </tr>
-                          <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
-                            <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                              {t("Encours Clients")}
-                            </td>
-                            <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
-                              <div className='flex items-center gap-2'>
-                                <Calculator
-                                  size={12}
-                                  className='text-slate-400'
-                                />
-                                <span>{t("Production - Receipts")}</span>
-                              </div>
-                            </td>
-                            <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
-                              {stats.encoursClients.toLocaleString("en-US", {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                            </td>
-                          </tr>
-                          <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
-                            <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                              {t("Recovery Rate")}
-                            </td>
-                            <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
-                              <div className='flex items-center gap-2'>
-                                <Calculator
-                                  size={12}
-                                  className='text-slate-400'
-                                />
-                                <span>
-                                  {t("(Receipts / Production) × 100")}
-                                </span>
-                              </div>
-                            </td>
-                            <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
-                              {stats.recoveryRate.toFixed(2)}%
-                            </td>
-                          </tr>
-                          <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
-                            <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                              {t("Productivity")}
-                            </td>
-                            <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
-                              <div className='flex items-center gap-2'>
-                                <Calculator
-                                  size={12}
-                                  className='text-slate-400'
-                                />
-                                <span>{t("Production / Workforce")}</span>
-                              </div>
-                            </td>
-                            <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
-                              {stats.productivity.toLocaleString("en-US", {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                            </td>
-                          </tr>
-                          <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
-                            <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                              {t("Average Cost")}
-                            </td>
-                            <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
-                              <div className='flex items-center gap-2'>
-                                <Calculator
-                                  size={12}
-                                  className='text-slate-400'
-                                />
-                                <span>{t("Charge 66 / Workforce")}</span>
-                              </div>
-                            </td>
-                            <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
-                              {stats.avgCost.toLocaleString("en-US", {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}
-                            </td>
-                          </tr>
-                          <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
-                            <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                              {t("Supervision Ratio")}
-                            </td>
-                            <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
-                              <div className='flex items-center gap-2'>
-                                <Calculator
-                                  size={12}
-                                  className='text-slate-400'
-                                />
-                                <span>{t("Workforce / Management")}</span>
-                              </div>
-                            </td>
-                            <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
-                              {stats.supervisionRatio.toFixed(2)}
-                            </td>
-                          </tr>
-                          <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
-                            <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                              {t("Average Salary")}
-                            </td>
-                            <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
-                              <div className='flex items-center gap-2'>
-                                <Calculator
-                                  size={12}
-                                  className='text-slate-400'
-                                />
-                                <span>{t("Salary Mass / Workforce")}</span>
-                              </div>
-                            </td>
-                            <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
-                              {stats.avgSalary.toLocaleString("fr-FR", {
-                                style: "currency",
-                                currency: "CDF",
-                              })}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div className='m-4 p-4 bg-linear-to-r from-yellow-50 to-orange-50 text-slate-700 text-xs rounded-lg border-2 border-yellow-300 shadow-sm'>
-                      <strong className='text-yellow-800'>Note:</strong> These
-                      values are calculated automatically based on the data
-                      entered in the Personnel and Budget sections. Ensure all
-                      budget achievements and personnel counts are up-to-date
-                      for accurate results.
-                    </div>
-                  </div>
-
-                  {/* Treasury Position */}
-                  <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
-                    <h3 className='text-lg font-bold text-slate-800 mb-4 flex items-center gap-2'>
-                      <TrendingUp className='w-5 h-5 text-black' />
-                      {t("Treasury Position")}
-                    </h3>
-                    <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                      <div className='p-4 bg-green-50 rounded-lg'>
-                        <p className='text-xs text-slate-600 mb-1'>
-                          {t("Receipts")}
-                        </p>
-                        <p className='text-sm text-slate-500 mb-1'>
-                          {t("Forecast")}:{" "}
-                          {stats.treasuryReceiptsForecast.toLocaleString()}
-                        </p>
-                        <p className='text-xl font-bold text-green-600'>
-                          {stats.treasuryReceiptsAchievement.toLocaleString()}
-                        </p>
-                      </div>
-                      <div className='p-4 bg-red-50 rounded-lg'>
-                        <p className='text-xs text-slate-600 mb-1'>
-                          {t("Disbursements")}
-                        </p>
-                        <p className='text-sm text-slate-500 mb-1'>
-                          {t("Forecast")}:{" "}
-                          {stats.treasuryDisbursementsForecast.toLocaleString()}
-                        </p>
-                        <p className='text-xl font-bold text-red-600'>
-                          {stats.treasuryDisbursementsAchievement.toLocaleString()}
-                        </p>
-                      </div>
-                      <div
-                        className={`p-4 rounded-lg ${
-                          stats.netTreasuryPosition >= 0
-                            ? "bg-green-50"
-                            : "bg-red-50"
-                        }`}
-                      >
-                        <p className='text-xs text-slate-600 mb-1'>
-                          {t("Net Position")}
-                        </p>
+                        <h3 className='text-sm font-medium text-slate-600 mb-1'>
+                          {t("Operating Margin")}
+                        </h3>
                         <p
                           className={`text-2xl font-bold ${
-                            stats.netTreasuryPosition >= 0
-                              ? "text-green-600"
+                            stats.operatingMargin >= 0
+                              ? "text-black"
                               : "text-red-600"
                           }`}
                         >
-                          {stats.netTreasuryPosition >= 0 ? "+" : ""}
-                          {stats.netTreasuryPosition.toLocaleString()}
+                          {stats.operatingMargin.toLocaleString()}
                         </p>
                       </div>
                     </div>
-                  </div>
-                </>
-              )}
-            </div>
-          )}
+
+                    {/* Budget Production KPIs */}
+                    <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
+                      <h3 className='text-lg font-bold text-slate-800 mb-4 flex items-center gap-2'>
+                        <BarChart3 className='w-5 h-5 text-gray-700' />
+                        {t("Budget Production Performance")}
+                      </h3>
+                      <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
+                        <div className='p-4 bg-blue-50 rounded-lg'>
+                          <p className='text-xs text-slate-600 mb-1'>
+                            {t("Forecast")}
+                          </p>
+                          <p className='text-xl font-bold text-slate-800'>
+                            {stats.productionForecast.toLocaleString()}
+                          </p>
+                        </div>
+                        <div className='p-4 bg-green-50 rounded-lg'>
+                          <p className='text-xs text-slate-600 mb-1'>
+                            {t("Achievement")}
+                          </p>
+                          <p className='text-xl font-bold text-green-600'>
+                            {stats.productionAchievement.toLocaleString()}
+                          </p>
+                        </div>
+                        <div
+                          className={`p-4 rounded-lg ${
+                            stats.productionVariance >= 0
+                              ? "bg-green-50"
+                              : "bg-red-50"
+                          }`}
+                        >
+                          <p className='text-xs text-slate-600 mb-1'>
+                            {t("Variance")}
+                          </p>
+                          <p
+                            className={`text-xl font-bold ${
+                              stats.productionVariance >= 0
+                                ? "text-green-600"
+                                : "text-red-600"
+                            }`}
+                          >
+                            {stats.productionVariance >= 0 ? "+" : ""}
+                            {stats.productionVariance.toLocaleString()}
+                          </p>
+                        </div>
+                        <div className='p-4 bg-purple-50 rounded-lg'>
+                          <p className='text-xs text-slate-600 mb-1'>
+                            {t("Performance")}
+                          </p>
+                          <p className='text-xl font-bold text-purple-600'>
+                            {stats.productionPerformance}%
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Budget Charges KPIs */}
+                    <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
+                      <h3 className='text-lg font-bold text-slate-800 mb-4 flex items-center gap-2'>
+                        <Banknote className='w-5 h-5  text-gray-700' />
+                        {t("Budget Charges")}
+                      </h3>
+                      <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                        <div className='p-4 bg-blue-50 rounded-lg'>
+                          <p className='text-xs text-slate-600 mb-1'>
+                            {t("Forecast")}
+                          </p>
+                          <p className='text-xl font-bold text-slate-800'>
+                            {stats.chargesForecast.toLocaleString()}
+                          </p>
+                        </div>
+                        <div className='p-4 bg-blue-50 rounded-lg'>
+                          <p className='text-xs text-slate-600 mb-1'>
+                            {t("Achievement")}
+                          </p>
+                          <p className='text-xl font-bold text-amber-600'>
+                            {stats.chargesAchievement.toLocaleString()}
+                          </p>
+                        </div>
+                        <div
+                          className={`p-4 rounded-lg ${
+                            stats.chargesVariance >= 0
+                              ? "bg-green-50"
+                              : "bg-red-50"
+                          }`}
+                        >
+                          <p className='text-xs text-slate-600 mb-1'>
+                            {t("Savings/Overrun")}
+                          </p>
+                          <p
+                            className={`text-xl font-bold ${
+                              stats.chargesVariance >= 0
+                                ? "text-green-600"
+                                : "text-red-600"
+                            }`}
+                          >
+                            {stats.chargesVariance >= 0 ? "+" : ""}
+                            {stats.chargesVariance.toLocaleString()}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Detailed KPI Table */}
+                    <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 overflow-hidden mb-6'>
+                      <div className='px-6 py-3 bg-linear-to-r from-indigo-50 to-slate-50 border-b-2 border-slate-200'>
+                        <h3 className='text-lg font-bold text-slate-800 flex items-center gap-2'>
+                          <LayoutDashboard className='w-5 h-5 text-indigo-600' />
+                          {t("Key Performance Indicators")}
+                        </h3>
+                      </div>
+                      <div className='overflow-x-auto'>
+                        <table className='w-full text-left border-collapse text-xs'>
+                          <thead className='bg-linear-to-r from-slate-100 to-slate-50'>
+                            <tr className='border-b-2 border-slate-300'>
+                              <th className='px-3 py-2 font-semibold text-slate-700 w-1/3 border-r border-slate-200'>
+                                {t("Indicator")}
+                              </th>
+                              <th className='px-3 py-2 font-semibold text-slate-600 w-1/3 border-r border-slate-200'>
+                                {t("Formula")}
+                              </th>
+                              <th className='px-3 py-2 font-bold text-slate-800 text-right w-1/3'>
+                                {t("Value")}
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
+                              <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
+                                {t("Total Workforce")}
+                              </td>
+                              <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
+                                <div className='flex items-center gap-2'>
+                                  <Calculator
+                                    size={12}
+                                    className='text-slate-400'
+                                  />
+                                  <span>{t("Sum of all personnel")}</span>
+                                </div>
+                              </td>
+                              <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
+                                {stats.totalPersonnel.toLocaleString()}
+                              </td>
+                            </tr>
+                            <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
+                              <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
+                                {t("V.A.")}
+                              </td>
+                              <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
+                                <div className='flex items-center gap-2'>
+                                  <Calculator
+                                    size={12}
+                                    className='text-slate-400'
+                                  />
+                                  <span>
+                                    {t("Production - Charges (60-65)")}
+                                  </span>
+                                </div>
+                              </td>
+                              <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
+                                {stats.va.toLocaleString("en-US", {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+                              </td>
+                            </tr>
+                            <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
+                              <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
+                                {t("Coefficient d'Exploitation")}
+                              </td>
+                              <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
+                                <div className='flex items-center gap-2'>
+                                  <Calculator
+                                    size={12}
+                                    className='text-slate-400'
+                                  />
+                                  <span>{t("Production / Total Charges")}</span>
+                                </div>
+                              </td>
+                              <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
+                                {stats.coeffExploitation.toFixed(2)}
+                              </td>
+                            </tr>
+                            <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
+                              <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
+                                {t("EBE")}
+                              </td>
+                              <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
+                                <div className='flex items-center gap-2'>
+                                  <Calculator
+                                    size={12}
+                                    className='text-slate-400'
+                                  />
+                                  <span>{t("V.A. - Charge 66")}</span>
+                                </div>
+                              </td>
+                              <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
+                                {stats.ebe.toLocaleString("en-US", {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+                              </td>
+                            </tr>
+                            <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
+                              <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
+                                {t("R.E.")}
+                              </td>
+                              <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
+                                <div className='flex items-center gap-2'>
+                                  <Calculator
+                                    size={12}
+                                    className='text-slate-400'
+                                  />
+                                  <span>{t("EBE - Charge 67")}</span>
+                                </div>
+                              </td>
+                              <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
+                                {stats.re.toLocaleString("en-US", {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+                              </td>
+                            </tr>
+                            <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
+                              <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
+                                {t("Encours Clients")}
+                              </td>
+                              <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
+                                <div className='flex items-center gap-2'>
+                                  <Calculator
+                                    size={12}
+                                    className='text-slate-400'
+                                  />
+                                  <span>{t("Production - Receipts")}</span>
+                                </div>
+                              </td>
+                              <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
+                                {stats.encoursClients.toLocaleString("en-US", {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+                              </td>
+                            </tr>
+                            <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
+                              <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
+                                {t("Recovery Rate")}
+                              </td>
+                              <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
+                                <div className='flex items-center gap-2'>
+                                  <Calculator
+                                    size={12}
+                                    className='text-slate-400'
+                                  />
+                                  <span>
+                                    {t("(Receipts / Production) × 100")}
+                                  </span>
+                                </div>
+                              </td>
+                              <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
+                                {stats.recoveryRate.toFixed(2)}%
+                              </td>
+                            </tr>
+                            <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
+                              <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
+                                {t("Productivity")}
+                              </td>
+                              <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
+                                <div className='flex items-center gap-2'>
+                                  <Calculator
+                                    size={12}
+                                    className='text-slate-400'
+                                  />
+                                  <span>{t("Production / Workforce")}</span>
+                                </div>
+                              </td>
+                              <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
+                                {stats.productivity.toLocaleString("en-US", {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+                              </td>
+                            </tr>
+                            <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
+                              <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
+                                {t("Average Cost")}
+                              </td>
+                              <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
+                                <div className='flex items-center gap-2'>
+                                  <Calculator
+                                    size={12}
+                                    className='text-slate-400'
+                                  />
+                                  <span>{t("Charge 66 / Workforce")}</span>
+                                </div>
+                              </td>
+                              <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
+                                {stats.avgCost.toLocaleString("en-US", {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
+                                })}
+                              </td>
+                            </tr>
+                            <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
+                              <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
+                                {t("Supervision Ratio")}
+                              </td>
+                              <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
+                                <div className='flex items-center gap-2'>
+                                  <Calculator
+                                    size={12}
+                                    className='text-slate-400'
+                                  />
+                                  <span>{t("Workforce / Management")}</span>
+                                </div>
+                              </td>
+                              <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
+                                {stats.supervisionRatio.toFixed(2)}
+                              </td>
+                            </tr>
+                            <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
+                              <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
+                                {t("Average Salary")}
+                              </td>
+                              <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
+                                <div className='flex items-center gap-2'>
+                                  <Calculator
+                                    size={12}
+                                    className='text-slate-400'
+                                  />
+                                  <span>{t("Salary Mass / Workforce")}</span>
+                                </div>
+                              </td>
+                              <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
+                                {stats.avgSalary.toLocaleString("fr-FR", {
+                                  style: "currency",
+                                  currency: "CDF",
+                                })}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className='m-4 p-4 bg-linear-to-r from-yellow-50 to-orange-50 text-slate-700 text-xs rounded-lg border-2 border-yellow-300 shadow-sm'>
+                        <strong className='text-yellow-800'>Note:</strong> These
+                        values are calculated automatically based on the data
+                        entered in the Personnel and Budget sections. Ensure all
+                        budget achievements and personnel counts are up-to-date
+                        for accurate results.
+                      </div>
+                    </div>
+
+                    {/* Treasury Position */}
+                    <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
+                      <h3 className='text-lg font-bold text-slate-800 mb-4 flex items-center gap-2'>
+                        <TrendingUp className='w-5 h-5 text-black' />
+                        {t("Treasury Position")}
+                      </h3>
+                      <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                        <div className='p-4 bg-green-50 rounded-lg'>
+                          <p className='text-xs text-slate-600 mb-1'>
+                            {t("Receipts")}
+                          </p>
+                          <p className='text-sm text-slate-500 mb-1'>
+                            {t("Forecast")}:{" "}
+                            {stats.treasuryReceiptsForecast.toLocaleString()}
+                          </p>
+                          <p className='text-xl font-bold text-green-600'>
+                            {stats.treasuryReceiptsAchievement.toLocaleString()}
+                          </p>
+                        </div>
+                        <div className='p-4 bg-red-50 rounded-lg'>
+                          <p className='text-xs text-slate-600 mb-1'>
+                            {t("Disbursements")}
+                          </p>
+                          <p className='text-sm text-slate-500 mb-1'>
+                            {t("Forecast")}:{" "}
+                            {stats.treasuryDisbursementsForecast.toLocaleString()}
+                          </p>
+                          <p className='text-xl font-bold text-red-600'>
+                            {stats.treasuryDisbursementsAchievement.toLocaleString()}
+                          </p>
+                        </div>
+                        <div
+                          className={`p-4 rounded-lg ${
+                            stats.netTreasuryPosition >= 0
+                              ? "bg-green-50"
+                              : "bg-red-50"
+                          }`}
+                        >
+                          <p className='text-xs text-slate-600 mb-1'>
+                            {t("Net Position")}
+                          </p>
+                          <p
+                            className={`text-2xl font-bold ${
+                              stats.netTreasuryPosition >= 0
+                                ? "text-green-600"
+                                : "text-red-600"
+                            }`}
+                          >
+                            {stats.netTreasuryPosition >= 0 ? "+" : ""}
+                            {stats.netTreasuryPosition.toLocaleString()}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
         </main>
       </div>
     </div>

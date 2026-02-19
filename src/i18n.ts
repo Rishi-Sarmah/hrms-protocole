@@ -168,6 +168,12 @@ const resources = {
       'Tab_Medical': 'Medical',
       'Tab_Exploitation': 'Exploitation',
       'Tab_Budget': 'Budget',
+      // Chat
+      'chat_title': 'Data Assistant',
+      'chat_open': 'Open chat',
+      'chat_close': 'Close chat',
+      'chat_placeholder': 'Ask about your session data...',
+      'chat_send': 'Send',
       // Upload Features
       'Upload Excel': 'Upload Excel',
       'Upload Budget Excel': 'Upload Budget Excel',
@@ -347,6 +353,12 @@ const resources = {
       'Tab_Medical': 'Médical',
       'Tab_Exploitation': 'Exploitation',
       'Tab_Budget': 'Budget',
+      // Chat
+      'chat_title': 'Assistant de Données',
+      'chat_open': 'Ouvrir le chat',
+      'chat_close': 'Fermer le chat',
+      'chat_placeholder': 'Posez une question sur vos données...',
+      'chat_send': 'Envoyer',
       // Upload Features
       'Upload Excel': 'Télécharger Excel',
       'Upload Budget Excel': 'Télécharger Budget Excel',

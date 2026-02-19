@@ -1,10 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { SessionProvider } from "./contexts/SessionContext";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Budget from "./pages/Budget";
 import RequireAuth from "./components/RequireAuth";
+import ChatPanel from "./components/ChatPanel";
+
+/** Renders the ChatPanel only when the user is authenticated */
+function AuthenticatedChatPanel() {
+  const { user } = useAuth();
+  if (!user) return null;
+  return <ChatPanel />;
+}
 
 function App() {
   return (
@@ -38,6 +46,8 @@ function App() {
               }
             />
           </Routes>
+          {/* Floating chat panel — visible on all authenticated pages */}
+          <AuthenticatedChatPanel />
         </SessionProvider>
       </AuthProvider>
     </Router>
