@@ -1,0 +1,152 @@
+src/components/LanguageSelector.tsx
+  5446d4dee110635c 1,3-4,7-25
+src/services/aiservice.ts
+  72f09e78fa5d9354 5-6,9
+src/components/SaveSessionModal.tsx
+  d36c296df8c6248c 130,144,158,171,189
+firebase.json
+  2ed7523b803f786f 9
+src/services/sessionService.ts
+  d36c296df8c6248c 45,174
+src/components/SessionDetailsForm.tsx
+  d36c296df8c6248c 75,87,109,135,140,142,162,188,210
+.env
+  72f09e78fa5d9354 7-9
+src/types/session.ts
+  d36c296df8c6248c 13
+src/components/SectionStaff.tsx
+  d36c296df8c6248c 71,73,94,103,135,138,150,158,162,169,173,198,230-231,236
+  72f09e78fa5d9354 23-24,27,33-36,44,47,100,127,185,208,225
+src/i18n.ts
+  d36c296df8c6248c 171-180,350-359
+  5446d4dee110635c 1-7,35-54,181,183-186,214-233,360-374
+src/components/SectionMovement.tsx
+  b39f6ea5433bd745 1,3-7,9-10,12-56,61-64,66-72,81-82,84-87,90-93,95-97,99-102,104-109,111-113,115-118,120-123,125-127,129-132,134-139,141-143,145-151,153-169
+  5446d4dee110635c 60,65,88,98,110,114,128,144
+  ad6a4fc92c15affe 133
+src/components/SectionBudget.tsx
+  ad6a4fc92c15affe 2,102,111,118,121-126,134,136-138,144,148,169,177,185,189,193,196,205,207-208,386,419,423,425,429,433
+  d36c296df8c6248c 3,109,142,153,162,172,180,209,366-367,390,400-401,409-410,420,426,430,434
+  b39f6ea5433bd745 1,4-7,9-14,16,18-31,33,35-99,104-108,110,113-117,127-132,139-141,143,145-147,149-152,154-161,163-168,170-171,173-176,178-179,181-184,186-188,190-192,194-195,197-203,210-218,220-361,363-364,368-370,372-373,375,377-385,387-388,392-395,397-398,402-404,406-407,411-417,422,427,431,435-443
+src/components/SectionDashboard.tsx
+  ad6a4fc92c15affe 2,90-92,95-96,99-104,107,110-115
+  d36c296df8c6248c 93,109,117,126-127
+  b39f6ea5433bd745 1,3-6,8-9,11-48,50-89,94,97-98,105-106,108,116,118-125,129-134
+src/pages/Budget.tsx
+  d36c296df8c6248c 236,247,275
+  b39f6ea5433bd745 15,20,30-31,36-37,50-52,99-177,180-182,185-186,209,211-212,214,219,231,237,240,242,245,248,250,254-256,258,260-261,283,285,314-317
+  5446d4dee110635c 244
+src/types/budget.ts
+  b39f6ea5433bd745 2,105,116,141
+src/components/SectionMedical.tsx
+  ad6a4fc92c15affe 1-2,12-13,52-54,57
+  b39f6ea5433bd745 3-7,9-10,14-51,55-56,58-77,79-80,84,103-105,110,120-123,128-130,133-136,139,141-142,144-147,158-161,170-178,184-185,189,194-196,201-206,210-211,216-218,220-229
+  d36c296df8c6248c 82,87-88,90-91,94-95,97-98,124,126-127,140,143,163-169,186-187,192-193,199-200,207-208,214-215
+src/constants.ts
+  b39f6ea5433bd745 2-4,11-12,15-17,20-21,26-36,38-75,77-129,131-135,138-353
+  ad6a4fc92c15affe 5-10,13-14,18-19,22-25,136-137
+src/components/SectionExploitation.tsx
+  ad6a4fc92c15affe 83,173,183,205
+  6f4363db170491d6 89,95,99-101,120-128,141,152
+  d36c296df8c6248c 1-3,12-15,19-22,32,85,166-168,170,180,194,196
+  72f09e78fa5d9354 16-18,87,96,131,150,158,178,186,210,218
+  b39f6ea5433bd745 4-7,9-10,23-28,30-31,33-40,45-49,59-64,68-76,78-80,82,84,145,147,175,207,240-243
+src/components/SectionWorkforce.tsx
+  b39f6ea5433bd745 4-7,9-12,14-21,26,29-31,35,37-39,41-46,49,51-53,55-59,61-63,66-67,69,71-81
+  5446d4dee110635c 25,40,47,54,60,70
+  ad6a4fc92c15affe 2
+src/contexts/AuthContext.tsx
+  4dedcf36df8d25c0 5-7,9,15-17,45,48-53,57,65-66
+src/pages/Login.tsx
+  4dedcf36df8d25c0 3-4,9-14,22,24-25,28-35,39-68,74-138,140-154
+  5446d4dee110635c 7,71-72
+src/pages/Dashboard.tsx
+  72f09e78fa5d9354 10,75
+  b39f6ea5433bd745 15-16,43-58
+  d36c296df8c6248c 79,94
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "d534f22f8c502680dab81208a72afc9772d12816",
+  "prompts": {
+    "5446d4dee110635c": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "92c01680-81a1-459a-a1b8-19a01a2cdf4a",
+        "model": "copilot/gpt-5-mini"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 17,
+      "total_deletions": 17,
+      "accepted_lines": 107,
+      "overriden_lines": 0
+    },
+    "6f4363db170491d6": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "472a2a01-75de-4de4-bbc2-f0a40d843b38",
+        "model": "copilot/grok-code-fast-1"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 18,
+      "total_deletions": 18,
+      "accepted_lines": 16,
+      "overriden_lines": 0
+    },
+    "72f09e78fa5d9354": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "d3705083-efbd-4bc6-8045-c6cbfc80b2a7",
+        "model": "copilot/gpt-4.1"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 10,
+      "total_deletions": 0,
+      "accepted_lines": 34,
+      "overriden_lines": 0
+    },
+    "ad6a4fc92c15affe": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "a0bab21c-a017-4baf-a57e-697bd80bb200",
+        "model": "copilot/claude-sonnet-4.5"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 7,
+      "total_deletions": 7,
+      "accepted_lines": 80,
+      "overriden_lines": 0
+    },
+    "b39f6ea5433bd745": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "db946dd0-1850-4834-99fc-ed551a0739c7",
+        "model": "copilot/claude-sonnet-4.5"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 3,
+      "accepted_lines": 1320,
+      "overriden_lines": 0
+    },
+    "d36c296df8c6248c": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "07be5174-b955-4155-8f13-9325a42c9857",
+        "model": "copilot/claude-sonnet-4.5"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 380,
+      "total_deletions": 126,
+      "accepted_lines": 132,
+      "overriden_lines": 0
+    }
+  }
+}
