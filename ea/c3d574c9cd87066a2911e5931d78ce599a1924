@@ -1,0 +1,25 @@
+src/pages/Dashboard.tsx
+  72f09e78fa5d9354 1135,1143,1152,1160,1174-1175
+.gitignore
+  72f09e78fa5d9354 15-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "eac3d574c9cd87066a2911e5931d78ce599a1924",
+  "prompts": {
+    "72f09e78fa5d9354": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "d3705083-efbd-4bc6-8045-c6cbfc80b2a7",
+        "model": "copilot/gpt-4.1"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 6,
+      "total_deletions": 9,
+      "accepted_lines": 11,
+      "overriden_lines": 0
+    }
+  }
+}
