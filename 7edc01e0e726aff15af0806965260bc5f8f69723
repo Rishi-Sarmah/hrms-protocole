@@ -1,0 +1,29 @@
+src/index.css
+  e54a3ad64aaac092 2-26
+src/services/aiservice.ts
+  e54a3ad64aaac092 27-47
+src/pages/Dashboard.tsx
+  e54a3ad64aaac092 28-30,439-446,448-450,452-453,455-456
+src/components/Mermaid.tsx
+  e54a3ad64aaac092 1-75
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "7edc01e0e726aff15af0806965260bc5f8f69723",
+  "prompts": {
+    "e54a3ad64aaac092": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_385f2ff82ffe0AXhbETNF2W70C",
+        "model": "google/gemini-3-pro-preview"
+      },
+      "human_author": "Rishi-Sarmah <rishi@trueleap.io>",
+      "messages": [],
+      "total_additions": 153,
+      "total_deletions": 73,
+      "accepted_lines": 141,
+      "overriden_lines": 0
+    }
+  }
+}
