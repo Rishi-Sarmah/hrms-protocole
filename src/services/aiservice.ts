@@ -1,64 +1,57 @@
-import { GoogleGenAI } from "@google/genai";
+import { httpsCallable } from "firebase/functions";
+import { functions } from "../firebase";
 import type { Session } from "../types/session";
 
+// ─── Types ──────────────────────────────────────────────────────────────────
+
+interface AnalyzeRequest {
+  data: Session;
+  language: string;
+}
+
+interface AnalyzeResponse {
+  text: string;
+}
+
+// ─── Cloud Function callable reference ──────────────────────────────────────
+
+const analyzeReportFunction = httpsCallable<AnalyzeRequest, AnalyzeResponse>(
+  functions,
+  "analyzeReport"
+);
+
+// ─── Service ────────────────────────────────────────────────────────────────
+
+/**
+ * Analyzes a session report using the secure Cloud Function.
+ * This function sends the session data to the backend where the Gemini API
+ * is called securely without exposing the API key in the browser.
+ * 
+ * @param data - The session data to analyze
+ * @param language - The user's preferred language ('en' or 'fr')
+ * @returns A promise that resolves to the analysis text
+ */
 export const analyzeReport = async (data: Session, language: string): Promise<string> => {
-  if (!import.meta.env.VITE_GEMINI_API_KEY) {
-    return "Error: API Key is missing. Please set VITE_GEMINI_API_KEY in your .env file.";
-  }
-
-  const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
-  
-  const prompt = `
-    You are a senior administrative and operational analyst. Analyze the following report data (Administration, Exploitation, and Budget) provided in JSON format and provide a concise executive summary.
-    
-    The user's preferred language is: ${language === 'fr' ? 'French' : 'English'}. Please respond in this language.
-
-    Focus on:
-    1. Personnel distribution and gender balance.
-    2. Significant personnel movements (hiring vs departures).
-    3. Medical cost drivers and transfer anomalies.
-    4. Operational performance (Exploitation):
-       - Import/Export volume and value trends.
-       - Lab analysis compliance rates.
-    5. Financial Performance (Budget):
-       - Execution rates for Production vs Charges.
-       - Treasury balance and cash flow health.
-    6. Provide 3 actionable recommendations covering HR, Operations, and Finance.
-    7. Generate exactly 2 concise Mermaid diagrams:
-       - Diagram 1: A simple Pie Chart for Personnel Distribution (e.g., Gender or Category).
-       - Diagram 2: A simple Bar Chart (using \`xychart-beta\`) for Financial Overview (e.g., Budget vs Actuals).
-       - Constraints:
-         - Keep diagrams compact. Use short labels.
-         - Place the two diagrams immediately one after another, with no text in between.
-         - Wrap EACH diagram in its own code block with the identifier "mermaid".
-       - Example for Diagram 1:
-       \`\`\`mermaid
-       pie title Personnel
-         "Men" : 60
-         "Women" : 40
-       \`\`\`
-       - Example for Diagram 2:
-       \`\`\`mermaid
-       xychart-beta
-         title "Budget vs Actuals"
-         x-axis ["Prod", "Charges"]
-         y-axis "Amount" 0 --> 100
-         bar [80, 50]
-       \`\`\`
-
-    Data:
-    ${JSON.stringify(data, null, 2)}
-  `;
-
   try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: prompt,
+    const result = await analyzeReportFunction({
+      data,
+      language,
     });
+
+    return result.data.text;
+  } catch (error: any) {
+    console.error("Error calling analyzeReport function:", error);
     
-    return response.text || "No analysis could be generated.";
-  } catch (error) {
-    console.error("Gemini API Error:", error);
+    // Handle specific error cases
+    if (error.code === "unauthenticated") {
+      return "Error: You must be signed in to use AI insights.";
+    }
+    
+    if (error.code === "permission-denied") {
+      return "Error: You don't have permission to use this feature.";
+    }
+    
+    // Generic error message
     return "An error occurred while communicating with the AI service. Please try again.";
   }
 };

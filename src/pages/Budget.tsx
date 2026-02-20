@@ -425,9 +425,9 @@ export default function Budget() {
   const tabs = [
     { id: "dashboard", label: t("Tab_Dashboard") },
     { id: "staff", label: t("Tab_Staff") },
-    { id: "workforce", label: t("Tab_Workforce") },
-    { id: "movement", label: t("Tab_Movement") },
-    { id: "medical", label: t("Tab_Medical") },
+    // { id: "workforce", label: t("Tab_Workforce") },
+    // { id: "movement", label: t("Tab_Movement") },
+    // { id: "medical", label: t("Tab_Medical") },
     { id: "exploitation", label: t("Tab_Exploitation") },
     { id: "budget", label: t("Tab_Budget") },
   ] as const;
@@ -448,22 +448,24 @@ export default function Budget() {
       <nav className='p-4 bg-white shadow border-b border-gray-200'>
         <div className='flex items-center justify-between container mx-auto'>
           <div className='flex items-center gap-6'>
-            <div className="flex justify-between gap-4">
-            <button
-              onClick={() => navigate("/")}
-              className='px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded transition border border-gray-300 flex items-center gap-1 rounded-xl'
-            >
-              {t("← Back to Dashboard")}
-            </button>
-              <div >
+            <div className='flex justify-between gap-4'>
+              <button
+                onClick={() => navigate("/")}
+                className='px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded transition border border-gray-300 flex items-center gap-1 rounded-xl'
+              >
+                {t("← Back to Dashboard")}
+              </button>
+              <div>
                 <h1 className='text-xl font-bold text-gray-900'>
-                Standards and Means
-              </h1>
-              {(loadedSession || sessionDetails || sessionId) && (
-                <p className='text-xs text-slate-600 mt-0.5'>
-                  {loadedSession?.name || sessionDetails?.sessionName || "Loading..."}
-                </p>
-              )}
+                  Standards and Means
+                </h1>
+                {(loadedSession || sessionDetails || sessionId) && (
+                  <p className='text-xs text-slate-600 mt-0.5'>
+                    {loadedSession?.name ||
+                      sessionDetails?.sessionName ||
+                      "Loading..."}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -472,7 +474,7 @@ export default function Budget() {
             <button
               onClick={handleSaveSession}
               disabled={isSaving}
-              className='px-4 py-2 bg-gray-900 text-white rounded hover:bg-black transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2'
+              className='px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded transition border border-gray-300 flex items-center gap-1 rounded-xl'
             >
               {isSaving ? (
                 <>
