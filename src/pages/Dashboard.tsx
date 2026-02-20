@@ -903,20 +903,20 @@ export default function Dashboard() {
                           <thead className='bg-linear-to-r from-slate-100 to-slate-50'>
                             <tr className='border-b-2 border-slate-300'>
                               <th className='px-3 py-2 font-semibold text-slate-700 w-1/3 border-r border-slate-200'>
-                                {t("Indicator")}
+                                {t("Dashboard_Indicator")}
                               </th>
                               <th className='px-3 py-2 font-semibold text-slate-600 w-1/3 border-r border-slate-200'>
-                                {t("Formula")}
+                                {t("Dashboard_Formula")}
                               </th>
                               <th className='px-3 py-2 font-bold text-slate-800 text-right w-1/3'>
-                                {t("Value")}
+                                {t("Dashboard_Value")}
                               </th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
                               <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                                {t("Total Workforce")}
+                                {t("dashboard_lbl_total_workforce")}
                               </td>
                               <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
                                 <div className='flex items-center gap-2'>
@@ -924,7 +924,7 @@ export default function Dashboard() {
                                     size={12}
                                     className='text-slate-400'
                                   />
-                                  <span>{t("Sum of all personnel")}</span>
+                                  <span>{t("dashboard_fml_total_workforce")}</span>
                                 </div>
                               </td>
                               <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
@@ -933,7 +933,7 @@ export default function Dashboard() {
                             </tr>
                             <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
                               <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                                {t("V.A.")}
+                                {t("dashboard_lbl_va")}
                               </td>
                               <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
                                 <div className='flex items-center gap-2'>
@@ -942,7 +942,7 @@ export default function Dashboard() {
                                     className='text-slate-400'
                                   />
                                   <span>
-                                    {t("Production - Charges (60-65)")}
+                                    {t("dashboard_fml_va")}
                                   </span>
                                 </div>
                               </td>
@@ -955,7 +955,7 @@ export default function Dashboard() {
                             </tr>
                             <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
                               <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                                {t("Coefficient d'Exploitation")}
+                                {t("dashboard_lbl_coeff")}
                               </td>
                               <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
                                 <div className='flex items-center gap-2'>
@@ -963,7 +963,7 @@ export default function Dashboard() {
                                     size={12}
                                     className='text-slate-400'
                                   />
-                                  <span>{t("Production / Total Charges")}</span>
+                                  <span>{t("dashboard_fml_coeff")}</span>
                                 </div>
                               </td>
                               <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
@@ -972,7 +972,7 @@ export default function Dashboard() {
                             </tr>
                             <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
                               <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                                {t("EBE")}
+                                {t("dashboard_lbl_ebe")}
                               </td>
                               <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
                                 <div className='flex items-center gap-2'>
@@ -980,7 +980,7 @@ export default function Dashboard() {
                                     size={12}
                                     className='text-slate-400'
                                   />
-                                  <span>{t("V.A. - Charge 66")}</span>
+                                  <span>{t("dashboard_fml_ebe")}</span>
                                 </div>
                               </td>
                               <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
@@ -992,7 +992,7 @@ export default function Dashboard() {
                             </tr>
                             <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
                               <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                                {t("R.E.")}
+                                {t("dashboard_lbl_re")}
                               </td>
                               <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
                                 <div className='flex items-center gap-2'>
@@ -1000,7 +1000,7 @@ export default function Dashboard() {
                                     size={12}
                                     className='text-slate-400'
                                   />
-                                  <span>{t("EBE - Charge 67")}</span>
+                                  <span>{t("dashboard_fml_re")}</span>
                                 </div>
                               </td>
                               <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
@@ -1012,7 +1012,7 @@ export default function Dashboard() {
                             </tr>
                             <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
                               <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                                {t("Encours Clients")}
+                                {t("dashboard_lbl_encours")}
                               </td>
                               <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
                                 <div className='flex items-center gap-2'>
@@ -1020,7 +1020,7 @@ export default function Dashboard() {
                                     size={12}
                                     className='text-slate-400'
                                   />
-                                  <span>{t("Production - Receipts")}</span>
+                                  <span>{t("dashboard_fml_encours")}</span>
                                 </div>
                               </td>
                               <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
@@ -1032,7 +1032,7 @@ export default function Dashboard() {
                             </tr>
                             <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
                               <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                                {t("Recovery Rate")}
+                                {t("dashboard_lbl_recovery")}
                               </td>
                               <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
                                 <div className='flex items-center gap-2'>
@@ -1041,7 +1041,7 @@ export default function Dashboard() {
                                     className='text-slate-400'
                                   />
                                   <span>
-                                    {t("(Receipts / Production) × 100")}
+                                    {t("dashboard_fml_recovery")}
                                   </span>
                                 </div>
                               </td>
@@ -1051,7 +1051,7 @@ export default function Dashboard() {
                             </tr>
                             <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
                               <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                                {t("Productivity")}
+                                {t("dashboard_lbl_productivity")}
                               </td>
                               <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
                                 <div className='flex items-center gap-2'>
@@ -1059,7 +1059,7 @@ export default function Dashboard() {
                                     size={12}
                                     className='text-slate-400'
                                   />
-                                  <span>{t("Production / Workforce")}</span>
+                                  <span>{t("dashboard_fml_productivity")}</span>
                                 </div>
                               </td>
                               <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
@@ -1071,7 +1071,7 @@ export default function Dashboard() {
                             </tr>
                             <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
                               <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                                {t("Average Cost")}
+                                {t("dashboard_lbl_avg_cost")}
                               </td>
                               <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
                                 <div className='flex items-center gap-2'>
@@ -1079,7 +1079,7 @@ export default function Dashboard() {
                                     size={12}
                                     className='text-slate-400'
                                   />
-                                  <span>{t("Charge 66 / Workforce")}</span>
+                                  <span>{t("dashboard_fml_avg_cost")}</span>
                                 </div>
                               </td>
                               <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
@@ -1091,7 +1091,7 @@ export default function Dashboard() {
                             </tr>
                             <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
                               <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                                {t("Supervision Ratio")}
+                                {t("dashboard_lbl_supervision")}
                               </td>
                               <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
                                 <div className='flex items-center gap-2'>
@@ -1099,7 +1099,7 @@ export default function Dashboard() {
                                     size={12}
                                     className='text-slate-400'
                                   />
-                                  <span>{t("Workforce / Management")}</span>
+                                  <span>{t("dashboard_fml_supervision")}</span>
                                 </div>
                               </td>
                               <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
@@ -1108,7 +1108,7 @@ export default function Dashboard() {
                             </tr>
                             <tr className='border-b border-slate-200 hover:bg-indigo-50/30 transition-all'>
                               <td className='px-3 py-2.5 font-semibold text-slate-800 border-r border-slate-200'>
-                                {t("Average Salary")}
+                                {t("dashboard_lbl_avg_salary")}
                               </td>
                               <td className='px-3 py-2.5 text-slate-600 border-r border-slate-200'>
                                 <div className='flex items-center gap-2'>
@@ -1116,7 +1116,7 @@ export default function Dashboard() {
                                     size={12}
                                     className='text-slate-400'
                                   />
-                                  <span>{t("Salary Mass / Workforce")}</span>
+                                  <span>{t("dashboard_fml_avg_salary")}</span>
                                 </div>
                               </td>
                               <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
@@ -1130,11 +1130,8 @@ export default function Dashboard() {
                         </table>
                       </div>
                       <div className='m-4 p-4 bg-linear-to-r from-yellow-50 to-orange-50 text-slate-700 text-xs rounded-lg border-2 border-yellow-300 shadow-sm'>
-                        <strong className='text-yellow-800'>Note:</strong> These
-                        values are calculated automatically based on the data
-                        entered in the Personnel and Budget sections. Ensure all
-                        budget achievements and personnel counts are up-to-date
-                        for accurate results.
+                        <strong className='text-yellow-800'>{t("Dashboard_Note")}</strong> {t("Dashboard_Note_Text")}
+                        {' '}{t("Dashboard_Note_Instruction")}
                       </div>
                     </div>
 
