@@ -1,0 +1,27 @@
+functions/src/index.ts
+  43812ae110378ae6 263-354
+src/services/aiservice.ts
+  43812ae110378ae6 1-2,5,7-9,11-16,18-21,23,25-34,36-38,40-52,54
+src/components/ChatPanel.tsx
+  43812ae110378ae6 5-7,150,156-184
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "bf94b79d5bcc3a86ede4c1de651c159dfa5f03ee",
+  "prompts": {
+    "43812ae110378ae6": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_3850f2267ffew4nUwLouCGELl3",
+        "model": "google/gemini-3-pro-preview"
+      },
+      "human_author": "Rishi-Sarmah <rishi@trueleap.io>",
+      "messages": [],
+      "total_additions": 173,
+      "total_deletions": 58,
+      "accepted_lines": 172,
+      "overriden_lines": 0
+    }
+  }
+}
