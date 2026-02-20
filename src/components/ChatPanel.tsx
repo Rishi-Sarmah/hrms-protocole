@@ -2,6 +2,9 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { MessageCircle, X, Send, Loader2, ExternalLink } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Mermaid } from "./Mermaid";
 import {
   sendChatMessage,
   generateMessageId,
@@ -150,8 +153,31 @@ export default function ChatPanel() {
                       : "rounded-tl-sm bg-gray-100 text-gray-800"
                   }`}
                 >
-                  {/* Render content with basic markdown-style line breaks */}
-                  <div className="whitespace-pre-wrap">{msg.content}</div>
+                  {/* Render content with markdown + mermaid support */}
+                  <div className={`prose prose-sm max-w-none ${
+                    msg.role === "user"
+                      ? "prose-invert"
+                      : "prose-slate"
+                  } [&>*:first-child]:mt-0 [&>*:last-child]:mb-0`}>
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        code({ className, children, ...props }) {
+                          const match = /language-(\w+)/.exec(className || "");
+                          if (match && match[1] === "mermaid") {
+                            return <Mermaid chart={String(children).replace(/\n$/, "")} />;
+                          }
+                          return (
+                            <code className={className} {...props}>
+                              {children}
+                            </code>
+                          );
+                        },
+                      }}
+                    >
+                      {msg.content}
+                    </ReactMarkdown>
+                  </div>
 
                   {/* Source citations */}
                   {msg.sources && msg.sources.length > 0 && (

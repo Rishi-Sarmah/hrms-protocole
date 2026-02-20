@@ -46,7 +46,7 @@ const db = admin.firestore();
 const geminiApiKey = (0, params_1.defineSecret)("GEMINI_API_KEY");
 // ─── Constants ───────────────────────────────────────────────────────────────
 const SESSIONS_COLLECTION = "sessions";
-const EMBEDDING_MODEL = "text-embedding-004";
+const EMBEDDING_MODEL = "gemini-embedding-001";
 const CHAT_MODEL = "gemini-2.0-flash";
 const EMBEDDING_DIMENSIONS = 768;
 // ─── Helper: Generate embedding for text ────────────────────────────────────
