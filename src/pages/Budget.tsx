@@ -448,22 +448,24 @@ export default function Budget() {
       <nav className='p-4 bg-white shadow border-b border-gray-200'>
         <div className='flex items-center justify-between container mx-auto'>
           <div className='flex items-center gap-6'>
-            <div>
-              <h1 className='text-xl font-bold text-gray-900'>
-                Standards and Means
-              </h1>
-              {(sessionDetails || sessionId) && (
-                <p className='text-xs text-slate-600 mt-0.5'>
-                  {sessionDetails?.sessionName || "Loading..."}
-                </p>
-              )}
-            </div>
+            <div className="flex justify-between gap-4">
             <button
               onClick={() => navigate("/")}
-              className='px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded transition'
+              className='px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded transition border border-gray-300 flex items-center gap-1 rounded-xl'
             >
               {t("← Back to Dashboard")}
             </button>
+              <div >
+                <h1 className='text-xl font-bold text-gray-900'>
+                Standards and Means
+              </h1>
+              {(loadedSession || sessionDetails || sessionId) && (
+                <p className='text-xs text-slate-600 mt-0.5'>
+                  {loadedSession?.name || sessionDetails?.sessionName || "Loading..."}
+                </p>
+              )}
+              </div>
+            </div>
           </div>
           <div className='flex items-center gap-4'>
             <LanguageSelector />
