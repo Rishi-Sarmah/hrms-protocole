@@ -1,0 +1,41 @@
+src/i18n.ts
+  d36c296df8c6248c 58-59
+  72f09e78fa5d9354 65,67-78,186-192,242-248,272-273,279,281-292
+src/pages/Budget.tsx
+  72f09e78fa5d9354 462,464
+src/pages/Dashboard.tsx
+  72f09e78fa5d9354 121,415,479,497,577,702,712,894
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "e581113696c21271aefd6379bccd14decbfd1ef5",
+  "prompts": {
+    "72f09e78fa5d9354": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "d3705083-efbd-4bc6-8045-c6cbfc80b2a7",
+        "model": "copilot/gpt-4.1"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 52,
+      "total_deletions": 10,
+      "accepted_lines": 52,
+      "overriden_lines": 0
+    },
+    "d36c296df8c6248c": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "07be5174-b955-4155-8f13-9325a42c9857",
+        "model": "copilot/claude-sonnet-4.5"
+      },
+      "human_author": "bidipta-tl <bidipta@trueleap.io>",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 0,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}
