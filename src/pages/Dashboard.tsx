@@ -21,19 +21,13 @@ import {
   Calculator,
   LayoutDashboard,
   Zap,
-  Loader2,
-  AlertCircle,
-  ArrowLeft,
+  Calendar,
+  Clock,
 } from "lucide-react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import { Mermaid } from "../components/Mermaid";
-import { analyzeReport } from "../services/aiservice";
 import type { SessionListItem, Session } from "../types/session";
 
 export default function Dashboard() {
-  const [showAIInsights, setShowAIInsights] = useState(false);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [sessions, setSessions] = useState<SessionListItem[]>([]);
@@ -42,9 +36,6 @@ export default function Dashboard() {
   const [loadingSessionData, setLoadingSessionData] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showNewSessionForm, setShowNewSessionForm] = useState(false);
-  const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
-  const [aiLoading, setAiLoading] = useState(false);
-  const [aiError, setAiError] = useState<string | null>(null);
 
   const loadSessions = async () => {
     if (user?.uid) {
@@ -131,41 +122,9 @@ export default function Dashboard() {
     }
   };
 
-  const handleAIInsights = async (sessionId: string, e: React.MouseEvent) => {
+  const handleNavigateToInsights = (sessionId: string, e: React.MouseEvent) => {
     e.stopPropagation();
-
-    try {
-      // Load session data if not already loaded or if different session
-      let session = selectedSession;
-      if (!session || session.id !== sessionId) {
-        setLoadingSessionData(true);
-        session = await getSession(sessionId);
-        if (session && session.userId === user?.uid) {
-          setSelectedSession(session);
-        } else {
-          throw new Error(t("Session not found or access denied"));
-        }
-        setLoadingSessionData(false);
-      }
-
-      // Show AI Insights view and start analysis
-      setShowAIInsights(true);
-      setAiLoading(true);
-      setAiError(null);
-      setAiAnalysis(null);
-
-      // Get current language
-      const currentLanguage = i18n.language || "en";
-
-      // Call AI service
-      const analysis = await analyzeReport(session, currentLanguage);
-      setAiAnalysis(analysis);
-    } catch (err) {
-      console.error("Error generating AI insights:", err);
-      setAiError(t("Failed to generate AI insights. Please try again."));
-    } finally {
-      setAiLoading(false);
-    }
+    navigate(`/insights/${sessionId}`);
   };
 
   if (showNewSessionForm) {
@@ -323,175 +282,6 @@ export default function Dashboard() {
 
   const stats = calculateStats();
 
-  if (showAIInsights) {
-    return (
-      <div className='h-screen bg-gray-50 text-gray-900 flex flex-col'>
-        <nav className='p-4 bg-white shadow-lg border-b-2 border-slate-200 shrink-0'>
-          <div className='flex items-center justify-between container mx-auto'>
-            <button
-              onClick={() => {
-                setShowAIInsights(false);
-                setAiAnalysis(null);
-                setAiError(null);
-              }}
-              className='px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded transition border border-gray-300 flex items-center gap-1 rounded-xl'
-            >
-              <ArrowLeft className='w-4 h-4' />
-              {t("Back to Dashboard")}
-            </button>
-            <div className='flex items-center gap-6'>
-              <h1 className='text-lg font-bold text-gray-900'>
-                {t("AI Insights")}
-              </h1>
-            </div>
-            <div className='flex items-center gap-4'>
-              <LanguageSelector />
-              <div className='flex flex-col items-end'>
-                <span className='text-xs font-medium'>{user?.displayName}</span>
-                <span className='text-[10px] text-gray-500'>{user?.email}</span>
-              </div>
-              {user?.photoURL && (
-                <img
-                  src={user.photoURL}
-                  alt='User'
-                  className='w-8 h-8 rounded-full border border-gray-300'
-                />
-              )}
-              <button
-                onClick={() => logout()}
-                className='px-3 py-1.5 text-xs text-red-600 bg-red-50 rounded hover:bg-red-100 border border-red-200 transition'
-              >
-                {t("Logout")}
-              </button>
-            </div>
-          </div>
-        </nav>
-        <div className='flex-1 overflow-y-auto p-6'>
-          <div className='max-w-5xl mx-auto'>
-            {/* Session Info Header */}
-            {selectedSession && (
-              <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
-                <div className='flex items-start gap-4'>
-                  <div className='p-3 bg-blue-100 rounded-lg'>
-                    <Zap className='w-8 h-8 text-blue-600' />
-                  </div>
-                  <div className='flex-1'>
-                    <h2 className='text-xl font-bold text-slate-800 mb-1'>
-                      {selectedSession.sessionName}
-                    </h2>
-                    {selectedSession.description && (
-                      <p className='text-slate-600 text-sm mb-2'>
-                        {selectedSession.description}
-                      </p>
-                    )}
-                    <div className='flex gap-4 text-xs text-slate-500'>
-                      <span>
-                        {t("Period")}:{" "}
-                        {new Date(
-                          selectedSession.startDate,
-                        ).toLocaleDateString()}{" "}
-                        -{" "}
-                        {new Date(selectedSession.endDate).toLocaleDateString()}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* AI Analysis Content */}
-            <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 overflow-hidden'>
-              <div className='px-6 py-4 bg-linear-to-r from-blue-50 to-indigo-50 border-b-2 border-slate-200'>
-                <h3 className='text-lg font-bold text-slate-800 flex items-center gap-2'>
-                  <BarChart3 className='w-5 h-5 text-indigo-600' />
-                  {t("Executive Summary & Analysis")}
-                </h3>
-              </div>
-
-              <div className='p-6'>
-                {aiLoading && (
-                  <div className='flex flex-col items-center justify-center py-12'>
-                    <Loader2 className='w-12 h-12 text-blue-500 animate-spin mb-4' />
-                    <p className='text-slate-600 text-lg'>
-                      {t("Analyzing your session data")}
-                    </p>
-                    <p className='text-slate-500 text-sm mt-2'>
-                      {t("This may take a few moments")}
-                    </p>
-                  </div>
-                )}
-
-                {aiError && (
-                  <div className='flex flex-col items-center justify-center py-12'>
-                    <div className='p-4 bg-red-50 rounded-full mb-4'>
-                      <AlertCircle className='w-12 h-12 text-red-500' />
-                    </div>
-                    <p className='text-red-600 text-lg font-semibold mb-2'>
-                      {t("Analysis Failed")}
-                    </p>
-                    <p className='text-slate-600 text-sm text-center max-w-md'>
-                      {aiError}
-                    </p>
-                  </div>
-                )}
-
-                {aiAnalysis && !aiLoading && (
-                  <div className='prose prose-slate max-w-none'>
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      components={{
-                        code({ className, children, ...props }) {
-                          const match = /language-(\w+)/.exec(className || "");
-                          if (match && match[1] === "mermaid") {
-                            return (
-                              <Mermaid
-                                chart={String(children).replace(/\n$/, "")}
-                              />
-                            );
-                          }
-                          return (
-                            <code className={className} {...props}>
-                              {children}
-                            </code>
-                          );
-                        },
-                      }}
-                    >
-                      {aiAnalysis}
-                    </ReactMarkdown>
-                  </div>
-                )}
-
-                {!aiLoading && !aiError && !aiAnalysis && (
-                  <div className='flex flex-col items-center justify-center py-12'>
-                    <Zap className='w-12 h-12 text-slate-300 mb-4' />
-                    <p className='text-slate-500'>
-                      {t("No analysis available")}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Info Box */}
-            <div className='mt-6 p-4 bg-blue-50 border-2 border-blue-200 rounded-lg'>
-              <div className='flex gap-3'>
-                <AlertCircle className='w-5 h-5 text-blue-600 shrink-0 mt-0.5' />
-                <div className='text-sm text-slate-700'>
-                  <p className='font-semibold mb-1'>{t("About AI Insights")}</p>
-                  <p>
-                    {t(
-                      "This analysis is generated by AI based on your session data Use it as a supplementary tool for decision-making",
-                    )}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
   return (
     <div className='h-screen bg-gray-50 text-gray-900 flex flex-col'>
       {/* Header */}
@@ -574,7 +364,7 @@ export default function Dashboard() {
                       </h3>
                       <div
                         className='flex items-center gap-1 cursor-pointer hover:bg-blue-50 px-2 py-1 rounded transition'
-                        onClick={(e) => handleAIInsights(session.id, e)}
+                        onClick={(e) => handleNavigateToInsights(session.id, e)}
                         title={t("Get AI insights for this session")}
                       >
                         <Zap className='w-4 h-4 text-blue-500 font-bold' />
@@ -684,52 +474,62 @@ export default function Dashboard() {
                           {selectedSession.description}
                         </p>
                       )}
-                      <div className='gap-4 text-sm text-slate-600'>
-                        <div>
-                          <strong>{t("Period")}:</strong>{" "}
-                          {new Date(
-                            selectedSession.startDate,
-                          ).toLocaleDateString()}{" "}
-                          -{" "}
-                          {new Date(
-                            selectedSession.endDate,
-                          ).toLocaleDateString()}
+                      <div className='flex flex-col gap-3 mt-4'>
+                        {/* Period Badge */}
+                        <div className='inline-flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg w-fit'>
+                          <Calendar className='w-4 h-4 text-slate-500' />
+                          <span className='text-sm font-medium text-slate-700'>
+                            {t("Period")}:{" "}
+                            <span className='text-slate-900'>
+                              {new Date(
+                                selectedSession.startDate,
+                              ).toLocaleDateString()}{" "}
+                              -{" "}
+                              {new Date(
+                                selectedSession.endDate,
+                              ).toLocaleDateString()}
+                            </span>
+                          </span>
                         </div>
-                        <div className='flex gap-2'>
-                          <div className='border rounded-xl text-blue-400 p-1 border-black mt-2'>
-                            <strong>{t("Created")}:</strong>{" "}
-                            {new Date(
-                              selectedSession.createdAt,
-                            ).toLocaleDateString()}{" "}
-                            <strong>
-                              {t("Time")}-{" "}
+
+                        {/* Metadata Row */}
+                        <div className='flex items-center gap-4 text-xs text-slate-500'>
+                          <div className='flex items-center gap-1.5'>
+                            <Clock className='w-3.5 h-3.5' />
+                            <span>
+                              {t("Created")}:{" "}
                               {new Date(
                                 selectedSession.createdAt,
-                              ).toLocaleTimeString()}
-                            </strong>
+                              ).toLocaleDateString()}{" "}
+                              {new Date(
+                                selectedSession.createdAt,
+                              ).toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: true,
+                              })}
+                            </span>
                           </div>
-                          <div className='border rounded-xl text-red-400 p-1 border-black mt-2'>
-                            <strong>{t("Updated")}:</strong>{" "}
-                            {new Date(
-                              selectedSession.updatedAt,
-                            ).toLocaleDateString()}{" "}
-                            <strong>
-                              {t("Time")}-{" "}
+                          <div className='w-px h-3 bg-slate-300'></div>
+                          <div className='flex items-center gap-1.5'>
+                            <Clock className='w-3.5 h-3.5' />
+                            <span>
+                              {t("Updated")}:{" "}
                               {new Date(
                                 selectedSession.updatedAt,
-                              ).toLocaleTimeString()}
-                            </strong>
+                              ).toLocaleDateString()}{" "}
+                              {new Date(
+                                selectedSession.updatedAt,
+                              ).toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: true,
+                              })}
+                            </span>
                           </div>
                         </div>
                       </div>
                     </div>
-                    {/* <button
-                      onClick={() => navigate(`/budget/${selectedSession.id}`)}
-                      className='px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-black transition font-semibold text-sm flex items-center gap-2'
-                    >
-                      <Eye className='w-4 h-4' />
-                      {t("Open Full View")}
-                    </button> */}
                   </div>
                 </div>
 
@@ -1143,76 +943,14 @@ export default function Dashboard() {
                                 </div>
                               </td>
                               <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
-                                {stats.avgSalary.toLocaleString("fr-FR", {
-                                  style: "currency",
-                                  currency: "CDF",
+                                {stats.avgSalary.toLocaleString("en-US", {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2,
                                 })}
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-                      <div className='m-4 p-4 bg-linear-to-r from-yellow-50 to-orange-50 text-slate-700 text-xs rounded-lg border-2 border-yellow-300 shadow-sm'>
-                        <strong className='text-yellow-800'>
-                          {t("Dashboard_Note")}
-                        </strong>{" "}
-                        {t("Dashboard_Note_Text")}{" "}
-                        {t("Dashboard_Note_Instruction")}
-                      </div>
-                    </div>
-
-                    {/* Treasury Position */}
-                    <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
-                      <h3 className='text-lg font-bold text-slate-800 mb-4 flex items-center gap-2'>
-                        <TrendingUp className='w-5 h-5 text-black' />
-                        {t("Treasury Position")}
-                      </h3>
-                      <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                        <div className='p-4 bg-green-50 rounded-lg'>
-                          <p className='text-xs text-slate-600 mb-1'>
-                            {t("Receipts")}
-                          </p>
-                          <p className='text-sm text-slate-500 mb-1'>
-                            {t("Forecast")}:{" "}
-                            {stats.treasuryReceiptsForecast.toLocaleString()}
-                          </p>
-                          <p className='text-xl font-bold text-green-600'>
-                            {stats.treasuryReceiptsAchievement.toLocaleString()}
-                          </p>
-                        </div>
-                        <div className='p-4 bg-red-50 rounded-lg'>
-                          <p className='text-xs text-slate-600 mb-1'>
-                            {t("Disbursements")}
-                          </p>
-                          <p className='text-sm text-slate-500 mb-1'>
-                            {t("Forecast")}:{" "}
-                            {stats.treasuryDisbursementsForecast.toLocaleString()}
-                          </p>
-                          <p className='text-xl font-bold text-red-600'>
-                            {stats.treasuryDisbursementsAchievement.toLocaleString()}
-                          </p>
-                        </div>
-                        <div
-                          className={`p-4 rounded-lg ${
-                            stats.netTreasuryPosition >= 0
-                              ? "bg-green-50"
-                              : "bg-red-50"
-                          }`}
-                        >
-                          <p className='text-xs text-slate-600 mb-1'>
-                            {t("Net Position")}
-                          </p>
-                          <p
-                            className={`text-2xl font-bold ${
-                              stats.netTreasuryPosition >= 0
-                                ? "text-green-600"
-                                : "text-red-600"
-                            }`}
-                          >
-                            {stats.netTreasuryPosition >= 0 ? "+" : ""}
-                            {stats.netTreasuryPosition.toLocaleString()}
-                          </p>
-                        </div>
                       </div>
                     </div>
                   </>

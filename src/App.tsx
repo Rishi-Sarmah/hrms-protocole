@@ -7,6 +7,8 @@ import Budget from "./pages/Budget";
 import RequireAuth from "./components/RequireAuth";
 import ChatPanel from "./components/ChatPanel";
 
+import AIInsightsPage from "./pages/AIInsightsPage";
+
 /** Renders the ChatPanel only when the user is authenticated */
 function AuthenticatedChatPanel() {
   const { user } = useAuth();
@@ -26,6 +28,14 @@ function App() {
               element={
                 <RequireAuth>
                   <Dashboard />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path='/insights/:sessionId'
+              element={
+                <RequireAuth>
+                  <AIInsightsPage />
                 </RequireAuth>
               }
             />

@@ -18,6 +18,9 @@ export interface Session {
   };
   // Vector embedding fields (managed by Cloud Functions — not set client-side)
   embeddingText?: string;
+  // AI Analysis Cache
+  aiAnalysis?: string;
+  aiAnalysisLanguage?: string;
 }
 
 export interface SessionListItem {
