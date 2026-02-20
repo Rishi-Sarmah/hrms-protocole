@@ -13,7 +13,6 @@ import {
 import {
   Trash2,
   Copy,
-  
   BarChart3,
   Users,
   Banknote,
@@ -24,6 +23,7 @@ import {
   Zap,
   Loader2,
   AlertCircle,
+  ArrowLeft,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -328,22 +328,23 @@ export default function Dashboard() {
       <div className='h-screen bg-gray-50 text-gray-900 flex flex-col'>
         <nav className='p-4 bg-white shadow-lg border-b-2 border-slate-200 shrink-0'>
           <div className='flex items-center justify-between container mx-auto'>
+            <button
+              onClick={() => {
+                setShowAIInsights(false);
+                setAiAnalysis(null);
+                setAiError(null);
+              }}
+              className='px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded transition border border-gray-300 flex items-center gap-1 rounded-xl'
+            >
+              <ArrowLeft className='w-4 h-4' />
+              {t("Back to Dashboard")}
+            </button>
             <div className='flex items-center gap-6'>
               <h1 className='text-lg font-bold text-gray-900'>
                 {t("AI Insights")}
               </h1>
             </div>
             <div className='flex items-center gap-4'>
-              <button
-                onClick={() => {
-                  setShowAIInsights(false);
-                  setAiAnalysis(null);
-                  setAiError(null);
-                }}
-                className='px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-black transition font-semibold text-sm'
-              >
-                {t("Back to Dashboard")}
-              </button>
               <LanguageSelector />
               <div className='flex flex-col items-end'>
                 <span className='text-xs font-medium'>{user?.displayName}</span>
@@ -442,7 +443,11 @@ export default function Dashboard() {
                         code({ className, children, ...props }) {
                           const match = /language-(\w+)/.exec(className || "");
                           if (match && match[1] === "mermaid") {
-                            return <Mermaid chart={String(children).replace(/\n$/, "")} />;
+                            return (
+                              <Mermaid
+                                chart={String(children).replace(/\n$/, "")}
+                              />
+                            );
                           }
                           return (
                             <code className={className} {...props}>
@@ -670,7 +675,7 @@ export default function Dashboard() {
                 {/* Session Header */}
                 <div className='bg-white rounded-xl shadow-lg border-2 border-slate-200 p-6 mb-6'>
                   <div className='flex justify-between items-start'>
-                    <div className="border border-blue-300 rounded-xl p-5">
+                    <div className='p-5'>
                       <h2 className='text-2xl font-bold text-slate-800 mb-1'>
                         {selectedSession.sessionName}
                       </h2>
@@ -690,29 +695,32 @@ export default function Dashboard() {
                             selectedSession.endDate,
                           ).toLocaleDateString()}
                         </div>
-                          <div className="flex gap-2">
-
-                        <div className="border rounded-xl text-blue-400 p-1 border-black mt-2">
-                          <strong>{t("Created")}:</strong>{" "}
-                          {new Date(
-                            selectedSession.createdAt,
-                          ).toLocaleDateString()}
-                          {" "}
-                          <strong>
-                            {t("Time")}- {new Date(selectedSession.createdAt).toLocaleTimeString()}
-                          </strong>
-                        </div>
-                        <div className="border rounded-xl text-red-400 p-1 border-black mt-2">
-                          <strong>{t("Updated")}:</strong>{" "}
-                          {new Date(
-                            selectedSession.updatedAt,
-                          ).toLocaleDateString()}
-                          {" "}
-                          <strong>
-                            {t("Time")}- {new Date(selectedSession.updatedAt).toLocaleTimeString()}
-                          </strong>
-                        </div>
+                        <div className='flex gap-2'>
+                          <div className='border rounded-xl text-blue-400 p-1 border-black mt-2'>
+                            <strong>{t("Created")}:</strong>{" "}
+                            {new Date(
+                              selectedSession.createdAt,
+                            ).toLocaleDateString()}{" "}
+                            <strong>
+                              {t("Time")}-{" "}
+                              {new Date(
+                                selectedSession.createdAt,
+                              ).toLocaleTimeString()}
+                            </strong>
                           </div>
+                          <div className='border rounded-xl text-red-400 p-1 border-black mt-2'>
+                            <strong>{t("Updated")}:</strong>{" "}
+                            {new Date(
+                              selectedSession.updatedAt,
+                            ).toLocaleDateString()}{" "}
+                            <strong>
+                              {t("Time")}-{" "}
+                              {new Date(
+                                selectedSession.updatedAt,
+                              ).toLocaleTimeString()}
+                            </strong>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     {/* <button
@@ -941,7 +949,9 @@ export default function Dashboard() {
                                     size={12}
                                     className='text-slate-400'
                                   />
-                                  <span>{t("dashboard_fml_total_workforce")}</span>
+                                  <span>
+                                    {t("dashboard_fml_total_workforce")}
+                                  </span>
                                 </div>
                               </td>
                               <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
@@ -958,9 +968,7 @@ export default function Dashboard() {
                                     size={12}
                                     className='text-slate-400'
                                   />
-                                  <span>
-                                    {t("dashboard_fml_va")}
-                                  </span>
+                                  <span>{t("dashboard_fml_va")}</span>
                                 </div>
                               </td>
                               <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
@@ -1057,9 +1065,7 @@ export default function Dashboard() {
                                     size={12}
                                     className='text-slate-400'
                                   />
-                                  <span>
-                                    {t("dashboard_fml_recovery")}
-                                  </span>
+                                  <span>{t("dashboard_fml_recovery")}</span>
                                 </div>
                               </td>
                               <td className='px-3 py-2.5 text-right font-mono font-bold text-indigo-700'>
@@ -1147,8 +1153,11 @@ export default function Dashboard() {
                         </table>
                       </div>
                       <div className='m-4 p-4 bg-linear-to-r from-yellow-50 to-orange-50 text-slate-700 text-xs rounded-lg border-2 border-yellow-300 shadow-sm'>
-                        <strong className='text-yellow-800'>{t("Dashboard_Note")}</strong> {t("Dashboard_Note_Text")}
-                        {' '}{t("Dashboard_Note_Instruction")}
+                        <strong className='text-yellow-800'>
+                          {t("Dashboard_Note")}
+                        </strong>{" "}
+                        {t("Dashboard_Note_Text")}{" "}
+                        {t("Dashboard_Note_Instruction")}
                       </div>
                     </div>
 

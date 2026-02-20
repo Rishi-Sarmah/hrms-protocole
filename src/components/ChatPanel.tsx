@@ -57,7 +57,7 @@ export default function ChatPanel() {
       const { answer, sources } = await sendChatMessage(
         question,
         messages,
-        i18n.language
+        i18n.language,
       );
 
       const assistantMessage: ChatMessage = {
@@ -73,7 +73,7 @@ export default function ChatPanel() {
       setError(
         i18n.language === "fr"
           ? "Une erreur est survenue. Veuillez réessayer."
-          : "An error occurred. Please try again."
+          : "An error occurred. Please try again.",
       );
     } finally {
       setIsLoading(false);
@@ -104,38 +104,38 @@ export default function ChatPanel() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl active:scale-95"
+          className='fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg transition-all hover:bg-blue-700 hover:shadow-xl active:scale-95'
           aria-label={t("chat_open")}
         >
-          <MessageCircle className="h-6 w-6" />
+          <MessageCircle className='h-6 w-6' />
         </button>
       )}
 
       {/* Chat Panel */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 flex h-[520px] w-[400px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl">
+        <div className='fixed bottom-6 right-6 z-50 flex h-[520px] w-[400px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl'>
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-gray-200 bg-blue-600 px-4 py-3">
-            <div className="flex items-center gap-2">
-              <MessageCircle className="h-5 w-5 text-white" />
-              <h3 className="text-sm font-semibold text-white">
+          <div className='flex items-center justify-between border-b border-gray-200 bg-blue-600 px-4 py-3'>
+            <div className='flex items-center gap-2'>
+              <MessageCircle className='h-5 w-5 text-white' />
+              <h3 className='text-sm font-semibold text-white'>
                 {t("chat_title")}
               </h3>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="rounded-lg p-1 text-white/80 transition-colors hover:bg-white/20 hover:text-white"
+              className='rounded-lg p-1 text-white/80 transition-colors hover:bg-white/20 hover:text-white'
               aria-label={t("chat_close")}
             >
-              <X className="h-5 w-5" />
+              <X className='h-5 w-5' />
             </button>
           </div>
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto px-4 py-3">
+          <div className='flex-1 overflow-y-auto px-4 py-3'>
             {/* Greeting */}
             {messages.length === 0 && (
-              <div className="mb-3 rounded-xl rounded-tl-sm bg-gray-100 px-3 py-2.5 text-sm text-gray-700">
+              <div className='mb-3 rounded-xl rounded-tl-sm bg-gray-100 px-3 py-2.5 text-sm text-gray-700'>
                 {greeting}
               </div>
             )}
@@ -147,25 +147,29 @@ export default function ChatPanel() {
                 className={`mb-3 flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[85%] rounded-xl px-3 py-2.5 text-sm leading-relaxed ${
+                  className={`max-w-[85%] rounded-xl px-3 py-2.5 text-sm ${
                     msg.role === "user"
                       ? "rounded-tr-sm bg-blue-600 text-white"
                       : "rounded-tl-sm bg-gray-100 text-gray-800"
                   }`}
                 >
                   {/* Render content with markdown + mermaid support */}
-                  <div className={`prose prose-sm max-w-none ${
-                    msg.role === "user"
-                      ? "prose-invert"
-                      : "prose-slate"
-                  } [&>*:first-child]:mt-0 [&>*:last-child]:mb-0`}>
+                  <div
+                    className={`prose prose-sm max-w-none ${
+                      msg.role === "user" ? "prose-invert" : "prose-slate"
+                    } [&>*:first-child]:mt-0 [&>*:last-child]:mb-0`}
+                  >
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       components={{
                         code({ className, children, ...props }) {
                           const match = /language-(\w+)/.exec(className || "");
                           if (match && match[1] === "mermaid") {
-                            return <Mermaid chart={String(children).replace(/\n$/, "")} />;
+                            return (
+                              <Mermaid
+                                chart={String(children).replace(/\n$/, "")}
+                              />
+                            );
                           }
                           return (
                             <code className={className} {...props}>
@@ -181,18 +185,18 @@ export default function ChatPanel() {
 
                   {/* Source citations */}
                   {msg.sources && msg.sources.length > 0 && (
-                    <div className="mt-2 border-t border-gray-200 pt-2">
-                      <p className="mb-1 text-xs font-medium text-gray-500">
+                    <div className='mt-2 border-t border-gray-200 pt-2'>
+                      <p className='mb-1 text-xs font-medium text-gray-500'>
                         {i18n.language === "fr" ? "Sources :" : "Sources:"}
                       </p>
-                      <div className="flex flex-wrap gap-1">
+                      <div className='flex flex-wrap gap-1'>
                         {msg.sources.map((src) => (
                           <button
                             key={src.sessionId}
                             onClick={() => handleSourceClick(src.sessionId)}
-                            className="inline-flex items-center gap-1 rounded-md bg-white/80 px-2 py-0.5 text-xs text-blue-600 transition-colors hover:bg-white hover:underline"
+                            className='inline-flex items-center gap-1 rounded-md bg-white/80 px-2 py-0.5 text-xs text-blue-600 transition-colors hover:bg-white hover:underline'
                           >
-                            <ExternalLink className="h-3 w-3" />
+                            <ExternalLink className='h-3 w-3' />
                             {src.sessionName}
                           </button>
                         ))}
@@ -205,17 +209,19 @@ export default function ChatPanel() {
 
             {/* Loading indicator */}
             {isLoading && (
-              <div className="mb-3 flex justify-start">
-                <div className="flex items-center gap-2 rounded-xl rounded-tl-sm bg-gray-100 px-3 py-2.5 text-sm text-gray-500">
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  {i18n.language === "fr" ? "Analyse en cours..." : "Analyzing..."}
+              <div className='mb-3 flex justify-start'>
+                <div className='flex items-center gap-2 rounded-xl rounded-tl-sm bg-gray-100 px-3 py-2.5 text-sm text-gray-500'>
+                  <Loader2 className='h-4 w-4 animate-spin' />
+                  {i18n.language === "fr"
+                    ? "Analyse en cours..."
+                    : "Analyzing..."}
                 </div>
               </div>
             )}
 
             {/* Error message */}
             {error && (
-              <div className="mb-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
+              <div className='mb-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600'>
                 {error}
               </div>
             )}
@@ -224,25 +230,25 @@ export default function ChatPanel() {
           </div>
 
           {/* Input Area */}
-          <div className="border-t border-gray-200 bg-gray-50 px-4 py-3">
-            <div className="flex items-center gap-2">
+          <div className='border-t border-gray-200 bg-gray-50 px-4 py-3'>
+            <div className='flex items-center gap-2'>
               <input
                 ref={inputRef}
-                type="text"
+                type='text'
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={t("chat_placeholder")}
                 disabled={isLoading}
-                className="flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm outline-none transition-colors placeholder:text-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:opacity-50"
+                className='flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm outline-none transition-colors placeholder:text-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:opacity-50'
               />
               <button
                 onClick={handleSend}
                 disabled={!input.trim() || isLoading}
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-white transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className='flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-white transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50'
                 aria-label={t("chat_send")}
               >
-                <Send className="h-4 w-4" />
+                <Send className='h-4 w-4' />
               </button>
             </div>
           </div>
