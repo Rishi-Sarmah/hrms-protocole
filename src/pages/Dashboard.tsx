@@ -25,6 +25,9 @@ import {
   Loader2,
   AlertCircle,
 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Mermaid } from "../components/Mermaid";
 import { analyzeReport } from "../services/aiservice";
 import type { SessionListItem, Session } from "../types/session";
 
@@ -433,68 +436,24 @@ export default function Dashboard() {
 
                 {aiAnalysis && !aiLoading && (
                   <div className='prose prose-slate max-w-none'>
-                    <div className='whitespace-pre-wrap text-slate-700 leading-relaxed'>
-                      {aiAnalysis.split("\n").map((line, index) => {
-                        // Check if line is a heading (starts with #)
-                        if (line.startsWith("###")) {
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        code({ className, children, ...props }) {
+                          const match = /language-(\w+)/.exec(className || "");
+                          if (match && match[1] === "mermaid") {
+                            return <Mermaid chart={String(children).replace(/\n$/, "")} />;
+                          }
                           return (
-                            <h3
-                              key={index}
-                              className='text-lg font-bold text-slate-800 mt-6 mb-3'
-                            >
-                              {line.replace(/^###\s*/, "")}
-                            </h3>
+                            <code className={className} {...props}>
+                              {children}
+                            </code>
                           );
-                        } else if (line.startsWith("##")) {
-                          return (
-                            <h2
-                              key={index}
-                              className='text-xl font-bold text-slate-800 mt-6 mb-3'
-                            >
-                              {line.replace(/^##\s*/, "")}
-                            </h2>
-                          );
-                        } else if (line.startsWith("#")) {
-                          return (
-                            <h1
-                              key={index}
-                              className='text-2xl font-bold text-slate-800 mt-6 mb-4'
-                            >
-                              {line.replace(/^#\s*/, "")}
-                            </h1>
-                          );
-                        } else if (
-                          line.startsWith("* ") ||
-                          line.startsWith("- ")
-                        ) {
-                          return (
-                            <li
-                              key={index}
-                              className='ml-6 mb-2 text-slate-700'
-                            >
-                              {line.replace(/^[*-]\s*/, "")}
-                            </li>
-                          );
-                        } else if (line.match(/^\d+\./)) {
-                          return (
-                            <li
-                              key={index}
-                              className='ml-6 mb-2 text-slate-700 list-decimal'
-                            >
-                              {line.replace(/^\d+\.\s*/, "")}
-                            </li>
-                          );
-                        } else if (line.trim() === "") {
-                          return <br key={index} />;
-                        } else {
-                          return (
-                            <p key={index} className='mb-3 text-slate-700'>
-                              {line}
-                            </p>
-                          );
-                        }
-                      })}
-                    </div>
+                        },
+                      }}
+                    >
+                      {aiAnalysis}
+                    </ReactMarkdown>
                   </div>
                 )}
 

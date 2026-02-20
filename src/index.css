@@ -1,1 +1,26 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Remove black background from code blocks containing mermaid diagrams */
+.prose pre:has(.mermaid-container) {
+  background-color: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin-bottom: 1rem !important;
+}
+
+@media (min-width: 1024px) {
+  .prose pre:has(.mermaid-container) {
+    display: inline-block !important;
+    width: 48% !important;
+    vertical-align: top !important;
+    margin-right: 1% !important;
+  }
+}
+
+/* Ensure SVG scales properly */
+.mermaid-container svg {
+  max-width: 100% !important;
+  height: auto !important;
+}

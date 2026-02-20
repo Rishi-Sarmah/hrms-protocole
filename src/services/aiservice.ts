@@ -24,6 +24,27 @@ export const analyzeReport = async (data: Session, language: string): Promise<st
        - Execution rates for Production vs Charges.
        - Treasury balance and cash flow health.
     6. Provide 3 actionable recommendations covering HR, Operations, and Finance.
+    7. Generate exactly 2 concise Mermaid diagrams:
+       - Diagram 1: A simple Pie Chart for Personnel Distribution (e.g., Gender or Category).
+       - Diagram 2: A simple Bar Chart (using \`xychart-beta\`) for Financial Overview (e.g., Budget vs Actuals).
+       - Constraints:
+         - Keep diagrams compact. Use short labels.
+         - Place the two diagrams immediately one after another, with no text in between.
+         - Wrap EACH diagram in its own code block with the identifier "mermaid".
+       - Example for Diagram 1:
+       \`\`\`mermaid
+       pie title Personnel
+         "Men" : 60
+         "Women" : 40
+       \`\`\`
+       - Example for Diagram 2:
+       \`\`\`mermaid
+       xychart-beta
+         title "Budget vs Actuals"
+         x-axis ["Prod", "Charges"]
+         y-axis "Amount" 0 --> 100
+         bar [80, 50]
+       \`\`\`
 
     Data:
     ${JSON.stringify(data, null, 2)}
