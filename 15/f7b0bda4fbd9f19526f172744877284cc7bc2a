@@ -1,0 +1,25 @@
+functions/src/index.ts
+  4cbb8edd5413901f 17
+src/components/ChatPanel.tsx
+  4cbb8edd5413901f 5-7,156-177,179
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.4",
+  "base_commit_sha": "15f7b0bda4fbd9f19526f172744877284cc7bc2a",
+  "prompts": {
+    "4cbb8edd5413901f": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_3853e63dfffeteRWHRHDVE0Xut",
+        "model": "github-copilot/claude-opus-4.6"
+      },
+      "human_author": "Rishi-Sarmah <rishi@trueleap.io>",
+      "messages": [],
+      "total_additions": 29,
+      "total_deletions": 3,
+      "accepted_lines": 27,
+      "overriden_lines": 0
+    }
+  }
+}
