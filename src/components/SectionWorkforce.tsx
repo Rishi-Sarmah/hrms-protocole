@@ -35,10 +35,10 @@ const SectionWorkforce: React.FC<Props> = ({ data, onChange }) => {
               <th className="px-3 py-2 border-r border-slate-200 bg-slate-100 text-left font-semibold text-slate-700 min-w-[100px]">{t('Level')}</th>
               {grades.map(g => (
                 <th key={g} className="px-2 py-2 border-r border-slate-200 font-semibold text-slate-600 min-w-[50px]">
-                  {g}
+                  {t(g)}
                 </th>
               ))}
-              <th className="px-3 py-2 bg-gray-50 font-bold text-gray-800 min-w-[60px]">TOTAL</th>
+              <th className="px-3 py-2 bg-gray-50 font-bold text-gray-800 min-w-[60px]">{t("Total")}</th>
             </tr>
           </thead>
           <tbody>
@@ -63,7 +63,7 @@ const SectionWorkforce: React.FC<Props> = ({ data, onChange }) => {
               );
             })}
             <tr className="bg-gradient-to-r from-slate-800 to-slate-700 text-white font-bold border-t-4 border-slate-900">
-              <td className="px-3 py-2 border-r border-slate-600 text-left uppercase tracking-wider text-sm">TOTAL</td>
+              <td className="px-3 py-2 border-r border-slate-600 text-left uppercase tracking-wider text-sm">{t("TOTAL")}</td>
               {grades.map(g => {
                 const colTotal = data.workforce.reduce((acc, row) => acc + (row[g] as number || 0), 0);
                 return <td key={g} className="px-2 py-2 border-r border-slate-600 font-mono text-sm">{colTotal}</td>;

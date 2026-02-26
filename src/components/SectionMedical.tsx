@@ -88,15 +88,15 @@ const SectionMedical: React.FC<Props> = ({ data, onChange }) => {
               <div className="p-4 bg-gradient-to-br from-gray-50 to-white rounded-lg border-2 border-gray-200">
                   <h4 className="font-bold mb-3 text-sm text-gray-800 uppercase tracking-wide">{t('Performed')}</h4>
                   <div className="flex gap-2">
-                      <input type="number" placeholder="Count" className="border-2 border-gray-300 p-2 rounded-lg w-1/3 bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold" value={data.serviceMissions.performed.count || ''} onChange={e => handleMissionChange('performed', 'count', e.target.value)} />
-                      <input type="number" placeholder="Cost" className="border-2 border-gray-300 p-2 rounded-lg w-2/3 bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold" value={data.serviceMissions.performed.cost || ''} onChange={e => handleMissionChange('performed', 'cost', e.target.value)} />
+                      <input type="number" placeholder={t("Count") || "Count"} className="border-2 border-gray-300 p-2 rounded-lg w-1/3 bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold" value={data.serviceMissions.performed.count || ''} onChange={e => handleMissionChange('performed', 'count', e.target.value)} />
+                      <input type="number" placeholder={t("Cost") || "Cost"} className="border-2 border-gray-300 p-2 rounded-lg w-2/3 bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold" value={data.serviceMissions.performed.cost || ''} onChange={e => handleMissionChange('performed', 'cost', e.target.value)} />
                   </div>
               </div>
               <div className="p-4 bg-gradient-to-br from-gray-50 to-white rounded-lg border-2 border-gray-200">
                   <h4 className="font-bold mb-3 text-sm text-gray-800 uppercase tracking-wide">{t('Received')}</h4>
                   <div className="flex gap-2">
-                      <input type="number" placeholder="Count" className="border-2 border-gray-300 p-2 rounded-lg w-1/3 bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold" value={data.serviceMissions.received.count || ''} onChange={e => handleMissionChange('received', 'count', e.target.value)} />
-                      <input type="number" placeholder="Cost" className="border-2 border-gray-300 p-2 rounded-lg w-2/3 bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold" value={data.serviceMissions.received.cost || ''} onChange={e => handleMissionChange('received', 'cost', e.target.value)} />
+                      <input type="number" placeholder={t("Count") || "Count"} className="border-2 border-gray-300 p-2 rounded-lg w-1/3 bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold" value={data.serviceMissions.received.count || ''} onChange={e => handleMissionChange('received', 'count', e.target.value)} />
+                      <input type="number" placeholder={t("Cost") || "Cost"} className="border-2 border-gray-300 p-2 rounded-lg w-2/3 bg-white text-black focus:ring-2 focus:ring-gray-400 focus:border-gray-400 outline-none transition-all hover:border-gray-400 text-xs font-semibold" value={data.serviceMissions.received.cost || ''} onChange={e => handleMissionChange('received', 'cost', e.target.value)} />
                   </div>
               </div>
           </div>
@@ -115,9 +115,9 @@ const SectionMedical: React.FC<Props> = ({ data, onChange }) => {
           <table className="w-full text-xs border-collapse">
               <thead className="bg-gradient-to-r from-slate-100 to-slate-50">
                   <tr className="border-b-2 border-slate-300">
-                      <th className="px-3 py-2 text-left font-semibold text-slate-700 border-r border-slate-200">Category</th>
-                      <th className="px-3 py-2 text-center font-semibold text-slate-700 border-r border-slate-200">Montant (USD)</th>
-                      <th className="px-3 py-2 text-center font-semibold text-slate-700">Montant (CDF)</th>
+                      <th className="px-3 py-2 text-left font-semibold text-slate-700 border-r border-slate-200">{t("Category")}</th>
+                      <th className="px-3 py-2 text-center font-semibold text-slate-700 border-r border-slate-200">{t("Amount (USD)")}</th>
+                      <th className="px-3 py-2 text-center font-semibold text-slate-700">{t("Amount (CDF)")}</th>
                   </tr>
               </thead>
               <tbody>
@@ -143,7 +143,7 @@ const SectionMedical: React.FC<Props> = ({ data, onChange }) => {
                     {t(key === 'transfersKinshasa' ? 'Transfers Kinshasa' : 'Transfers Abroad')}
                 </h3>
                 <button onClick={() => addTransferRow(key as 'transfersKinshasa' | 'transfersAbroad')} className="text-sm bg-gray-900 hover:bg-black text-white px-4 py-2 rounded-lg flex items-center gap-1 transition-all shadow-md hover:shadow-lg font-medium">
-                    <Plus size={14} /> Add Row
+                    <Plus size={14} /> {t("Add Row")}
                 </button>
             </div>
             <div className="overflow-x-auto">
@@ -155,7 +155,7 @@ const SectionMedical: React.FC<Props> = ({ data, onChange }) => {
                             <th className="px-3 py-2 text-center font-semibold text-slate-700 border-r border-slate-200">{t('Retirees')}</th>
                             <th className="px-3 py-2 text-center font-semibold text-slate-700 border-r border-slate-200">{t('Wives')}</th>
                             <th className="px-3 py-2 text-center font-semibold text-slate-700 border-r border-slate-200">{t('Children')}</th>
-                            <th className="px-3 py-2 text-center font-semibold text-slate-700 border-r border-slate-200">Total USD</th>
+                            <th className="px-3 py-2 text-center font-semibold text-slate-700 border-r border-slate-200">{t("Total USD")}</th>
                             <th className="px-3 py-2 text-left font-semibold text-slate-700">{t('Observation')}</th>
                         </tr>
                     </thead>
@@ -186,7 +186,7 @@ const SectionMedical: React.FC<Props> = ({ data, onChange }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Missions Costs */}
               <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg border-2 border-gray-200">
-                  <h4 className="font-bold text-sm text-gray-800 mb-3 pb-2 border-b-2 border-gray-300 uppercase tracking-wide">Missions Cost</h4>
+                  <h4 className="font-bold text-sm text-gray-800 mb-3 pb-2 border-b-2 border-gray-300 uppercase tracking-wide">{t("Missions Cost")}</h4>
                   <div className="space-y-3">
                       <div className="flex justify-between items-center">
                           <span className="text-xs font-semibold text-slate-700">{t('Inside')}</span>
@@ -207,7 +207,7 @@ const SectionMedical: React.FC<Props> = ({ data, onChange }) => {
 
               {/* Other Divers */}
               <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg border-2 border-gray-200">
-                  <h4 className="font-bold text-sm text-gray-800 mb-3 pb-2 border-b-2 border-gray-300 uppercase tracking-wide">Others</h4>
+                  <h4 className="font-bold text-sm text-gray-800 mb-3 pb-2 border-b-2 border-gray-300 uppercase tracking-wide">{t("Others")}</h4>
                   <div className="space-y-3">
                       {data.divers.map(d => (
                           <div key={d.category} className="flex justify-between items-center">

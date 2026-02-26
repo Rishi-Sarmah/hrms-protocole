@@ -425,9 +425,9 @@ export default function Budget() {
   const tabs = [
     { id: "dashboard", label: t("Tab_Dashboard") },
     { id: "staff", label: t("Tab_Staff") },
-    // { id: "workforce", label: t("Tab_Workforce") },
-    // { id: "movement", label: t("Tab_Movement") },
-    // { id: "medical", label: t("Tab_Medical") },
+    { id: "workforce", label: t("Tab_Workforce") },
+    { id: "movement", label: t("Tab_Movement") },
+    { id: "medical", label: t("Tab_Medical") },
     { id: "exploitation", label: t("Tab_Exploitation") },
     { id: "budget", label: t("Tab_Budget") },
   ] as const;

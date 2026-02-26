@@ -29,14 +29,14 @@ export const SessionDetailsForm: React.FC<SessionDetailsFormProps> = ({
     // Validation
     if (!sessionName.trim()) {
       newErrors.sessionName =
-        t("Session name is required") || "Session name is required";
+        t("Session name is required");
     }
     if (!startDate) {
       newErrors.startDate =
-        t("Start date is required") || "Start date is required";
+        t("Start date is required");
     }
     if (!endDate) {
-      newErrors.endDate = t("End date is required") || "End date is required";
+      newErrors.endDate = t("End date is required");
     }
 
     if (startDate && endDate) {
@@ -44,8 +44,7 @@ export const SessionDetailsForm: React.FC<SessionDetailsFormProps> = ({
       const end = new Date(endDate);
       if (start > end) {
         newErrors.dateRange =
-          t("Start date must be before end date") ||
-          "Start date must be before end date";
+          t("Start date must be before end date");
       }
     }
 
@@ -76,7 +75,7 @@ export const SessionDetailsForm: React.FC<SessionDetailsFormProps> = ({
             <button
               onClick={() => (onClose ? onClose() : navigate("/"))}
               className='absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-2 transition'
-              title={t("Back to Dashboard") || "Back to Dashboard"}
+              title={t("Back to Dashboard")}
             >
               <X className='w-5 h-5' />
             </button>
@@ -105,7 +104,7 @@ export const SessionDetailsForm: React.FC<SessionDetailsFormProps> = ({
                     setErrors({ ...errors, sessionName: "" });
                   }
                 }}
-                placeholder={t("Enter session name") || "e.g., Q1 2026 Report"}
+                placeholder={t("Enter session name")}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-transparent outline-none transition ${
                   errors.sessionName
                     ? "border-red-500 bg-red-50"
@@ -128,8 +127,7 @@ export const SessionDetailsForm: React.FC<SessionDetailsFormProps> = ({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder={
-                  t("Enter optional description") ||
-                  "e.g., Comments or notes about this session"
+                  t("Enter optional description")
                 }
                 rows={3}
                 className='w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-transparent outline-none resize-none bg-slate-50 transition'
