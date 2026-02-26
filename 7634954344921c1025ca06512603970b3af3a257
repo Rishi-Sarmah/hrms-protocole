@@ -1,0 +1,42 @@
+src/pages/AIInsightsPage.tsx
+  172f90e2e0c068ba 208
+functions/src/index.ts
+  32ad5a1864312f01 207,209-216,262-264,267-271,273-295,298,320
+src/services/chatService.ts
+  32ad5a1864312f01 10,42-44,58-86
+src/components/ChatPanel.tsx
+  32ad5a1864312f01 57,63-72,79,195-200
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.5",
+  "base_commit_sha": "7634954344921c1025ca06512603970b3af3a257",
+  "prompts": {
+    "172f90e2e0c068ba": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_36524cb4fffeRNGiwK0BfChRZs",
+        "model": "google/gemini-3-pro-preview"
+      },
+      "human_author": "Rishi-Sarmah <rishi@trueleap.io>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "32ad5a1864312f01": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_3647724b3ffeR0Oqjg6ulG2Baz",
+        "model": "google/gemini-3-pro-preview"
+      },
+      "human_author": "Rishi-Sarmah <rishi@trueleap.io>",
+      "messages": [],
+      "total_additions": 110,
+      "total_deletions": 23,
+      "accepted_lines": 95,
+      "overriden_lines": 0
+    }
+  }
+}
