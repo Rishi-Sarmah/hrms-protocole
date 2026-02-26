@@ -145,7 +145,7 @@ exports.chat = (0, https_1.onCall)({
     const querySnapshot = await vectorQuery.get();
     if (querySnapshot.empty) {
         return {
-            answer: language === "fr"
+            answer: language?.startsWith("fr")
                 ? "Je n'ai trouvé aucune session correspondant à votre question. Veuillez vous assurer que vous avez des sessions enregistrées avec des données."
                 : "I couldn't find any sessions matching your question. Please make sure you have saved sessions with data.",
             sources: [],
@@ -176,9 +176,20 @@ Rules:
 2. If the context does not contain enough information to answer, say so explicitly.
 3. When referencing data, cite which session it comes from by name.
 4. Provide specific numbers and calculations when possible.
-5. Respond in ${language === "fr" ? "French" : "English"}.
-6. Be concise but thorough. Use bullet points for clarity when listing multiple data points.
-7. If the user asks for comparisons between sessions, compare the relevant metrics side by side.`;
+5. Be concise but thorough. Use bullet points for clarity when listing multiple data points.
+6. If the user asks for comparisons between sessions, compare the relevant metrics side by side.
+7. IMPORTANT: You must respond in JSON format with the following structure:
+   {
+     "answer": {
+       "en": "English answer here...",
+       "fr": "French answer here..."
+     },
+     "question": {
+       "en": "The user's question translated to English...",
+       "fr": "The user's question translated to French..."
+     }
+   }
+   Do not include any markdown formatting like \`\`\`json. Return raw JSON only.`;
     // Build conversation for Gemini
     const conversationParts = [];
     // System context as the first user message
@@ -194,9 +205,10 @@ Rules:
         role: "model",
         parts: [
             {
-                text: language === "fr"
-                    ? "J'ai bien reçu les données de contexte. Je suis prêt à répondre à vos questions sur vos sessions."
-                    : "I have received the context data. I'm ready to answer your questions about your sessions.",
+                text: JSON.stringify({
+                    en: "I have received the context data. I'm ready to answer your questions about your sessions.",
+                    fr: "J'ai bien reçu les données de contexte. Je suis prêt à répondre à vos questions sur vos sessions.",
+                }),
             },
         ],
     });
@@ -216,12 +228,44 @@ Rules:
     const response = await ai.models.generateContent({
         model: CHAT_MODEL,
         contents: conversationParts,
+        config: {
+            responseMimeType: "application/json",
+        },
     });
-    const answer = response.text ||
-        (language === "fr"
-            ? "Désolé, je n'ai pas pu générer une réponse. Veuillez réessayer."
-            : "Sorry, I couldn't generate a response. Please try again.");
-    return { answer, sources };
+    const jsonText = response.text;
+    let answer = {
+        answer: { en: "", fr: "" },
+        question: { en: question, fr: question }
+    };
+    if (jsonText) {
+        try {
+            answer = JSON.parse(jsonText);
+        }
+        catch (e) {
+            // Fallback cleanup
+            const cleaned = jsonText.replace(/```json/g, "").replace(/```/g, "").trim();
+            try {
+                answer = JSON.parse(cleaned);
+            }
+            catch (e2) {
+                console.error("Failed to parse chat response as JSON:", jsonText);
+                answer = {
+                    answer: {
+                        en: "Error generating response.",
+                        fr: "Erreur lors de la génération de la réponse.",
+                    },
+                    question: {
+                        en: question,
+                        fr: question,
+                    }
+                };
+            }
+        }
+    }
+    return {
+        answer: JSON.stringify(answer),
+        sources
+    };
 });
 exports.analyzeReport = (0, https_1.onCall)({
     secrets: [geminiApiKey],
@@ -241,7 +285,7 @@ exports.analyzeReport = (0, https_1.onCall)({
     const prompt = `
     You are a senior administrative and operational analyst. Analyze the following report data (Administration, Exploitation, and Budget) provided in JSON format and provide a concise executive summary.
     
-    The user's preferred language is: ${language === 'fr' ? 'French' : 'English'}. Please respond in this language.
+    The user's preferred language is: ${language?.startsWith('fr') ? 'French' : 'English'}. Please respond in this language.
 
     Focus on:
     1. Personnel distribution and gender balance.

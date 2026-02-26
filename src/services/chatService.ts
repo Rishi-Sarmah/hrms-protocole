@@ -7,6 +7,7 @@ export interface ChatMessage {
   id: string;
   role: "user" | "assistant";
   content: string;
+  translations?: { en: string; fr: string };
   sources?: { sessionId: string; sessionName: string }[];
   timestamp: string;
 }
@@ -36,7 +37,12 @@ export async function sendChatMessage(
   question: string,
   history: ChatMessage[],
   language: string
-): Promise<{ answer: string; sources: { sessionId: string; sessionName: string }[] }> {
+): Promise<{ 
+  answer: string; 
+  sources: { sessionId: string; sessionName: string }[]; 
+  translations?: { en: string; fr: string };
+  questionTranslations?: { en: string; fr: string };
+}> {
   // Convert ChatMessage[] to the simplified format expected by the Cloud Function
   const simplifiedHistory = history.map((msg) => ({
     role: msg.role,
@@ -49,7 +55,35 @@ export async function sendChatMessage(
     language,
   });
 
-  return result.data;
+  // Try parsing the answer as JSON
+  let answer = result.data.answer;
+  let translations: { en: string; fr: string } | undefined;
+  let questionTranslations: { en: string; fr: string } | undefined;
+
+  try {
+    const parsed = JSON.parse(answer);
+    
+    // Check for new structure { answer: {...}, question: {...} }
+    if (parsed.answer && parsed.question) {
+      translations = parsed.answer;
+      questionTranslations = parsed.question;
+      answer = language.startsWith('fr') ? parsed.answer.fr : parsed.answer.en;
+    } 
+    // Fallback to old structure { en, fr }
+    else if (parsed.en && parsed.fr) {
+      translations = parsed;
+      answer = language.startsWith('fr') ? parsed.fr : parsed.en;
+    }
+  } catch (e) {
+    // Not JSON, use as plain text
+  }
+
+  return { 
+    answer, 
+    sources: result.data.sources, 
+    translations,
+    questionTranslations
+  };
 }
 
 /**

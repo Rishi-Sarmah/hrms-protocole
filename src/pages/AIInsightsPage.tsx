@@ -205,7 +205,7 @@ export default function AIInsightsPage() {
               </h3>
               {session.aiAnalysisLanguage && (
                  <span className="text-xs text-slate-500 bg-white px-2 py-1 rounded border border-slate-200">
-                    {session.aiAnalysisLanguage === 'fr' ? 'Français' : 'English'}
+                    {session.aiAnalysisLanguage?.startsWith('fr') ? 'Français' : 'English'}
                  </span>
               )}
             </div>

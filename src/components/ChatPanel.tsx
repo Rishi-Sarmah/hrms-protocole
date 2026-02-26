@@ -54,24 +54,36 @@ export default function ChatPanel() {
     setIsLoading(true);
 
     try {
-      const { answer, sources } = await sendChatMessage(
+      const { answer, sources, translations, questionTranslations } = await sendChatMessage(
         question,
         messages,
         i18n.language,
       );
+
+      // Update user message with its translations
+      if (questionTranslations) {
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === userMessage.id
+              ? { ...msg, translations: questionTranslations }
+              : msg
+          )
+        );
+      }
 
       const assistantMessage: ChatMessage = {
         id: generateMessageId(),
         role: "assistant",
         content: answer,
         sources,
+        translations, // Store the translations if available
         timestamp: new Date().toISOString(),
       };
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (err) {
       console.error("Chat error:", err);
       setError(
-        i18n.language === "fr"
+        i18n.language?.startsWith("fr")
           ? "Une erreur est survenue. Veuillez réessayer."
           : "An error occurred. Please try again.",
       );
@@ -92,11 +104,12 @@ export default function ChatPanel() {
     setIsOpen(false);
   };
 
+  console.log("My messages: ", messages);
+
   // Greeting message shown when chat is first opened
-  const greeting =
-    i18n.language === "fr"
-      ? "Bonjour ! Je suis votre assistant de donnees. Posez-moi des questions sur vos sessions — personnel, budget, exploitation, et plus encore."
-      : "Hello! I'm your data assistant. Ask me questions about your sessions — personnel, budget, exploitation, and more.";
+  const greeting = i18n.language?.startsWith("fr")
+    ? "Bonjour ! Je suis votre assistant de donnees. Posez-moi des questions sur vos sessions — personnel, budget, exploitation, et plus encore."
+    : "Hello! I'm your data assistant. Ask me questions about your sessions — personnel, budget, exploitation, and more.";
 
   return (
     <>
@@ -179,7 +192,12 @@ export default function ChatPanel() {
                         },
                       }}
                     >
-                      {msg.content}
+                      {/* Check if translations exist and show content based on current language, else show original content */}
+                      {msg.translations
+                        ? i18n.language.startsWith("fr")
+                          ? msg.translations.fr
+                          : msg.translations.en
+                        : msg.content}
                     </ReactMarkdown>
                   </div>
 
@@ -187,7 +205,9 @@ export default function ChatPanel() {
                   {msg.sources && msg.sources.length > 0 && (
                     <div className='mt-2 border-t border-gray-200 pt-2'>
                       <p className='mb-1 text-xs font-medium text-gray-500'>
-                        {i18n.language === "fr" ? "Sources :" : "Sources:"}
+                        {i18n.language?.startsWith("fr")
+                          ? "Sources :"
+                          : "Sources:"}
                       </p>
                       <div className='flex flex-wrap gap-1'>
                         {msg.sources.map((src) => (
@@ -212,7 +232,7 @@ export default function ChatPanel() {
               <div className='mb-3 flex justify-start'>
                 <div className='flex items-center gap-2 rounded-xl rounded-tl-sm bg-gray-100 px-3 py-2.5 text-sm text-gray-500'>
                   <Loader2 className='h-4 w-4 animate-spin' />
-                  {i18n.language === "fr"
+                  {i18n.language?.startsWith("fr")
                     ? "Analyse en cours..."
                     : "Analyzing..."}
                 </div>
